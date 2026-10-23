@@ -700,7 +700,8 @@ sealed class Screen(
             onGestureConsumed: (Boolean) -> Unit
         ) {
             com.ai.assistance.operit.ui.features.agreement.screens.AgreementScreen(
-                    onAgreementAccepted = onGoBack
+                    onAgreementAccepted = onGoBack,
+                    onBack = onGoBack
             )
         }
     }

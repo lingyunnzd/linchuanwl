@@ -1497,7 +1497,7 @@
     <string name="speech_error_model_not_found">Speech model not found in assets: %s</string>
     <string name="speech_error_init_failed">Failed to initialize speech recognition engine</string>
     <string name="speech_error_not_initialized">Speech recognition engine not initialized</string>
-    <string name="title_activity_crash_report">Application Error</string>
+    <string name="title_activity_crash_report">应用异常</string>
     <string name="title_activity_data_recovery">数据救援</string>
     <string name="shortcut_data_recovery">数据救援</string>
     <string name="data_recovery_raw_snapshot_section">原始快照</string>

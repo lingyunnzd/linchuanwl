@@ -44,7 +44,9 @@ import com.ai.assistance.operit.data.updates.UpdateManager
 import com.ai.assistance.operit.data.updates.UpdateStatus
 import com.ai.assistance.operit.ui.common.NavItem
 import com.ai.assistance.operit.ui.features.agreement.screens.AgreementScreen
+import com.ai.assistance.operit.ui.features.cloudauth.CloudAuthScreen
 import com.ai.assistance.operit.ui.features.permission.screens.PermissionGuideScreen
+import com.ai.assistance.operit.sync.SyncManager
 import com.ai.assistance.operit.ui.features.startup.screens.PluginLoadingScreenWithState
 import com.ai.assistance.operit.ui.features.startup.screens.PluginLoadingState
 import com.ai.assistance.operit.ui.features.startup.screens.LocalPluginLoadingState
@@ -95,6 +97,9 @@ class MainActivity : ComponentActivity() {
 
     // 是否显示权限引导界面
     private var showPermissionGuide by mutableStateOf(false)
+
+    // 首次进入（权限选择完成后）是否显示霖川账号登录页
+    private var showCloudLogin by mutableStateOf(false)
 
     // 存储待处理的分享文件URIs
     private var pendingSharedFileUris: List<Uri>? = null
@@ -358,7 +363,16 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // ======== 设置初始占位内容 ========
+    // ======== 霖川账号登录门禁（跳过标记只影响本机，不阻断本地使用） ========
+    private fun cloudLoginGatePrefs() =
+        getSharedPreferences("linchuan_cloud_login", Context.MODE_PRIVATE)
+
+    private fun hasSkippedCloudLogin(): Boolean =
+        cloudLoginGatePrefs().getBoolean("skipped", false)
+
+    private fun markCloudLoginSkipped() {
+        cloudLoginGatePrefs().edit().putBoolean("skipped", true).apply()
+    }
 
     // ======== 执行初始化检查 ========
     private fun performInitialChecks() {
@@ -371,8 +385,13 @@ class MainActivity : ComponentActivity() {
 
             prepareStartupChatIfNeeded()
 
-            // 3. 在协议已接受且无需权限引导时，启动插件加载
-            if (!showPermissionGuide && agreementPreferences.isAgreementAccepted()) {
+            // 3. 已过协议与权限引导但尚未登录时，先进入霖川账号登录，登录后拉取云端服务商模型
+            val needCloudLogin = runCatching { !SyncManager.isLoggedIn() }.getOrDefault(false) &&
+                !hasSkippedCloudLogin()
+            showCloudLogin = needCloudLogin
+
+            // 4. 在协议已接受、无需权限引导且无需登录时，启动插件加载
+            if (!showPermissionGuide && !showCloudLogin && agreementPreferences.isAgreementAccepted()) {
                 startPluginLoading()
             }
         }
@@ -607,7 +626,11 @@ class MainActivity : ComponentActivity() {
                                             delay(300) // 短暂延迟确保UI状态更新
                                             checkPermissionLevelSet()
                                             if (!showPermissionGuide) {
-                                                startPluginLoading()
+                                                // 未登录时先进入账号登录，避免插件加载浮层盖住登录页
+                                                val needLogin = runCatching { !SyncManager.isLoggedIn() }.getOrDefault(false) &&
+                                                    !hasSkippedCloudLogin()
+                                                showCloudLogin = needLogin
+                                                if (!needLogin) startPluginLoading()
                                             }
                                             // 重新设置应用内容
                                             setAppContent()
@@ -620,10 +643,29 @@ class MainActivity : ComponentActivity() {
                             PermissionGuideScreen(
                                     onComplete = {
                                         showPermissionGuide = false
-                                        // 权限设置完成后，启动插件加载并更新内容
-                                        startPluginLoading()
+                                        // 权限设置完成后进入账号门禁：未登录先登录并拉取云端服务商模型
+                                        val needLogin = runCatching { !SyncManager.isLoggedIn() }.getOrDefault(false) &&
+                                            !hasSkippedCloudLogin()
+                                        showCloudLogin = needLogin
+                                        if (!needLogin) startPluginLoading()
                                         setAppContent()
                                     }
+                            )
+                        }
+                        // 霖川账号登录（权限选择完成后首次进入）
+                        else if (showCloudLogin) {
+                            CloudAuthScreen(
+                                onGoBack = {
+                                    showCloudLogin = false
+                                    startPluginLoading()
+                                    setAppContent()
+                                },
+                                onSkip = {
+                                    markCloudLoginSkipped()
+                                    showCloudLogin = false
+                                    startPluginLoading()
+                                    setAppContent()
+                                }
                             )
                         }
                         // 显示主应用界面

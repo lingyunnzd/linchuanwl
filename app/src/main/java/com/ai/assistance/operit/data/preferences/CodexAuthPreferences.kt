@@ -5,8 +5,7 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.ai.assistance.operit.util.AppLogger
-import java.io.IOException
-import java.security.GeneralSecurityException
+import java.security.KeyStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +22,7 @@ data class CodexAuthState(
 
 class CodexAuthPreferences private constructor(context: Context) {
     private val appContext = context.applicationContext
-    private var preferences = createPreferences(appContext)
+    private var preferences = SecurePrefsFactory.create(appContext, STORE_NAME)
 
     private val _authState = MutableStateFlow(readState())
     val authState: StateFlow<CodexAuthState?> = _authState.asStateFlow()
@@ -98,8 +97,7 @@ class CodexAuthPreferences private constructor(context: Context) {
     }
 
     private fun resetEncryptedStore() {
-        appContext.deleteSharedPreferences(STORE_NAME)
-        preferences = createEncryptedPreferences(appContext)
+        preferences = SecurePrefsFactory.create(appContext, STORE_NAME, forceReset = true)
     }
 
     companion object {
@@ -121,37 +119,64 @@ class CodexAuthPreferences private constructor(context: Context) {
             }
         }
 
-        private fun createPreferences(context: Context): SharedPreferences {
-            return try {
-                createEncryptedPreferences(context)
-            } catch (error: GeneralSecurityException) {
-                recreatePreferencesAfterUnreadableStore(context, error)
-            } catch (error: IOException) {
-                recreatePreferencesAfterUnreadableStore(context, error)
+    }
+}
+
+/**
+ * EncryptedSharedPreferences 的安全创建器。
+ *
+ * 背景：设备恢复备份、系统清理或 Keystore 损坏时，`_androidx_security_master_key_` 别名会
+ * 残留但不可用，此时 `EncryptedSharedPreferences.create` 直接抛
+ * `KeyStoreException: the master key ... exists but is unusable`。
+ * 只删 SharedPreferences 文件并不能解决，必须同时删掉 Keystore 别名再重建，
+ * 重建仍失败则回退普通 SharedPreferences，保证界面不崩溃。
+ */
+internal object SecurePrefsFactory {
+    private const val TAG = "SecurePrefsFactory"
+    private const val MASTER_KEY_ALIAS = "_androidx_security_master_key_"
+
+    fun create(context: Context, storeName: String, forceReset: Boolean = false): SharedPreferences {
+        if (forceReset) resetKeystoreAndStore(context, storeName, null)
+        return try {
+            createEncrypted(context, storeName)
+        } catch (first: Exception) {
+            AppLogger.e(TAG, "加密存储 $storeName 无法打开，重建密钥后重试", first)
+            resetKeystoreAndStore(context, storeName, first)
+            try {
+                createEncrypted(context, storeName)
+            } catch (second: Exception) {
+                AppLogger.e(TAG, "加密存储 $storeName 重建仍失败，回退普通存储", second)
+                context.getSharedPreferences("${storeName}_plain", Context.MODE_PRIVATE)
             }
         }
+    }
 
-        private fun recreatePreferencesAfterUnreadableStore(
-            context: Context,
-            error: Exception
-        ): SharedPreferences {
-            // Android backup restores SharedPreferences XML but not the app's Android Keystore
-            // entry. Tink then rejects the encrypted keyset with AEADBadTagException.
-            AppLogger.e(TAG, "Codex OAuth encrypted store cannot be opened; resetting it", error)
-            context.deleteSharedPreferences(STORE_NAME)
-            return createEncryptedPreferences(context)
+    private fun resetKeystoreAndStore(context: Context, storeName: String, error: Exception?) {
+        if (error != null) AppLogger.e(TAG, "重置加密存储 $storeName（Keystore 别名一并删除）", error)
+        try {
+            val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+            if (keyStore.containsAlias(MASTER_KEY_ALIAS)) {
+                keyStore.deleteEntry(MASTER_KEY_ALIAS)
+            }
+        } catch (e: Exception) {
+            AppLogger.e(TAG, "删除 Keystore 别名失败", e)
         }
+        try {
+            context.deleteSharedPreferences(storeName)
+        } catch (e: Exception) {
+            AppLogger.e(TAG, "删除 SharedPreferences 失败", e)
+        }
+    }
 
-        private fun createEncryptedPreferences(context: Context): SharedPreferences {
-            return EncryptedSharedPreferences.create(
-                context,
-                STORE_NAME,
-                MasterKey.Builder(context)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build(),
-                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
-            )
-        }
+    private fun createEncrypted(context: Context, storeName: String): SharedPreferences {
+        return EncryptedSharedPreferences.create(
+            context,
+            storeName,
+            MasterKey.Builder(context)
+                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                .build(),
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
+        )
     }
 }

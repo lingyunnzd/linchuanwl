@@ -1,4 +1,4 @@
-﻿import java.io.File
+import java.io.File
 import java.io.FileInputStream
 import java.net.HttpURLConnection
 import java.net.URI
@@ -435,7 +435,7 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             signingConfig = signingConfigs.getByName("debug")
-            resValue("string", "app_name", "Operit Debug")
+            resValue("string", "app_name", "霖川 AI")
         }
         create("clone") {
             initWith(getByName("debug"))
@@ -444,7 +444,7 @@ android {
                 signingConfig = releaseSigningConfig
             }
             matchingFallbacks += listOf("debug")
-            resValue("string", "app_name", "Operit Clone")
+            resValue("string", "app_name", "霖川 AI")
         }
         create("nightly") {
             isMinifyEnabled = false

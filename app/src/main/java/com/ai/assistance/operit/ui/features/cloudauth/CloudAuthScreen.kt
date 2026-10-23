@@ -52,6 +52,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -87,7 +88,7 @@ private enum class Step { EMAIL, CODE, PASSWORD }
  * 流程：邮箱 → 邮箱验证码 → 密码（注册时含确认密码）。
  */
 @Composable
-fun CloudAuthScreen(onGoBack: () -> Unit) {
+fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
     val scope = rememberCoroutineScope()
     val authState by SyncManager.state.collectAsState()
 
@@ -477,6 +478,19 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
             }
         }
 
+        if (onSkip != null) {
+            TextButton(
+                onClick = { if (!busy) onSkip() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "暂不登录，先本地使用",
+                    color = cs.onSurfaceVariant,
+                    fontSize = 12.sp
+                )
+            }
+        }
+
         Text(
             text = if (mode == AuthMode.REGISTER) "注册即代表同意《用户协议》与《隐私政策》" else "登录后可在任意设备恢复你的配置",
             fontSize = 10.5.sp,
@@ -608,6 +622,8 @@ private fun CodeCells(
 ) {
     val cs = MaterialTheme.colorScheme
     val focusRequester = remember { FocusRequester() }
+    // 输入法被系统手势/误触收起后焦点仍在，单纯 requestFocus 不会重新弹键盘，必须显式 show()
+    val keyboardController = LocalSoftwareKeyboardController.current
     val transition = rememberInfiniteTransition(label = "code-caret")
     val caretAlpha by transition.animateFloat(
         initialValue = 1f,
@@ -833,15 +849,23 @@ private fun CodeCells(
             textStyle = TextStyle(color = Color.Transparent)
         )
 
-        // 点击整块区域即聚焦输入
+        // 点击整块区域即聚焦输入；同时强制唤起输入法，避免误触收起后无法再次触发
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .clickable { focusRequester.requestFocus() }
+                .clickable {
+                    focusRequester.requestFocus()
+                    keyboardController?.show()
+                }
         )
     }
 
-    LaunchedEffect(Unit) { focusRequester.requestFocus() }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+        // 等焦点真正落到输入框后再唤起键盘，避免部分机型首次请求无效
+        delay(120)
+        keyboardController?.show()
+    }
 }
 
 // =============== Helpers ===============

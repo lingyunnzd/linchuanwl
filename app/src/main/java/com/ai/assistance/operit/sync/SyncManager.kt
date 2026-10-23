@@ -2,8 +2,7 @@ package com.ai.assistance.operit.sync
 
 import android.content.Context
 import android.util.Base64
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
+import com.ai.assistance.operit.data.preferences.SecurePrefsFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -88,14 +87,8 @@ object SyncManager {
     ) {
         if (::prefs.isInitialized) return
         this.storage = storage
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        prefs = EncryptedSharedPreferences.create(
-            context, PREFS_NAME, masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
-        )
+        // 统一走安全创建器：Keystore 别名损坏时自动删除重建，失败回退普通存储，避免启动崩溃
+        prefs = SecurePrefsFactory.create(context, PREFS_NAME)
         api = SyncApi(
             baseUrl = prefs.getString(KEY_BASE_URL, baseUrl) ?: baseUrl,
             tokenProvider = { prefs.getString(KEY_ACCESS_TOKEN, null) },
