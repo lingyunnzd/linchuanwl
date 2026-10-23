@@ -20,6 +20,25 @@ data class LoginRequest(
 )
 
 @Serializable
+data class SendCodeRequest(
+    val email: String,
+    val purpose: String = "register", // register / login
+)
+
+@Serializable
+data class VerifyCodeRequest(
+    val email: String,
+    val code: String,
+    val purpose: String = "register",
+)
+
+@Serializable
+data class VerifyCodeResponse(
+    val ok: Boolean,
+    val token: String? = null, // 可选：后端返回一次性验证 token，注册时可带上
+)
+
+@Serializable
 data class RefreshRequest(
     @SerialName("refresh_token")
     val refreshToken: String,
@@ -175,3 +194,15 @@ data class ProviderTemplatesResponse(
 data class ErrorResponse(
     val error: String,
 )
+
+// ============ 验证码结果枚举（UI 层识别用） ============
+
+sealed class CodeSendResult {
+    object Sent : CodeSendResult()
+    object NotSupported : CodeSendResult() // 后端未实现 send-code 端点（404）
+}
+
+sealed class CodeVerifyResult {
+    data class Ok(val token: String?) : CodeVerifyResult()
+    object NotSupported : CodeVerifyResult() // 后端未实现 verify-code 端点（404）
+}

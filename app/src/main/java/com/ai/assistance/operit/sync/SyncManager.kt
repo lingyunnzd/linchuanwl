@@ -168,6 +168,32 @@ object SyncManager {
         _state.value = AuthState.LoggedOut
     }
 
+    // ============ 验证码（优雅降级） ============
+
+    /** 发送邮箱验证码。后端未实现该端点（404）时返回 NotSupported，UI 应跳过验证 */
+    suspend fun sendCode(email: String, purpose: String = "register"): Result<CodeSendResult> {
+        return when (val resp = api.sendCode(SendCodeRequest(email, purpose))) {
+            is ApiResult.Ok -> Result.success(CodeSendResult.Sent)
+            is ApiResult.Error -> {
+                if (resp.ex is ApiException.Http && resp.ex.code == 404) {
+                    Result.success(CodeSendResult.NotSupported)
+                } else Result.failure(resp.ex)
+            }
+        }
+    }
+
+    /** 校验邮箱验证码。后端未实现该端点（404）时返回 NotSupported，UI 应跳过验证 */
+    suspend fun verifyCode(email: String, code: String, purpose: String = "register"): Result<CodeVerifyResult> {
+        return when (val resp = api.verifyCode(VerifyCodeRequest(email, code, purpose))) {
+            is ApiResult.Ok -> Result.success(CodeVerifyResult.Ok(resp.data.token))
+            is ApiResult.Error -> {
+                if (resp.ex is ApiException.Http && resp.ex.code == 404) {
+                    Result.success(CodeVerifyResult.NotSupported)
+                } else Result.failure(resp.ex)
+            }
+        }
+    }
+
     /** 401 回调：用 refresh_token 换新 access_token */
     private suspend fun doRefreshToken(): String? {
         val refresh = prefs.getString(KEY_REFRESH_TOKEN, null) ?: return null

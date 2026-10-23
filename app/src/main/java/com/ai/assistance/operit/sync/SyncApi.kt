@@ -39,6 +39,12 @@ class SyncApi(
     suspend fun refresh(refreshToken: String): ApiResult<RefreshResponse> =
         post("/api/auth/refresh", RefreshRequest(refreshToken), needAuth = false)
 
+    suspend fun sendCode(req: SendCodeRequest): ApiResult<OkResponse> =
+        post("/api/auth/send-code", req, needAuth = false)
+
+    suspend fun verifyCode(req: VerifyCodeRequest): ApiResult<VerifyCodeResponse> =
+        post("/api/auth/verify-code", req, needAuth = false)
+
     // ============ Provider Templates ============
 
     suspend fun listProviderTemplates(): ApiResult<ProviderTemplatesResponse> =
