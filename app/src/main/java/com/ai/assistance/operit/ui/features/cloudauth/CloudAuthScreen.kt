@@ -9,6 +9,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -361,7 +362,7 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
                     Text(
                         text = when (currentStep) {
                             Step.EMAIL -> if (mode == AuthMode.REGISTER) "注册即表示同意霖川网络服务条款与隐私政策" else "使用邮箱注册的账号登录"
-                            Step.CODE -> if (countdown > 0) "验证码已发送到 $cleanEmail ($countdown s 后可重发)" else "验证码已发送到 $cleanEmail"
+                            Step.CODE -> if (countdown > 0) "验证码已发送到 ${email.text.trim().lowercase()} ($countdown s 后可重发)" else "验证码已发送到 ${email.text.trim().lowercase()}"
                             Step.PASSWORD -> "密码用于派生加密密钥，云端无法读取你的数据"
                             else -> ""
                         },
@@ -490,7 +491,7 @@ private fun CodeStep(
         BasicTextField(
             value = code,
             onValueChange = { if (it.length <= 6 && it.all { c -> c.isDigit() }) onCodeChange(it) },
-            keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             modifier = Modifier
                 .matchParentSize()
@@ -564,7 +565,7 @@ private fun PasswordInput(value: String, onValueChange: (String) -> Unit, placeh
         onValueChange = { onValueChange(it) },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
-        keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
         modifier = Modifier
             .fillMaxWidth()
