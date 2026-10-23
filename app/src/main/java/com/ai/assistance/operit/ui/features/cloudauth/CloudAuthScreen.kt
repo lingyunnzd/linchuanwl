@@ -627,16 +627,27 @@ private fun CodeCells(
         animationSpec = tween(280, delayMillis = 380, easing = EaseInOutCubic),
         label = "check-progress"
     )
-    // 失败抖动
-    val shakeOffset by animateFloatAsState(
+    // 失败红圈进度
+    val failRingProgress by animateFloatAsState(
         targetValue = if (verifyState == VerifyState.FAIL) 1f else 0f,
-        animationSpec = tween(80),
-        label = "shake"
+        animationSpec = tween(450, easing = EaseInOutCubic),
+        label = "fail-ring-progress"
+    )
+    val failXProgress by animateFloatAsState(
+        targetValue = if (verifyState == VerifyState.FAIL) 1f else 0f,
+        animationSpec = tween(280, delayMillis = 380, easing = EaseInOutCubic),
+        label = "fail-x-progress"
+    )
+    // 失败抖动 — 用无限过渡驱动，确保重组
+    val shakeTransition = rememberInfiniteTransition(label = "fail-shake")
+    val shakeWave by shakeTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(tween(400), RepeatMode.Reverse),
+        label = "shake-wave"
     )
     val shakeX = if (verifyState == VerifyState.FAIL) {
-        // 用时间驱动的抖动
-        val t = (System.currentTimeMillis() % 500) / 500f
-        (Math.sin(t * Math.PI * 8) * 6 * shakeOffset).toFloat()
+        (Math.sin(shakeWave * Math.PI * 4) * 6).toFloat()
     } else 0f
 
     val baseBorder = cs.outlineVariant
@@ -753,6 +764,57 @@ private fun CodeCells(
                                 mid.y + (right.y - mid.y) * t2
                             )
                             drawLine(green, mid, end2, stroke, cap = StrokeCap.Round)
+                        }
+                    }
+                }
+            }
+        }
+
+        // 失败画红圈 + 红叉（覆盖在格子上方）
+        if (verifyState == VerifyState.FAIL) {
+            Box(
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Canvas(modifier = Modifier.size(52.dp)) {
+                    val stroke = 3.dp.toPx()
+                    val radius = size.minDimension / 2 - stroke
+                    val sweep = 360f * failRingProgress
+                    drawArc(
+                        color = red,
+                        startAngle = -90f,
+                        sweepAngle = sweep,
+                        useCenter = false,
+                        style = androidx.compose.ui.graphics.drawscope.Stroke(width = stroke, cap = StrokeCap.Round)
+                    )
+                    // 画叉（两段线，左上→右下，右上→左下）
+                    if (failXProgress > 0f) {
+                        val cx = size.width / 2
+                        val cy = size.height / 2
+                        val r = radius * 0.45f
+                        val tl = Offset(cx - r, cy - r)
+                        val br = Offset(cx + r, cy + r)
+                        val tr = Offset(cx + r, cy - r)
+                        val bl = Offset(cx - r, cy + r)
+                        val segLen = (br - tl).getDistance()
+                        val drawn = segLen * 2 * failXProgress
+                        // 第一段：左上 → 右下
+                        if (drawn <= segLen) {
+                            val t = (drawn / segLen).coerceIn(0f, 1f)
+                            val end = Offset(
+                                tl.x + (br.x - tl.x) * t,
+                                tl.y + (br.y - tl.y) * t
+                            )
+                            drawLine(red, tl, end, stroke, cap = StrokeCap.Round)
+                        } else {
+                            drawLine(red, tl, br, stroke, cap = StrokeCap.Round)
+                            val seg2Drawn = drawn - segLen
+                            val t2 = (seg2Drawn / segLen).coerceIn(0f, 1f)
+                            val end2 = Offset(
+                                tr.x + (bl.x - tr.x) * t2,
+                                tr.y + (bl.y - tr.y) * t2
+                            )
+                            drawLine(red, tr, end2, stroke, cap = StrokeCap.Round)
                         }
                     }
                 }

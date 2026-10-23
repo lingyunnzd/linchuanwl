@@ -8,6 +8,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.VolumeOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Composable
@@ -120,6 +124,7 @@ fun ChatScreenHeader(
     val maxWindowSizeInK by actualViewModel.maxWindowSizeInK.collectAsState()
     val inputTokenCount by actualViewModel.inputTokenCount.collectAsState()
     val outputTokenCount by actualViewModel.outputTokenCount.collectAsState()
+    val isAutoReadEnabled by actualViewModel.isAutoReadEnabled.collectAsState()
 
     val permissionLauncher =
         rememberLauncherForActivityResult(
@@ -155,7 +160,7 @@ fun ChatScreenHeader(
         Box(
             modifier = Modifier
                 .size(28.dp)
-                .background(Color(0xFF1E4FA3), androidx.compose.foundation.shape.RoundedCornerShape(8.dp)),
+                .background(Color(0xFF1E4FA3), RoundedCornerShape(8.dp)),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -163,6 +168,20 @@ fun ChatScreenHeader(
                 color = Color.White,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
+            )
+        }
+
+        // 朗读开关
+        val ttsTint = if (isAutoReadEnabled) Color(0xFF1E4FA3) else MaterialTheme.colorScheme.onSurfaceVariant
+        IconButton(
+            onClick = { actualViewModel.toggleAutoRead() },
+            modifier = Modifier.size(32.dp)
+        ) {
+            Icon(
+                imageVector = if (isAutoReadEnabled) Icons.Filled.VolumeUp else Icons.Filled.VolumeOff,
+                contentDescription = if (isAutoReadEnabled) "关闭朗读" else "开启朗读",
+                tint = ttsTint,
+                modifier = Modifier.size(20.dp)
             )
         }
 

@@ -44,6 +44,7 @@ fun BubbleStyleChatMessage(
     enableDialogs: Boolean = true,  // 新增参数：是否启用弹窗功能，默认启用
     onRoleAvatarLongPress: ((String) -> Unit)? = null,
     onEditSummary: ((ChatMessage) -> Unit)? = null,
+    onSpeakMessage: ((String) -> Unit)? = null,
 ) {
     when (message.sender) {
         "user" -> {
@@ -79,6 +80,7 @@ fun BubbleStyleChatMessage(
                 heightMemory = heightMemory,
                 enableDialogs = enableDialogs,
                 onAvatarLongPressMention = onRoleAvatarLongPress,
+                onSpeakMessage = onSpeakMessage,
             )
         }
         "summary" -> {

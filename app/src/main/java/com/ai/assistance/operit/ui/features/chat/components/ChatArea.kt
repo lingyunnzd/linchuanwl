@@ -782,7 +782,8 @@ private fun MessageItem(
                         onRoleAvatarLongPress = onMentionRoleFromAvatar,
                         onEditSummary = { summaryMessage ->
                             onSelectMessageToEdit?.invoke(index, summaryMessage, "summary")
-                        }
+                        },
+                        onSpeakMessage = onSpeakMessage,
                     )
                 }
             }
