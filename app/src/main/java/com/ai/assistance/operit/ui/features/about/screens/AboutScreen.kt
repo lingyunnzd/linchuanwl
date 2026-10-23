@@ -956,9 +956,9 @@ fun AboutScreen(
                         icon = Icons.Default.Language,
                         iconTint = MaterialTheme.colorScheme.primary,
                         title = "官方网站",
-                        subtitleText = "ag.linchuanwl.xyz",
+                        subtitleText = "www.linchuanwl.xyz",
                         onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://ag.linchuanwl.xyz")).apply {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linchuanwl.xyz")).apply {
                                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             }
                             context.startActivity(intent)

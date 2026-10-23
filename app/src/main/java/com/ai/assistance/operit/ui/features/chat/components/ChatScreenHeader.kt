@@ -145,12 +145,27 @@ fun ChatScreenHeader(
                             .fillMaxWidth()
                             .background(
                                     if (chatHeaderTransparent) Color.Transparent
-                                    else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f)
+                                    else MaterialTheme.colorScheme.surface
                             )
-                            .padding(horizontal = 16.dp, vertical = 6.dp),
+                            .padding(horizontal = 14.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        // 品牌标识
+        Box(
+            modifier = Modifier
+                .size(28.dp)
+                .background(Color(0xFF1E4FA3), androidx.compose.foundation.shape.RoundedCornerShape(8.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "川",
+                color = Color.White,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
         ChatHeader(
                 showChatHistorySelector = showChatHistorySelector,
                 onToggleChatHistorySelector = { actualViewModel.toggleChatHistorySelector() },

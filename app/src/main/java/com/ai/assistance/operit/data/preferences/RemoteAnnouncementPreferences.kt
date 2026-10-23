@@ -7,16 +7,12 @@ class RemoteAnnouncementPreferences(context: Context) {
     private val prefs: SharedPreferences =
         context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-    fun getAcknowledgedVersion(): Int {
-        return prefs.getInt(KEY_ACKNOWLEDGED_VERSION, 0)
+    fun getAcknowledgedVersion(): String {
+        return prefs.getString(KEY_ACKNOWLEDGED_VERSION, "") ?: ""
     }
 
-    fun shouldShow(version: Int): Boolean {
-        return version > getAcknowledgedVersion()
-    }
-
-    fun setAcknowledgedVersion(version: Int) {
-        prefs.edit().putInt(KEY_ACKNOWLEDGED_VERSION, version).apply()
+    fun setAcknowledgedVersion(version: String) {
+        prefs.edit().putString(KEY_ACKNOWLEDGED_VERSION, version).apply()
     }
 
     companion object {

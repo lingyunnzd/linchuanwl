@@ -588,7 +588,7 @@
     <string name="about_description">霖川 AI 是一款强大的设备智能助手，提供界面分析、聊天对话、端到端加密云同步等功能。</string>
     <string name="about_developer">开发者: 霖川网络</string>
     <string name="about_contact">联系我们: support@linchuanwl.xyz</string>
-    <string name="about_website">&lt;a href="https://ag.linchuanwl.xyz"&gt;官网: https://ag.linchuanwl.xyz&lt;/a&gt;</string>
+    <string name="about_website">&lt;a href="https://www.linchuanwl.xyz"&gt;官网: https://www.linchuanwl.xyz&lt;/a&gt;</string>
     <string name="about_copyright">© 2025 - 2026 霖川网络 · 保留所有权利。</string>
     <string name="star_on_github">访问霖川官网</string>
     <string name="update_log">更新日志</string>
@@ -1709,8 +1709,8 @@
     <string name="mirror_download">%1$s 镜像下载</string>
     <string name="china_mirror">国内加速镜像</string>
     <string name="china_mirror_desc">通过国内镜像服务器下载，速度更快</string>
-    <string name="github_source">GitHub原始链接</string>
-    <string name="github_source_desc">直接从GitHub官方服务器下载，速度可能较慢</string>
+    <string name="github_source">官方下载线路</string>
+    <string name="github_source_desc">从官方服务器下载，速度可能较慢</string>
     <string name="no_mirrors_found">未找到可用的镜像源</string>
     <string name="beta_plan">Beta 计划</string>
     <string name="beta_plan_desc">加入后将会在有更新的测试版本的时候，wifi下自动下载30MB左右的补丁更新。</string>
@@ -1756,7 +1756,7 @@
     <string name="developer">开发者</string>
     <string name="contact">联系方式</string>
     <string name="project_url">项目地址</string>
-    <string name="open_source_licenses">第三方开源组件声明</string>
+    <string name="open_source_licenses">第三方组件声明</string>
     <string name="cloud_auth_title">霖川云服务</string>
     <string name="license_format">许可: %1$s</string>
     <string name="visit_project">访问项目</string>

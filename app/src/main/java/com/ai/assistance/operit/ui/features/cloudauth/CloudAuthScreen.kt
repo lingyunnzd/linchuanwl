@@ -6,6 +6,7 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseInOutCubic
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -22,6 +23,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -60,6 +62,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.assistance.operit.sync.AuthState
@@ -70,11 +73,17 @@ import com.ai.assistance.operit.util.AppLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
+
+private enum class VerifyState { IDLE, SUCCESS, FAIL }
+private enum class AuthMode { REGISTER, LOGIN }
+private enum class Step { EMAIL, CODE, PASSWORD }
 
 /**
  * 霖川云服务 · 登录 / 注册
  *
  * 视觉规范：纯色底、单层标题栏（外层导航已提供返回）、字段聚焦描边、分步横向滑动。
+ * 验证码：Telegram 风格方格，输入跳跃、正确变绿、错误变红、成功画圆+勾。
  * 流程：邮箱 → 邮箱验证码 → 密码（注册时含确认密码）。
  */
 @Composable
@@ -100,6 +109,8 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
     var codeSent by remember { mutableStateOf(false) }
     var countdown by remember { mutableIntStateOf(0) }
     var countdownJob by remember { mutableStateOf<Job?>(null) }
+    var verifyState by remember { mutableStateOf(VerifyState.IDLE) }
+    var jumpIndex by remember { mutableIntStateOf(-1) }
 
     val cs = MaterialTheme.colorScheme
     val emailValid = Patterns.EMAIL_ADDRESS.matcher(email.text.trim()).matches()
@@ -210,7 +221,17 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
                         CodeCells(
                             code = code,
                             focused = codeFocused,
-                            onCodeChange = { code = it; errorText = null },
+                            verifyState = verifyState,
+                            jumpIndex = jumpIndex,
+                            onCodeChange = { newCode ->
+                                if (verifyState != VerifyState.IDLE) return@CodeCells
+                                val prevLen = code.length
+                                code = newCode
+                                errorText = null
+                                if (newCode.length > prevLen && newCode.length <= 6) {
+                                    jumpIndex = newCode.length - 1
+                                }
+                            },
                             onFocusChange = { codeFocused = it }
                         )
                         Spacer(modifier = Modifier.height(12.dp))
@@ -339,14 +360,26 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
                                 ).fold(
                                     onSuccess = { res ->
                                         when (res) {
-                                            is CodeVerifyResult.Ok -> step = Step.PASSWORD
+                                            is CodeVerifyResult.Ok -> {
+                                                verifyState = VerifyState.SUCCESS
+                                                delay(1100)
+                                                step = Step.PASSWORD
+                                                verifyState = VerifyState.IDLE
+                                                code = ""
+                                            }
                                             is CodeVerifyResult.NotSupported -> {
                                                 verificationSupported = false
                                                 step = Step.PASSWORD
                                             }
                                         }
                                     },
-                                    onFailure = { errorText = "验证码错误或已过期，请重试" }
+                                    onFailure = {
+                                        verifyState = VerifyState.FAIL
+                                        errorText = "验证码错误或已过期，请重试"
+                                        delay(700)
+                                        verifyState = VerifyState.IDLE
+                                        code = ""
+                                    }
                                 )
                             } else {
                                 step = Step.PASSWORD
@@ -568,6 +601,8 @@ private fun BrandTextField(
 private fun CodeCells(
     code: String,
     focused: Boolean,
+    verifyState: VerifyState,
+    jumpIndex: Int,
     onCodeChange: (String) -> Unit,
     onFocusChange: (Boolean) -> Unit
 ) {
@@ -581,29 +616,74 @@ private fun CodeCells(
         label = "caret-alpha"
     )
 
+    // 成功画圆进度
+    val ringProgress by animateFloatAsState(
+        targetValue = if (verifyState == VerifyState.SUCCESS) 1f else 0f,
+        animationSpec = tween(450, easing = EaseInOutCubic),
+        label = "ring-progress"
+    )
+    val checkProgress by animateFloatAsState(
+        targetValue = if (verifyState == VerifyState.SUCCESS) 1f else 0f,
+        animationSpec = tween(280, delayMillis = 380, easing = EaseInOutCubic),
+        label = "check-progress"
+    )
+    // 失败抖动
+    val shakeOffset by animateFloatAsState(
+        targetValue = if (verifyState == VerifyState.FAIL) 1f else 0f,
+        animationSpec = tween(80),
+        label = "shake"
+    )
+    val shakeX = if (verifyState == VerifyState.FAIL) {
+        // 用时间驱动的抖动
+        val t = (System.currentTimeMillis() % 500) / 500f
+        (Math.sin(t * Math.PI * 8) * 6 * shakeOffset).toFloat()
+    } else 0f
+
+    val baseBorder = cs.outlineVariant
+    val green = Color(0xFF2E9E5B)
+    val red = Color(0xFFE0483D)
+    val greenBg = Color(0xFFE6F4EC)
+    val redBg = Color(0xFFFBE9E7)
+
     Box(modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset { IntOffset(shakeX.roundToInt(), 0) },
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             repeat(6) { idx ->
                 val digit = code.getOrNull(idx)?.toString() ?: ""
-                val active = focused && code.length == idx
-                val borderColor = when {
-                    active -> cs.primary
-                    digit.isNotEmpty() -> cs.primary.copy(alpha = 0.55f)
-                    else -> cs.outlineVariant
+                val active = focused && code.length == idx && verifyState == VerifyState.IDLE
+                val isJumping = jumpIndex == idx
+
+                val jumpAnim by animateFloatAsState(
+                    targetValue = if (isJumping) -10f else 0f,
+                    animationSpec = tween(180, easing = EaseInOutCubic),
+                    label = "jump-$idx"
+                )
+
+                val (borderColor, bgColor, textColor) = when (verifyState) {
+                    VerifyState.SUCCESS -> Triple(green, greenBg, green)
+                    VerifyState.FAIL -> Triple(red, redBg, red)
+                    VerifyState.IDLE -> when {
+                        active -> Triple(cs.primary, cs.surface, cs.onSurface)
+                        digit.isNotEmpty() -> Triple(cs.primary.copy(alpha = 0.55f), cs.surface, cs.onSurface)
+                        else -> Triple(baseBorder, cs.surface, cs.onSurface)
+                    }
                 }
+
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .height(56.dp)
+                        .offset { IntOffset(0, jumpAnim.roundToInt()) }
                         .border(
-                            width = if (active) 1.5.dp else 1.dp,
+                            width = if (active || verifyState != VerifyState.IDLE) 1.5.dp else 1.dp,
                             color = borderColor,
                             shape = RoundedCornerShape(10.dp)
                         )
-                        .background(cs.surface, RoundedCornerShape(10.dp)),
+                        .background(bgColor, RoundedCornerShape(10.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     if (digit.isNotEmpty()) {
@@ -611,7 +691,7 @@ private fun CodeCells(
                             text = digit,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = cs.onSurface
+                            color = textColor
                         )
                     } else if (active) {
                         Box(
@@ -620,6 +700,60 @@ private fun CodeCells(
                                 .height(22.dp)
                                 .background(cs.primary.copy(alpha = caretAlpha))
                         )
+                    }
+                }
+            }
+        }
+
+        // 成功画圆 + 勾（覆盖在格子上方）
+        if (verifyState == VerifyState.SUCCESS) {
+            Box(
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Canvas(modifier = Modifier.size(52.dp)) {
+                    val stroke = 3.dp.toPx()
+                    // 画圆
+                    val radius = size.minDimension / 2 - stroke
+                    val sweep = 360f * ringProgress
+                    drawArc(
+                        color = green,
+                        startAngle = -90f,
+                        sweepAngle = sweep,
+                        useCenter = false,
+                        style = androidx.compose.ui.graphics.drawscope.Stroke(width = stroke, cap = StrokeCap.Round)
+                    )
+                    // 画勾（两段线）
+                    if (checkProgress > 0f) {
+                        val p = checkProgress
+                        // 勾的路径：从左下到中到右上
+                        val cx = size.width / 2
+                        val cy = size.height / 2
+                        val left = Offset(cx - radius * 0.5f, cy)
+                        val mid = Offset(cx - radius * 0.08f, cy + radius * 0.38f)
+                        val right = Offset(cx + radius * 0.55f, cy - radius * 0.35f)
+                        val totalLen = (mid - left).getDistance() + (right - mid).getDistance()
+                        val drawn = totalLen * p
+                        // 第一段
+                        val seg1Len = (mid - left).getDistance()
+                        if (drawn <= seg1Len) {
+                            val t = drawn / seg1Len
+                            val end = Offset(
+                                left.x + (mid.x - left.x) * t,
+                                left.y + (mid.y - left.y) * t
+                            )
+                            drawLine(green, left, end, stroke, cap = StrokeCap.Round)
+                        } else {
+                            drawLine(green, left, mid, stroke, cap = StrokeCap.Round)
+                            val seg2Drawn = drawn - seg1Len
+                            val seg2Len = (right - mid).getDistance()
+                            val t2 = (seg2Drawn / seg2Len).coerceIn(0f, 1f)
+                            val end2 = Offset(
+                                mid.x + (right.x - mid.x) * t2,
+                                mid.y + (right.y - mid.y) * t2
+                            )
+                            drawLine(green, mid, end2, stroke, cap = StrokeCap.Round)
+                        }
                     }
                 }
             }
@@ -649,9 +783,6 @@ private fun CodeCells(
 }
 
 // =============== Helpers ===============
-
-private enum class Step { EMAIL, CODE, PASSWORD }
-private enum class AuthMode { REGISTER, LOGIN }
 
 private fun startCountdown(onTick: (Int) -> Unit) {
     kotlinx.coroutines.GlobalScope.launch {
