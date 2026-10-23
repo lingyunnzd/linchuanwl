@@ -1,6 +1,8 @@
 package com.ai.assistance.operit.ui.features.settings.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,25 +16,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.style.TextOverflow
 import com.ai.assistance.operit.R
 import com.ai.assistance.operit.core.tools.defaultTool.standard.CookiePrivacyManager
-import com.ai.assistance.operit.data.model.FunctionType
-import com.ai.assistance.operit.data.preferences.GitHubAuthPreferences
-import com.ai.assistance.operit.data.repository.ChatHistoryManager
 import com.ai.assistance.operit.sync.AuthState
 import com.ai.assistance.operit.sync.SyncManager
-import com.ai.assistance.operit.ui.features.github.GitHubLoginDialog
-import com.ai.assistance.operit.ui.theme.LocalThemePreferenceSnapshot
 import com.ai.assistance.operit.util.AppLogger
 import kotlinx.coroutines.launch
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 // 保存滑动状态变量，使其跨重组保持
 private val SettingsScreenScrollPosition = mutableStateOf(0)
@@ -62,13 +57,8 @@ fun SettingsScreen(
         navigateToLayoutAdjustmentSettings: () -> Unit
 ) {
         val context = LocalContext.current
-        val githubAuth = remember { GitHubAuthPreferences.getInstance(context) }
         val scope = rememberCoroutineScope()
-        var showGitHubLogin by remember { mutableStateOf(false) }
         var showClearCookieConfirm by remember { mutableStateOf(false) }
-
-        val isGitHubLoggedIn = githubAuth.isLoggedInFlow.collectAsState(initial = false).value
-        val gitHubUser = githubAuth.userInfoFlow.collectAsState(initial = null).value
         // 创建和记住滚动状态，设置为上次保存的位置
         val scrollState = rememberScrollState(SettingsScreenScrollPosition.value)
 
@@ -79,157 +69,53 @@ fun SettingsScreen(
                 }
         }
 
-        val hasBackgroundImage = LocalThemePreferenceSnapshot.current.useBackgroundImage
-        
-        val cardContainerColor = if (hasBackgroundImage) {
-                MaterialTheme.colorScheme.surface
-        } else {
-                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
-        }
-
         Column(
                 modifier = Modifier.fillMaxSize()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .padding(horizontal = 2.dp, vertical = 4.dp)
                         .verticalScroll(scrollState)
         ) {
-                // ======= 账号 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_section_account),
-                        icon = Icons.Default.AccountCircle,
-                        containerColor = cardContainerColor
-                ) {
-                        CompactSettingsItem(
-                                title = stringResource(R.string.github_account),
-                                subtitle = if (isGitHubLoggedIn && gitHubUser != null) {
-                                        "@${gitHubUser!!.login}"
-                                } else {
-                                        stringResource(R.string.github_account_not_logged_in)
-                                },
-                                icon = Icons.Default.Person,
-                                onClick = navigateToGitHubAccount
-                        )
+                // ======= 账号与云服务 =======
+                CloudSyncSection(navigateToCloudAuth = navigateToCloudAuth)
 
-                        if (isGitHubLoggedIn) {
-                                CompactSettingsItem(
-                                        title = stringResource(R.string.logout),
-                                        subtitle = stringResource(R.string.github_account_logout_desc),
-                                        icon = Icons.Default.Logout,
-                                        onClick = {
-                                                scope.launch { githubAuth.logout() }
-                                        }
-                                )
-                        } else {
-                                CompactSettingsItem(
-                                        title = stringResource(R.string.login_github),
-                                        subtitle = stringResource(R.string.github_account_login_desc),
-                                        icon = Icons.Default.Login,
-                                        onClick = { showGitHubLogin = true }
-                                )
-                        }
-                }
-
-                if (showGitHubLogin) {
-                        GitHubLoginDialog(
-                                onDismissRequest = { showGitHubLogin = false }
-                        )
-                }
-
-                // ======= 霖川云服务 =======
-                CloudSyncSection(cardContainerColor = cardContainerColor, navigateToCloudAuth = navigateToCloudAuth)
-
-                // ======= 个性化配置 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_section_personalization),
-                        icon = Icons.Default.Person,
-                        containerColor = cardContainerColor
-                ) {
-                        CompactSettingsItem(
-                                title = stringResource(id = R.string.settings_user_preferences),
-                                subtitle = stringResource(id = R.string.settings_user_preferences_subtitle),
-                                icon = Icons.Default.Face,
-                                onClick = navigateToUserPreferences
-                        )
-
-                        CompactSettingsItem(
-                                title = stringResource(R.string.language_settings),
-                                subtitle = stringResource(id = R.string.settings_language_subtitle),
-                                icon = Icons.Default.Language,
-                                onClick = navigateToLanguageSettings
-                        )
-                        
-                        CompactSettingsItem(
-                                title = stringResource(id = R.string.settings_theme_appearance),
-                                subtitle = stringResource(id = R.string.settings_theme_subtitle),
-                                icon = Icons.Default.Palette,
-                                onClick = navigateToThemeSettings
-                        )
-                        
-                        CompactSettingsItem(
-                                title = stringResource(R.string.settings_global_display),
-                                subtitle = stringResource(R.string.settings_global_display_subtitle),
-                                icon = Icons.Default.Visibility,
-                                onClick = navigateToGlobalDisplaySettings
-                        )
-                        
-                        CompactSettingsItem(
-                                title = stringResource(R.string.layout_adjustment),
-                                subtitle = stringResource(R.string.layout_adjustment_subtitle),
-                                icon = Icons.Default.AspectRatio,
-                                onClick = navigateToLayoutAdjustmentSettings
-                        )
-                }
-
-                // ======= AI模型配置 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_section_ai_model),
-                        icon = Icons.Default.Settings,
-                        containerColor = cardContainerColor
-                ) {
+                // ======= 模型与服务商 =======
+                SettingsSection(title = "模型与服务商") {
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_model_parameters),
                                 subtitle = stringResource(id = R.string.settings_model_params_subtitle),
                                 icon = Icons.Default.Api,
-                                onClick = navigateToModelConfig
+                                onClick = navigateToModelConfig,
+                                showDivider = false
                         )
-                        
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_functional_model),
                                 subtitle = stringResource(id = R.string.settings_functional_model_subtitle),
                                 icon = Icons.Default.Tune,
                                 onClick = navigateToFunctionalConfig
                         )
-                        
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_speech_services),
                                 subtitle = stringResource(id = R.string.settings_speech_services_subtitle),
                                 icon = Icons.Default.RecordVoiceOver,
                                 onClick = navigateToSpeechServicesSettings
                         )
-                        
-                }
-
-                // ======= 提示词配置 =======
-                SettingsSection(
-                        title = stringResource(R.string.settings_prompt_section),
-                        icon = Icons.Default.Message,
-                        containerColor = cardContainerColor
-                ) {
                         CompactSettingsItem(
                                 title = stringResource(R.string.settings_prompt_title),
                                 subtitle = stringResource(id = R.string.settings_system_prompts_subtitle),
                                 icon = Icons.Default.ChatBubble,
                                 onClick = navigateToModelPrompts
                         )
-                        
-                        // 新增：人设卡生成
+                        CompactSettingsItem(
+                                title = stringResource(id = R.string.settings_section_context_summary),
+                                subtitle = stringResource(id = R.string.settings_context_summary_subtitle),
+                                icon = Icons.Default.Analytics,
+                                onClick = navigateToContextSummarySettings
+                        )
                         CompactSettingsItem(
                                 title = stringResource(R.string.persona_card_generation),
                                 subtitle = stringResource(R.string.persona_card_generation_desc),
                                 icon = Icons.Default.Face,
                                 onClick = navigateToPersonaCardGeneration
                         )
-                        
-                        // 新增：Waifu模式设置
                         CompactSettingsItem(
                                 title = stringResource(R.string.waifu_mode_settings),
                                 subtitle = stringResource(R.string.waifu_mode_settings_desc),
@@ -238,68 +124,80 @@ fun SettingsScreen(
                         )
                 }
 
-                // ======= 上下文和总结设置 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_section_context_summary),
-                        icon = Icons.Default.Analytics,
-                        containerColor = cardContainerColor
-                ) {
+                // ======= 界面与外观 =======
+                SettingsSection(title = "界面与外观") {
                         CompactSettingsItem(
-                                title = stringResource(id = R.string.settings_section_context_summary),
-                                subtitle = stringResource(id = R.string.settings_context_summary_subtitle),
-                                icon = Icons.Default.Tune,
-                                onClick = navigateToContextSummarySettings
+                                title = stringResource(id = R.string.settings_theme_appearance),
+                                subtitle = stringResource(id = R.string.settings_theme_subtitle),
+                                icon = Icons.Default.Palette,
+                                onClick = navigateToThemeSettings,
+                                showDivider = false
+                        )
+                        CompactSettingsItem(
+                                title = stringResource(R.string.layout_adjustment),
+                                subtitle = stringResource(R.string.layout_adjustment_subtitle),
+                                icon = Icons.Default.AspectRatio,
+                                onClick = navigateToLayoutAdjustmentSettings
+                        )
+                        CompactSettingsItem(
+                                title = stringResource(R.string.settings_global_display),
+                                subtitle = stringResource(R.string.settings_global_display_subtitle),
+                                icon = Icons.Default.Visibility,
+                                onClick = navigateToGlobalDisplaySettings
+                        )
+                        CompactSettingsItem(
+                                title = stringResource(id = R.string.settings_user_preferences),
+                                subtitle = stringResource(id = R.string.settings_user_preferences_subtitle),
+                                icon = Icons.Default.Face,
+                                onClick = navigateToUserPreferences
+                        )
+                        CompactSettingsItem(
+                                title = stringResource(R.string.language_settings),
+                                subtitle = stringResource(id = R.string.settings_language_subtitle),
+                                icon = Icons.Default.Language,
+                                onClick = navigateToLanguageSettings
                         )
                 }
 
-                // ======= 数据和权限 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_data_permissions),
-                        icon = Icons.Default.Security,
-                        containerColor = cardContainerColor
-                ) {
+                // ======= 安全与数据 =======
+                SettingsSection(title = "安全与数据") {
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_tool_permissions),
                                 subtitle = stringResource(id = R.string.settings_tool_permissions_subtitle),
                                 icon = Icons.Default.AdminPanelSettings,
-                                onClick = navigateToToolPermissions
+                                onClick = navigateToToolPermissions,
+                                showDivider = false
                         )
-
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_data_backup),
                                 subtitle = stringResource(id = R.string.settings_data_backup_desc),
                                 icon = Icons.Default.CloudUpload,
                                 onClick = navigateToChatBackupSettings
                         )
-                        
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_chat_history_management),
                                 subtitle = stringResource(id = R.string.settings_chat_history_management_subtitle),
                                 icon = Icons.Default.ManageHistory,
                                 onClick = navigateToChatHistorySettings
                         )
-
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_token_usage_stats),
                                 subtitle = stringResource(id = R.string.settings_token_usage_subtitle),
                                 icon = Icons.Default.Analytics,
                                 onClick = navigateToTokenUsageStatistics
                         )
-
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_performance_monitor),
                                 subtitle = stringResource(id = R.string.settings_performance_monitor_subtitle),
                                 icon = Icons.Default.Speed,
                                 onClick = navigateToPerformanceMonitor
                         )
-                }
-
-                // ======= 隐私与数据清理 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_privacy_data_cleanup),
-                        icon = Icons.Default.DeleteSweep,
-                        containerColor = cardContainerColor
-                ) {
+                        CompactSettingsItem(
+                                title = stringResource(id = R.string.settings_external_http_chat),
+                                subtitle = stringResource(id = R.string.settings_external_http_chat_subtitle),
+                                icon = Icons.Default.SettingsEthernet,
+                                onClick = navigateToExternalHttpChatSettings
+                        )
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_clear_cookies),
                                 subtitle = stringResource(id = R.string.settings_clear_cookies_subtitle),
@@ -308,22 +206,7 @@ fun SettingsScreen(
                         )
                 }
 
-                // ======= 外部调用 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_section_external_calls),
-                        icon = Icons.Default.SettingsEthernet,
-                        containerColor = cardContainerColor
-                ) {
-                        CompactSettingsItem(
-                                title = stringResource(id = R.string.settings_external_http_chat),
-                                subtitle = stringResource(id = R.string.settings_external_http_chat_subtitle),
-                                icon = Icons.Default.SettingsEthernet,
-                                onClick = navigateToExternalHttpChatSettings
-                        )
-                }
-
-                // 底部间距
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
         }
 
         if (showClearCookieConfirm) {
@@ -368,42 +251,27 @@ fun SettingsScreen(
 @Composable
 private fun SettingsSection(
         title: String,
-        icon: ImageVector,
-        containerColor: Color,
         content: @Composable ColumnScope.() -> Unit
 ) {
-        Column(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-                // 分组标题
-                Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(vertical = 6.dp)
-                ) {
-                        Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                                text = title,
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary
-                        )
-                }
-                
-                // 内容区域
-                Card(
+        val cs = MaterialTheme.colorScheme
+        Column(
+                modifier = Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, bottom = 18.dp)
+        ) {
+                Text(
+                        text = title,
+                        fontSize = 11.sp,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.9.sp,
+                        color = cs.onSurfaceVariant,
+                        modifier = Modifier.padding(start = 4.dp, top = 4.dp, bottom = 8.dp)
+                )
+                Surface(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                                containerColor = containerColor
-                        )
+                        shape = RoundedCornerShape(14.dp),
+                        color = cs.surface,
+                        border = BorderStroke(1.dp, cs.outlineVariant.copy(alpha = 0.6f))
                 ) {
-                        Column(
-                                modifier = Modifier.padding(12.dp),
-                                content = content
-                        )
+                        Column(content = content)
                 }
         }
 }
@@ -413,48 +281,74 @@ private fun CompactSettingsItem(
         title: String,
         subtitle: String,
         icon: ImageVector,
-        onClick: () -> Unit
+        onClick: () -> Unit,
+        showDivider: Boolean = true,
+        trailingText: String? = null
 ) {
-        Row(
-                modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(6.dp))
-                        .clickable { onClick() }
-                        .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-        ) {
-                Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(20.dp)
-                )
-                
-                Spacer(modifier = Modifier.width(12.dp))
-                
-                Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                                text = title,
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Medium,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
-                                text = subtitle,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+        val cs = MaterialTheme.colorScheme
+        Column(modifier = Modifier.fillMaxWidth()) {
+                if (showDivider) {
+                        HorizontalDivider(
+                                modifier = Modifier.padding(start = 58.dp),
+                                thickness = 0.6.dp,
+                                color = cs.outlineVariant.copy(alpha = 0.45f)
                         )
                 }
-                
-                Icon(
-                        imageVector = Icons.Default.ChevronRight,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(16.dp)
-                )
+                Row(
+                        modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onClick() }
+                                .padding(horizontal = 14.dp, vertical = 13.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                ) {
+                        Box(
+                                modifier = Modifier
+                                        .size(32.dp)
+                                        .clip(RoundedCornerShape(9.dp))
+                                        .background(cs.primary.copy(alpha = 0.08f)),
+                                contentAlignment = Alignment.Center
+                        ) {
+                                Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        tint = cs.primary,
+                                        modifier = Modifier.size(18.dp)
+                                )
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                        text = title,
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Medium,
+                                        color = cs.onSurface,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                )
+                                Spacer(modifier = Modifier.height(2.dp))
+                                Text(
+                                        text = subtitle,
+                                        fontSize = 11.5.sp,
+                                        color = cs.onSurfaceVariant,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
+                                )
+                        }
+                        if (trailingText != null) {
+                                Text(
+                                        text = trailingText,
+                                        fontSize = 11.5.sp,
+                                        color = cs.onSurfaceVariant,
+                                        modifier = Modifier.padding(start = 8.dp)
+                                )
+                        }
+                        Icon(
+                                imageVector = Icons.Default.ChevronRight,
+                                contentDescription = null,
+                                tint = cs.outline,
+                                modifier = Modifier.padding(start = 6.dp).size(16.dp)
+                        )
+                }
         }
 }
 
@@ -462,7 +356,7 @@ private fun CompactSettingsItem(
 
 /** 霖川云服务区块：账号登录/注册 + 配置与话题的端到端加密同步 */
 @Composable
-private fun CloudSyncSection(cardContainerColor: Color, navigateToCloudAuth: () -> Unit) {
+private fun CloudSyncSection(navigateToCloudAuth: () -> Unit) {
         // 同步模块初始化失败时（极少数情况）不显示入口，避免崩溃
         val syncReady = remember { runCatching { SyncManager.isInitialized() }.getOrDefault(false) }
         if (!syncReady) return
@@ -472,22 +366,20 @@ private fun CloudSyncSection(cardContainerColor: Color, navigateToCloudAuth: () 
         var busy by remember { mutableStateOf(false) }
         var statusText by remember { mutableStateOf<String?>(null) }
 
-        SettingsSection(
-                title = "霖川云服务",
-                icon = Icons.Default.Cloud,
-                containerColor = cardContainerColor
-        ) {
+        SettingsSection(title = "账号与云服务") {
                 when (val state = authState) {
                         is AuthState.LoggedIn -> {
                                 CompactSettingsItem(
-                                        title = "已登录：${state.username}",
-                                        subtitle = statusText ?: "数据经 AES-256-GCM 端到端加密后同步",
+                                        title = "霖川账号",
+                                        subtitle = state.username,
                                         icon = Icons.Default.CloudDone,
-                                        onClick = {}
+                                        onClick = {},
+                                        showDivider = false,
+                                        trailingText = "已登录"
                                 )
                                 CompactSettingsItem(
-                                        title = if (busy) "同步中…" else "立即同步",
-                                        subtitle = "上传并拉取模型配置与聊天话题",
+                                        title = if (busy) "同步中…" else "云同步",
+                                        subtitle = statusText ?: "AES-256-GCM 端侧加密，服务端不可解密",
                                         icon = Icons.Default.Sync,
                                         onClick = {
                                                 if (!busy) {
@@ -528,10 +420,12 @@ private fun CloudSyncSection(cardContainerColor: Color, navigateToCloudAuth: () 
                         }
                         AuthState.LoggedOut -> {
                                 CompactSettingsItem(
-                                        title = "登录 / 注册霖川账号",
-                                        subtitle = "登录后自动加密同步配置与话题到霖川云端",
+                                        title = "霖川账号",
+                                        subtitle = "登录后自动加密同步配置与话题",
                                         icon = Icons.Default.CloudUpload,
-                                        onClick = navigateToCloudAuth
+                                        onClick = navigateToCloudAuth,
+                                        showDivider = false,
+                                        trailingText = "未登录"
                                 )
                         }
                 }

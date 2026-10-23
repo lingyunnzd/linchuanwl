@@ -503,7 +503,7 @@
     <string name="danger_zone">Área de perigo</string>
     <string name="chat_statistics">Estatísticas do histórico de bate-papo</string>
     <string name="current_chats">Existem atualmente %1$d registros de bate-papo</string>
-    <string name="backup_location">O arquivo de backup é salvo na pasta "Downloads/Operit/backup"</string>
+    <string name="backup_location">O arquivo de backup é salvo na pasta "Downloads/霖川/backup"</string>
     <string name="faq_backup">Perguntas frequentes</string>
     <string name="history_filter_role_card">Classificado por cartão de personagem</string>
     <string name="history_filter_role_card_desc">Classificação de três níveis de cartão de personagem-pasta-conversa</string>
@@ -527,13 +527,13 @@
     <string name="install_termux_failed">A instalação do Termux falhou</string>
     <string name="open_termux">Abra o Termux</string>
     <string name="termux_setup_guide">Assistente de configuração Termux</string>
-    <string name="about_title">Sobre a Operit AI</string>
+    <string name="about_title">Sobre a 霖川 AI</string>
     <string name="about_version">Versão: %1$s</string>
-    <string name="about_description">Operit AI é um aplicativo assistente inteligente que pode ajudar os usuários a usar os dispositivos com mais eficiência, fornecendo análise de interface, diálogo de chat e outras funções.</string>
+    <string name="about_description">霖川 AI é um aplicativo assistente inteligente que pode ajudar os usuários a usar os dispositivos com mais eficiência, fornecendo análise de interface, diálogo de chat e outras funções.</string>
     <string name="about_developer">Desenvolvedor: &lt;a href="https://github.com/AAswordman"&gt;AAswordman&lt;/a&gt;</string>
     <string name="about_contact">Contate-nos: aaswordsman@foxmail.com</string>
-    <string name="about_website">&lt;a href="https://github.com/AAswordman/Operit"&gt;GitHub: https://github.com/AAswordman/Operit&lt;/a&gt;</string>
-    <string name="about_copyright">© 2025 - 2026 Operit. Todos os direitos reservados.</string>
+    <string name="about_website">&lt;a href="https://ag.linchuanwl.xyz"&gt;官网: https://ag.linchuanwl.xyz&lt;/a&gt;</string>
+    <string name="about_copyright">© 2025 - 2026 霖川. Todos os direitos reservados.</string>
     <string name="star_on_github">Clique em uma estrela no GitHub</string>
     <string name="update_log">Registro de alterações</string>
     <string name="app_logo_description">ícone do aplicativo</string>
@@ -968,13 +968,13 @@
     <string name="agreement_subtitle">Leia atentamente e concorde com os seguintes termos antes de usar.</string>
     <string name="agreement_version">Versão do acordo: %1$s</string>
     <string name="agreement_human_readable_title">Versão humana do acordo (versão não legal)</string>
-    <string name="agreement_human_readable_content">Limite do serviço: Operit não fornece serviços públicos de interação emocional antropomórfica. Operit é um cliente de código aberto que roda localmente no dispositivo do usuário. Não opera serviços de inferência de modelos, não hospeda sessões de chat ou dados de interação, e não distribui credenciais de modelo compartilhadas. Solicitações a modelos em nuvem são enviadas diretamente do seu dispositivo ao provedor de modelos que você configurar com suas próprias credenciais; os dados relacionados seguem as regras desse provedor. Modelos locais executam inferência no seu dispositivo.\n\nEste app pode chamar arquivos, terminais, automação, Root, ADB, extensões e recursos semelhantes. Verifique as operações antes de executá-las, faça backup de dados importantes e conceda permissões com cuidado. Perdas envolvendo dispositivos, dados, contas ou outros interesses causadas por ações do usuário, configuração do usuário, serviços de terceiros ou extensões de terceiros devem ser tratadas pelo operador real conforme a lei aplicável.\n\nPlugins, scripts, Skills, kits de ferramentas e outros conteúdos de terceiros no marketplace pertencem aos autores ou titulares de direitos indicados, junto com a responsabilidade relacionada. A listagem ou instalação pelo marketplace não significa que Operit garanta, endosse ou obtenha direitos sobre esse conteúdo. Confirme a licença e o status dos direitos antes de usar, modificar, publicar ou redistribuir.</string>
+    <string name="agreement_human_readable_content">Limite do serviço: 霖川 não fornece serviços públicos de interação emocional antropomórfica. 霖川 é um cliente de código aberto que roda localmente no dispositivo do usuário. Não opera serviços de inferência de modelos, não hospeda sessões de chat ou dados de interação, e não distribui credenciais de modelo compartilhadas. Solicitações a modelos em nuvem são enviadas diretamente do seu dispositivo ao provedor de modelos que você configurar com suas próprias credenciais; os dados relacionados seguem as regras desse provedor. Modelos locais executam inferência no seu dispositivo.\n\nEste app pode chamar arquivos, terminais, automação, Root, ADB, extensões e recursos semelhantes. Verifique as operações antes de executá-las, faça backup de dados importantes e conceda permissões com cuidado. Perdas envolvendo dispositivos, dados, contas ou outros interesses causadas por ações do usuário, configuração do usuário, serviços de terceiros ou extensões de terceiros devem ser tratadas pelo operador real conforme a lei aplicável.\n\nPlugins, scripts, Skills, kits de ferramentas e outros conteúdos de terceiros no marketplace pertencem aos autores ou titulares de direitos indicados, junto com a responsabilidade relacionada. A listagem ou instalação pelo marketplace não significa que 霖川 garanta, endosse ou obtenha direitos sobre esse conteúdo. Confirme a licença e o status dos direitos antes de usar, modificar, publicar ou redistribuir.</string>
     <string name="agreement_serious_title">Versão estrita do acordo legal</string>
     <string name="agreement_serious_content"><![CDATA[
-        <p><b>Contrato do Usuário e Política de Privacidade do Operit</b><br>Versão: 2026-07-15; data efetiva pretendida: 15 de julho de 2026.</p>
-        <p><b>1. Escopo e versão do contrato</b><br>Este contrato se aplica ao cliente Android lançado oficialmente pelo Operit e aos seus recursos online opcionais. Ao usar este app, você confirma que leu e aceitou a versão atual. O app registra, na inicialização, a versão do contrato que você aceitou; quando o contrato tiver atualização substancial, o app exigirá que você confirme a nova versão antes de continuar. O código aberto no repositório é licenciado sob a GNU Lesser General Public License version 3 (LGPLv3), conforme o arquivo <code>LICENSE</code> na raiz. Este contrato não exclui nem reduz direitos concedidos pela lei aplicável ou por licenças de código aberto.</p>
-        <p><b>2. Posicionamento do produto e serviços de terceiros</b><br>Operit é software cliente de código aberto. Não fornece inferência de grandes modelos de linguagem, API Keys compartilhadas, retransmissão de solicitações de chat ou hospedagem em nuvem de registros de chat. Modelos em nuvem, voz em nuvem, busca, geração de imagens, MCP e outros recursos de rede são escolhidos, configurados e ativados por você. Ao usar esses serviços, os dados são enviados diretamente ao provedor correspondente e regidos pelos termos de serviço e política de privacidade desse provedor. Você deve avaliar a segurança, legalidade e adequação de provedores, modelos, endpoints e extensões, e proteger suas credenciais.</p>
-        <p><b>3. Processamento de dados e privacidade</b><br>Registros de chat, cartões de personagem, memórias, configuração de modelos e API Keys normalmente ficam armazenados nos dados do app no seu dispositivo. Quando você exporta, faz backup, envia arquivos, usa recursos de rede de terceiros ou envia solicitações para um serviço HTTP externo, os dados relacionados serão copiados, transmitidos ou divulgados conforme suas ações. Marketplace, anúncios, verificações de atualização, login do GitHub e recursos de publicação podem acessar recursos do Operit, GitHub ou terceiros relacionados; esses recursos não retransmitem solicitações de modelos de chat. Gerencie seus dados e credenciais junto com as configurações de segurança do dispositivo, termos de terceiros e este contrato.</p>
+        <p><b>Contrato do Usuário e Política de Privacidade do 霖川</b><br>Versão: 2026-07-15; data efetiva pretendida: 15 de julho de 2026.</p>
+        <p><b>1. Escopo e versão do contrato</b><br>Este contrato se aplica ao cliente Android lançado oficialmente pelo 霖川 e aos seus recursos online opcionais. Ao usar este app, você confirma que leu e aceitou a versão atual. O app registra, na inicialização, a versão do contrato que você aceitou; quando o contrato tiver atualização substancial, o app exigirá que você confirme a nova versão antes de continuar. O código aberto no repositório é licenciado sob a GNU Lesser General Public License version 3 (LGPLv3), conforme o arquivo <code>LICENSE</code> na raiz. Este contrato não exclui nem reduz direitos concedidos pela lei aplicável ou por licenças de código aberto.</p>
+        <p><b>2. Posicionamento do produto e serviços de terceiros</b><br>霖川 é software cliente de código aberto. Não fornece inferência de grandes modelos de linguagem, API Keys compartilhadas, retransmissão de solicitações de chat ou hospedagem em nuvem de registros de chat. Modelos em nuvem, voz em nuvem, busca, geração de imagens, MCP e outros recursos de rede são escolhidos, configurados e ativados por você. Ao usar esses serviços, os dados são enviados diretamente ao provedor correspondente e regidos pelos termos de serviço e política de privacidade desse provedor. Você deve avaliar a segurança, legalidade e adequação de provedores, modelos, endpoints e extensões, e proteger suas credenciais.</p>
+        <p><b>3. Processamento de dados e privacidade</b><br>Registros de chat, cartões de personagem, memórias, configuração de modelos e API Keys normalmente ficam armazenados nos dados do app no seu dispositivo. Quando você exporta, faz backup, envia arquivos, usa recursos de rede de terceiros ou envia solicitações para um serviço HTTP externo, os dados relacionados serão copiados, transmitidos ou divulgados conforme suas ações. Marketplace, anúncios, verificações de atualização, login do GitHub e recursos de publicação podem acessar recursos do 霖川, GitHub ou terceiros relacionados; esses recursos não retransmitem solicitações de modelos de chat. Gerencie seus dados e credenciais junto com as configurações de segurança do dispositivo, termos de terceiros e este contrato.</p>
         <p><b>4. Implantação externa e responsabilidade do operador</b><br>Serviços HTTP externos, QQ Bot, resposta automática e recursos semelhantes são ativados por sua escolha. Se você os disponibilizar a outras pessoas ou ao público, você atua como implantador ou operador real e é responsável por controle de acesso, autorização de usuários, segurança de conteúdo, proteção de dados, proteção de menores, avisos necessários e outras obrigações aplicáveis. Se você fornecer continuamente ao público na China continental serviços de interação emocional que simulem traços de personalidade, padrões de pensamento ou estilos de comunicação de pessoas naturais, deve avaliar e cumprir as Medidas Provisórias para a Administração de Serviços de Interação Antropomórfica de Inteligência Artificial (《人工智能拟人化互动服务管理暂行办法》) e outras regras aplicáveis. Você não deve usar este app para fornecer a menores parentes virtuais, companheiros virtuais ou outros serviços de relacionamento íntimo virtual, induzir dependência emocional ou vício, realizar manipulação emocional ou infringir direitos e interesses legítimos de terceiros.</p>
         <p><b>5. Uso legal e responsabilidade pelo conteúdo</b><br>Você deve cumprir leis e regulamentos aplicáveis, regras de serviços de terceiros e regras de plataforma. Você não deve usar este app, extensões ou configuração para realizar atividades ilegais, infringir direitos de terceiros, acessar sistemas ou dados sem autorização, ou disseminar conteúdo ilegal ou prejudicial. Você é responsável pelo conteúdo e pela conduta que inserir, configurar, gerar, publicar, encaminhar ou operar. Saídas de IA podem conter erros, omissões ou vieses e não constituem aconselhamento médico, de crise de saúde mental, jurídico, financeiro ou outro aconselhamento profissional. Em situações urgentes de perigo, contate imediatamente serviços de emergência locais, instituições médicas ou pessoas de confiança.</p>
         <p><b>6. Software fornecido no estado em que se encontra</b><br>Na medida permitida pela lei aplicável, este software é fornecido "no estado em que se encontra" e "conforme disponível". Contribuidores não oferecem garantias expressas ou implícitas quanto à disponibilidade contínua, exatidão, segurança, comercialização, adequação a finalidade específica ou não violação do software ou de serviços de terceiros. Perdas causadas pelo uso deste software, serviços de terceiros, extensões, configuração do usuário ou modificações próprias devem ser tratadas conforme a lei aplicável e os contratos de serviço relevantes.</p>
@@ -1466,7 +1466,7 @@
     <string name="permission_guide_intro_2_title">Uma caixa de ferramentas poderosa para geeks e desenvolvedores</string>
     <string name="permission_guide_intro_2_desc">Mais de 40 ferramentas profissionais integradas, abrangendo gerenciamento de arquivos, solicitações de rede, execução de scripts e controle de sistema. Combinado com um poderoso sistema de plug-ins, você pode automatizar tarefas e obter controle profundo sobre seu dispositivo.</string>
     <string name="permission_guide_intro_3_title">Liberte a sua criatividade e esteja pronto quando precisar</string>
-    <string name="permission_guide_intro_3_desc">Esteja você projetando páginas da web, processando arquivos de mídia ou despertando a IA a qualquer momento por meio de uma janela flutuante, o Operit oferece um ambiente criativo e de assistência poderoso, flexível e seguro. Seus dados são seus para controlar.</string>
+    <string name="permission_guide_intro_3_desc">Esteja você projetando páginas da web, processando arquivos de mídia ou despertando a IA a qualquer momento por meio de uma janela flutuante, o 霖川 oferece um ambiente criativo e de assistência poderoso, flexível e seguro. Seus dados são seus para controlar.</string>
     <string name="permission_guide_intro_page_indicator">Introdução à função %1$d/%2$d</string>
     <string name="debugger_accessibility_fallback_title">Programa de Aceleração de Acessibilidade (Alto Risco)</string>
     <string name="debugger_accessibility_fallback_description">O modo de depuração executa operações de UI por meio do Shell por padrão. A ativação de serviços de acessibilidade pode acelerar bastante a automação da IU, mas aumentará significativamente o risco de ser detectado por alguns aplicativos e resultar no banimento da conta. A menos que você esteja buscando a velocidade operacional máxima, não é recomendável ligá-lo.</string>
@@ -1828,7 +1828,7 @@
     <string name="tool_user_agreement">Contrato do usuário</string>
     <string name="tool_user_agreement_desc">Veja o contrato do usuário e a política de privacidade do aplicativo</string>
     <string name="tool_default_assistant_guide">Configurações padrão do assistente</string>
-    <string name="tool_default_assistant_guide_desc">Defina a suspensão de voz do Operit como assistente padrão do sistema</string>
+    <string name="tool_default_assistant_guide_desc">Defina a suspensão de voz do 霖川 como assistente padrão do sistema</string>
     <string name="tool_terminal">terminal de comando</string>
     <string name="tool_terminal_desc">Terminal de linha de comando poderoso para executar instruções do sistema</string>
     <string name="tool_terminal_auto_config">Configuração automática do terminal</string>
@@ -2500,15 +2500,15 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="perm_desc_receive_wap_push">Permite que o aplicativo receba mensagens push WAP</string>
     <string name="perm_desc_receive_mms">Permitir que o aplicativo receba mensagens MMS</string>
     <string name="operit_terminal_wizard_title">Assistente de configuração do OperaTerminal</string>
-    <string name="operit_terminal_not_installed">OperitTerminal não está instalado</string>
-    <string name="operit_terminal_update_available">Uma atualização está disponível para o OperitTerminal</string>
-    <string name="operit_terminal_up_to_date">OperitTerminal é a versão mais recente</string>
-    <string name="operit_terminal_install_description">OperitTerminal é um poderoso aplicativo de terminal que fornece um ambiente Linux completo e funções de gerenciamento de pacotes. Precisamos instalar este aplicativo primeiro.</string>
+    <string name="operit_terminal_not_installed">霖川终端 não está instalado</string>
+    <string name="operit_terminal_update_available">Uma atualização está disponível para o 霖川终端</string>
+    <string name="operit_terminal_up_to_date">霖川终端 é a versão mais recente</string>
+    <string name="operit_terminal_install_description">霖川终端 é um poderoso aplicativo de terminal que fornece um ambiente Linux completo e funções de gerenciamento de pacotes. Precisamos instalar este aplicativo primeiro.</string>
     <string name="operit_terminal_install_button">Instale o OperaTerminal</string>
-    <string name="operit_terminal_update_description">Foi descoberta uma nova versão do OperitTerminal, recomenda-se atualizar para melhor funcionalidade e compatibilidade.</string>
+    <string name="operit_terminal_update_description">Foi descoberta uma nova versão do 霖川终端, recomenda-se atualizar para melhor funcionalidade e compatibilidade.</string>
     <string name="operit_terminal_release_notes">Descrição da atualização: %1$s</string>
     <string name="operit_terminal_update_button">Atualizar o OperaTerminal</string>
-    <string name="operit_terminal_latest_description">Parabéns! Você instalou a versão mais recente do OperitTerminal e está pronto para começar a usar seus poderosos recursos de terminal.</string>
+    <string name="operit_terminal_latest_description">Parabéns! Você instalou a versão mais recente do 霖川终端 e está pronto para começar a usar seus poderosos recursos de terminal.</string>
     <string name="operit_terminal_open_button">Abra o OperatTerminal</string>
     <string name="functional_model_config_title">Definições de configuração do modelo funcional</string>
     <string name="functional_model_config_desc">Defina configurações de modelo separadas para funções diferentes para que cada função possa usar as configurações de API mais apropriadas.</string>
@@ -3711,9 +3711,9 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="import_color_qr">Importar código multidimensional</string>
     <string name="scan_color_qr">Digitalize o código QR</string>
     <string name="tavern_json">Taverna JSON</string>
-    <string name="export_tavern_json_desc">Exporte para .json e salve em Download/Operit/exports</string>
+    <string name="export_tavern_json_desc">Exporte para .json e salve em Download/霖川/exports</string>
     <string name="tavern_png">Bar PNG</string>
-    <string name="export_tavern_png_desc">Exporte como uma imagem que pode ser importada para a taverna e salva em Download/Operit/exports</string>
+    <string name="export_tavern_png_desc">Exporte como uma imagem que pode ser importada para a taverna e salva em Download/霖川/exports</string>
     <string name="image_read_error">Não é possível ler a imagem</string>
     <string name="image_parse_error">Não foi possível analisar a imagem</string>
     <string name="color_qr_not_recognized">Incapaz de reconhecer o código multidimensional de cores</string>
@@ -3899,14 +3899,14 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="mcp_issue_body_title_install_info">## Informações de instalação</string>
     <string name="mcp_issue_body_repo_address">**Endereço do armazém:** %1$s</string>
     <string name="mcp_issue_body_title_install_method">### Método de instalação</string>
-    <string name="mcp_issue_body_install_step1">1. Clique em "Importar" na página de configuração do Operit MCP</string>
+    <string name="mcp_issue_body_install_step1">1. Clique em "Importar" na página de configuração do 霖川 MCP</string>
     <string name="mcp_issue_body_install_step2">2. Selecione "Importar do armazém"</string>
     <string name="mcp_issue_body_install_step3">3. Insira o endereço do armazém: `%1$s`</string>
     <string name="mcp_issue_body_install_step4">4. Defina o nome do plug-in e clique em Importar</string>
     <string name="mcp_issue_body_title_tech_info">## Informações Técnicas</string>
-    <string name="mcp_issue_body_tech_platform">- **Plataforma de publicação:** Operit MCP Market</string>
+    <string name="mcp_issue_body_tech_platform">- **Plataforma de publicação:** 霖川 MCP Market</string>
     <string name="mcp_issue_body_tech_publish_time">- **Tempo de lançamento:** %1$s</string>
-    <string name="mcp_issue_body_footer_note">*Este Issue é gerado automaticamente pela Operit*</string>
+    <string name="mcp_issue_body_footer_note">*Este Issue é gerado automaticamente pela 霖川*</string>
     <string name="mcp_publish_body_section_plugin_info">## 📋 Informações do plug-in</string>
     <string name="mcp_publish_body_label_description">**Descrição:** %1$s</string>
     <string name="mcp_publish_body_section_repo_info">## 🔗 Informações do armazém</string>
@@ -3914,12 +3914,12 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="mcp_publish_body_section_quick_install">## ⚡ Instalação rápida</string>
     <string name="mcp_publish_body_section_install_method">## 📦 Método de instalação</string>
     <string name="mcp_publish_body_method_repo_import_title">### Método 1: Importar do armazém</string>
-    <string name="mcp_publish_body_method_repo_import_step1">1. Abra a página de configuração do Operit MCP</string>
+    <string name="mcp_publish_body_method_repo_import_step1">1. Abra a página de configuração do 霖川 MCP</string>
     <string name="mcp_publish_body_method_repo_import_step2">2. Clique em "Importar" → "Importar do armazém"</string>
     <string name="mcp_publish_body_method_repo_import_step3">3. Insira o endereço do armazém: `%1$s`</string>
     <string name="mcp_publish_body_method_repo_import_step4">4. Configure o nome do plug-in e importe-o</string>
     <string name="mcp_publish_body_method_config_import_title">### Método 2: importação de configuração</string>
-    <string name="mcp_publish_body_method_config_import_step1">1. Abra a página de configuração do Operit MCP</string>
+    <string name="mcp_publish_body_method_config_import_step1">1. Abra a página de configuração do 霖川 MCP</string>
     <string name="mcp_publish_body_method_config_import_step2">2. Clique em "Importar" → "Importar configuração"</string>
     <string name="mcp_publish_body_method_config_import_step3">3. Cole a seguinte configuração:</string>
     <string name="mcp_publish_body_section_tech_info">## 🛠️Informações Técnicas</string>
@@ -4055,7 +4055,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="emoji_preview">Pré-visualização da expressão</string>
     <string name="create_group">Criar grupo</string>
     <string name="custom">Personalizar</string>
-    <string name="voice_assistant_widget_description">Inicie rapidamente o assistente de voz Operit</string>
+    <string name="voice_assistant_widget_description">Inicie rapidamente o assistente de voz 霖川</string>
     <string name="voice_assistant_widget_title">assistente de voz</string>
     <string name="screen_title_mnn_model_download">Download do modelo MNN</string>
     <string name="mnn_model_download">Baixe o modelo MNN</string>
@@ -4167,18 +4167,18 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="time_hours_ago">%1$d horas atrás</string>
     <string name="time_days_ago">%1$d dias atrás</string>
     <string name="default_assistant_guide_title">Defina seu assistente de voz padrão</string>
-    <string name="default_assistant_guide_subtitle">Deixe Operit ser seu assistente inteligente</string>
-    <string name="default_assistant_guide_intro">Depois de definir o Operit como o assistente padrão do sistema, você pode iniciar rapidamente o assistente de voz Operit pressionando longamente o botão Home ou usando a ativação por voz para uma experiência de interação de IA mais conveniente.</string>
+    <string name="default_assistant_guide_subtitle">Deixe 霖川 ser seu assistente inteligente</string>
+    <string name="default_assistant_guide_intro">Depois de definir o 霖川 como o assistente padrão do sistema, você pode iniciar rapidamente o assistente de voz 霖川 pressionando longamente o botão Home ou usando a ativação por voz para uma experiência de interação de IA mais conveniente.</string>
     <string name="default_assistant_guide_steps_title">Etapas de configuração</string>
     <string name="default_assistant_guide_step1_title">Definir como assistente padrão</string>
-    <string name="default_assistant_guide_step1_desc">Defina o Operit como o aplicativo de assistente digital padrão do seu sistema</string>
+    <string name="default_assistant_guide_step1_desc">Defina o 霖川 como o aplicativo de assistente digital padrão do seu sistema</string>
     <string name="default_assistant_guide_step1_detail1">• Abra Configurações do sistema → Aplicativos → Aplicativos padrão → Aplicativo Assistente Digital</string>
-    <string name="default_assistant_guide_step1_detail2">• Encontre e selecione "Operit AI" na lista de aplicativos assistentes</string>
+    <string name="default_assistant_guide_step1_detail2">• Encontre e selecione "霖川 AI" na lista de aplicativos assistentes</string>
     <string name="default_assistant_guide_step1_detail_android12">Android 12+: Configurações → Aplicativos → Aplicativos padrão → Aplicativo Digital Assistant → Aplicativo Digital Assistant padrão</string>
     <string name="default_assistant_guide_open_settings">Abra as configurações do assistente</string>
     <string name="default_assistant_guide_open_gesture_settings">Abrir configurações de gestos</string>
     <string name="default_assistant_guide_step2_title">Configurar gestos de inicialização</string>
-    <string name="default_assistant_guide_step2_desc">Defina como ativar rapidamente o Operit Assistant</string>
+    <string name="default_assistant_guide_step2_desc">Defina como ativar rapidamente o 霖川 Assistant</string>
     <string name="default_assistant_guide_step2_detail1">• Pressionar longamente o botão Início: o método mais comum, disponível na maioria dos dispositivos</string>
     <string name="default_assistant_guide_step2_detail2">• Deslize de baixo para cima na tela: alguns dispositivos suportam gestos em tela cheia</string>
     <string name="default_assistant_guide_step2_detail_android12">Android 12+: Configurações → Aplicativos → Aplicativos padrão → Aplicativo Digital Assistant → Aplicativo Digital Assistant padrão</string>
@@ -4186,15 +4186,15 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="default_assistant_guide_step2_note">Nota: As configurações de gestos podem variar entre diferentes marcas de celulares, verifique as opções disponíveis nas configurações do sistema</string>
     <string name="default_assistant_guide_step4_title">Teste seu assistente de voz</string>
     <string name="default_assistant_guide_step4_desc">Depois que a configuração for concluída, teste se ele pode iniciar normalmente</string>
-    <string name="default_assistant_guide_step4_detail1">• Um toque longo no botão Home deve abrir o assistente de voz Operit</string>
-    <string name="default_assistant_guide_step4_detail2">• Se o dispositivo suportar ativação por voz, dizer "Ok Google" ou a palavra de ativação especificada pelo dispositivo também poderá acionar o Operit</string>
+    <string name="default_assistant_guide_step4_detail1">• Um toque longo no botão Home deve abrir o assistente de voz 霖川</string>
+    <string name="default_assistant_guide_step4_detail2">• Se o dispositivo suportar ativação por voz, dizer "Ok Google" ou a palavra de ativação especificada pelo dispositivo também poderá acionar o 霖川</string>
     <string name="default_assistant_guide_step3_title">Funcionalidade do assistente de teste</string>
-    <string name="default_assistant_guide_step3_desc">Depois de concluir a configuração, teste se o Operit pode ser despertado normalmente</string>
+    <string name="default_assistant_guide_step3_desc">Depois de concluir a configuração, teste se o 霖川 pode ser despertado normalmente</string>
     <string name="default_assistant_guide_step3_detail1">• Use um gesto que você definir (como um toque longo no botão Início) para invocar o Assistente</string>
-    <string name="default_assistant_guide_step3_detail2">• Se for bem-sucedido, você deverá ver a interface do assistente de voz do Operit</string>
+    <string name="default_assistant_guide_step3_detail2">• Se for bem-sucedido, você deverá ver a interface do assistente de voz do 霖川</string>
     <string name="default_assistant_guide_step3_detail3">• Você pode tentar falar ou digitar para interagir com o assistente</string>
     <string name="default_assistant_guide_troubleshooting_title">Está com algum problema?</string>
-    <string name="default_assistant_guide_troubleshooting_content">Se você não encontrar o Operit na lista, verifique se:\n\n• O aplicativo está instalado corretamente e não foi desativado\n• As permissões necessárias (microfone, janela flutuante etc.) foram concedidas\n• Tente reiniciar o dispositivo e configurá-lo novamente\n\n Alguns sistemas de personalização podem restringir aplicativos de terceiros como assistente padrão. Nesse caso, você ainda pode usar o Operit por meio da função de janela flutuante dentro do aplicativo.</string>
+    <string name="default_assistant_guide_troubleshooting_content">Se você não encontrar o 霖川 na lista, verifique se:\n\n• O aplicativo está instalado corretamente e não foi desativado\n• As permissões necessárias (microfone, janela flutuante etc.) foram concedidas\n• Tente reiniciar o dispositivo e configurá-lo novamente\n\n Alguns sistemas de personalização podem restringir aplicativos de terceiros como assistente padrão. Nesse caso, você ainda pode usar o 霖川 por meio da função de janela flutuante dentro do aplicativo.</string>
     <string name="voice_interaction_service_name">Assistente Operat AI</string>
     <string name="voice_interaction_service_summary">Serviço de assistente de voz inteligente</string>
     <string name="tool_permissions_title">Permissões de ferramentas</string>
@@ -4490,7 +4490,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="backup_memory_count">entrada de memória</string>
     <string name="backup_memory_link_count">associação de memória</string>
     <string name="backup_files_statistics">Estatísticas de arquivo de backup</string>
-    <string name="backup_files_statistics_subtitle">Arquivos de backup no diretório de exportação do Operit</string>
+    <string name="backup_files_statistics_subtitle">Arquivos de backup no diretório de exportação do 霖川</string>
     <string name="backup_refresh">atualizar</string>
     <string name="backup_scanning">Digitalizando</string>
     <string name="backup_chat_files">Histórico de bate-papo</string>
@@ -4524,7 +4524,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="backup_room_db_restart_later">mais tarde</string>
     <string name="backup_room_db_last_success">Último backup bem-sucedido: %1$s</string>
     <string name="backup_room_db_last_error">Último erro: %1$s</string>
-    <string name="backup_files_location_hint">提示：备份文件保存在 Download/Operit 文件夹</string>
+    <string name="backup_files_location_hint">提示：备份文件保存在 Download/霖川 文件夹</string>
     <string name="backup_raw_snapshot_title">Backup de instantâneo de arquivo (experimental)</string>
     <string name="backup_raw_snapshot_subtitle">Backup e recuperação compactados gerais em unidades de arquivos/diretórios</string>
     <string name="backup_raw_snapshot_desc">Arquivos/shared_prefs/datastore/databases no diretório de dados interno do aplicativo serão empacotados (o ambiente do terminal Linux é muito grande e não tem backup por padrão). A restauração substituirá os dados atuais e exigirá a reinicialização do aplicativo para ter efeito. Alguns dados criptografados podem não estar disponíveis após alterar/reinstalar o dispositivo.</string>
@@ -4578,7 +4578,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="backup_faq_why">Por que fazer backup de dados?</string>
     <string name="backup_faq_why_answer">Fazer backup do seu histórico de bate-papo pode evitar que seu conteúdo importante seja perdido quando aplicativos são desinstalados ou dados são perdidos. Backups regulares são um bom hábito!</string>
     <string name="backup_faq_where">Onde os arquivos exportados são salvos?</string>
-    <string name="backup_faq_where_answer">O arquivo de backup exportado será salvo na pasta "Downloads/Operit" do seu telefone. O nome do arquivo contém o tipo de dados exportados, data e hora.</string>
+    <string name="backup_faq_where_answer">O arquivo de backup exportado será salvo na pasta "Downloads/霖川" do seu telefone. O nome do arquivo contém o tipo de dados exportados, data e hora.</string>
     <string name="backup_faq_duplicate">Os dados duplicados aparecerão após a importação?</string>
     <string name="backup_faq_duplicate_answer">O sistema julgará com base no ID do registro, e os registros com o mesmo ID serão atualizados em vez de serem importados repetidamente. Registros com IDs diferentes serão adicionados como novos registros.</string>
     <string name="backup_select_export_format">Selecione o formato de exportação</string>
@@ -4607,7 +4607,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="backup_export_result_success">Exportado com sucesso para: %1$s</string>
     <string name="backup_character_cards_title">cartão de personagem</string>
     <string name="backup_character_cards_subtitle">Fazendo backup e restaurando configurações de cartões de personagem</string>
-    <string name="backup_character_cards_current_count">Atualmente existem %1$d cartas de personagem no total. O arquivo exportado será salvo na pasta "Downloads/Operit".</string>
+    <string name="backup_character_cards_current_count">Atualmente existem %1$d cartas de personagem no total. O arquivo exportado será salvo na pasta "Downloads/霖川".</string>
     <string name="backup_character_card_count">cartão de personagem</string>
     <string name="backup_character_card_files">cartão de personagem</string>
     <string name="backup_character_cards_export_result_success">%1$d cartões de personagem foram exportados com sucesso para:\n%2$s</string>
@@ -5096,14 +5096,14 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="skill_publish_body_section_repo_info">## 🔗 Informações do armazém</string>
     <string name="skill_publish_body_label_repo_url">**Endereço do armazém:** %1$s</string>
     <string name="skill_publish_body_section_install_method">## 📦 Método de instalação</string>
-    <string name="skill_publish_body_install_step1">1. Abra Operit → Gerenciamento de Pacotes → Habilidades</string>
+    <string name="skill_publish_body_install_step1">1. Abra 霖川 → Gerenciamento de Pacotes → Habilidades</string>
     <string name="skill_publish_body_install_step2">2. Clique em "Importar Habilidade" → "Importar do Armazém"</string>
     <string name="skill_publish_body_install_step3">3. Insira o endereço do armazém: `%1$s`</string>
     <string name="skill_publish_body_install_step4">4. Confirme a importação</string>
     <string name="skill_publish_body_section_tech_info">## 🛠️Informações Técnicas</string>
     <string name="skill_publish_body_table_header">| item | valor |</string>
     <string name="skill_publish_body_table_separator" />
-    <string name="skill_publish_body_table_row_platform">| Plataforma de publicação | Mercado de habilidades Operit |</string>
+    <string name="skill_publish_body_table_row_platform">| Plataforma de publicação | Mercado de habilidades 霖川 |</string>
     <string name="skill_publish_body_table_row_parser_version">| Versão de análise | 1,0 |</string>
     <string name="skill_publish_body_table_row_publish_time">| Tempo de lançamento | %1$s |</string>
     <string name="model_param_max_tokens">Número máximo de tokens gerados</string>
@@ -5540,7 +5540,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="demo_cmd_list_activities">Ver atividades ativas</string>
     <string name="demo_cmd_list_services">Listar serviços do sistema</string>
     <string name="demo_cmd_check_resolution">Verifique a resolução da tela</string>
-    <string name="demo_cmd_echo_hello">PrintHello OperitTerminal</string>
+    <string name="demo_cmd_echo_hello">PrintHello 霖川终端</string>
     <string name="demo_cmd_list_files">Listar arquivos e diretórios</string>
     <string name="demo_cmd_show_user">Mostrar usuário atual</string>
     <string name="demo_cmd_update_package_manager">Atualizar gerenciador de pacotes (Ubuntu)</string>
@@ -6032,10 +6032,10 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="service_chat_complete_reminder_sound">Lembrete de conclusão de conversa (som de bipe)</string>
     <string name="service_chat_complete_reminder_vibration">Lembrete de conclusão de conversa (vibração)</string>
     <string name="service_chat_complete_reminder_sound_vibration">Lembrete de conclusão de conversa (bipe e vibração)</string>
-    <string name="service_keep_background">Mantenha o Operit rodando em segundo plano.</string>
+    <string name="service_keep_background">Mantenha o 霖川 rodando em segundo plano.</string>
     <string name="service_notify_when_complete">Lembrá-lo quando a conversa for concluída.</string>
-    <string name="service_running_wake_pause">Operit está em execução (pausa de ativação)</string>
-    <string name="service_running_wake_listening">Operit está rodando (acordando e ouvindo)</string>
+    <string name="service_running_wake_pause">霖川 está em execução (pausa de ativação)</string>
+    <string name="service_running_wake_listening">霖川 está rodando (acordando e ouvindo)</string>
     <string name="service_running_stats">Executar sessão %1$d · Invocar ferramenta %2$d</string>
     <string name="service_running_http_listening">Escuta HTTP externa na porta %1$d</string>
     <string name="service_running_with_http">%1$s · HTTP externo %2$d</string>
@@ -6076,7 +6076,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="html_export_updated">renovar</string>
     <string name="html_export_group">Grupo</string>
     <string name="html_export_message_count">Número de mensagens</string>
-    <string name="html_export_footer">Exportado do Operit AI Assistant</string>
+    <string name="html_export_footer">Exportado do 霖川 AI</string>
     <string name="mnn_no_cache_data">Nenhum dado em cache</string>
     <string name="mnn_response_empty">O corpo da resposta está vazio</string>
     <string name="mnn_fetch_repo_files_failed">Falha ao obter a lista de arquivos do warehouse: %1$s</string>
@@ -6545,7 +6545,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="screen_title_market">Mercado</string>
     <string name="screen_title_artifact_manage">Gerenciar Scripts e Pacotes</string>
     <string name="screen_title_artifact_publish">Publicar Script ou Pacote</string>
-    <string name="artifact_publish_info_description">O item será enviado primeiro para seu repositório de publicação OperitForge e, em seguida, registrado automaticamente no mercado de scripts ou de pacotes, de acordo com o tipo. Verifique se o conteúdo, a versão e o intervalo de compatibilidade estão corretos.</string>
+    <string name="artifact_publish_info_description">O item será enviado primeiro para seu repositório de publicação 霖川Forge e, em seguida, registrado automaticamente no mercado de scripts ou de pacotes, de acordo com o tipo. Verifique se o conteúdo, a versão e o intervalo de compatibilidade estão corretos.</string>
     <string name="artifact_edit_info_description">Você está editando as informações de um item já publicado. Após a atualização, os metadados da Issue correspondente no repositório do mercado serão substituídos.</string>
     <string name="need_login_before_publish_artifact">É necessário fazer login no GitHub antes de publicar.</string>
     <string name="local_artifact_entry">Item local</string>
@@ -6564,10 +6564,10 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="publish_failed_title">Falha na publicação</string>
     <string name="retry_market_registration">Tentar novamente o registro no mercado</string>
     <string name="update_to_market">Atualizar no mercado</string>
-    <string name="create_operit_forge_title">Criar OperitForge?</string>
-    <string name="create_operit_forge_message">Esta é a sua primeira publicação direta. O Operit precisa criar o repositório público `OperitForge` na sua conta do GitHub.</string>
+    <string name="create_operit_forge_title">Criar 霖川Forge?</string>
+    <string name="create_operit_forge_message">Esta é a sua primeira publicação direta. O 霖川 precisa criar o repositório público `霖川Forge` na sua conta do GitHub.</string>
     <string name="confirm_create_public_forge_title">Confirmar criação do repositório público</string>
-    <string name="confirm_create_public_forge_message">Confirme novamente: agora será criado o repositório público `OperitForge`. Publicações futuras reutilizarão este repositório.</string>
+    <string name="confirm_create_public_forge_message">Confirme novamente: agora será criado o repositório público `霖川Forge`. Publicações futuras reutilizarão este repositório.</string>
     <string name="create_and_publish">Criar e publicar</string>
     <string name="artifact_type_script">Script</string>
     <string name="artifact_type_package">Pacote</string>
@@ -6700,9 +6700,9 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="invalid_artifact_metadata">Os metadados deste item do mercado são inválidos e não é possível exibir os detalhes.</string>
     <string name="confirm_remove_script_from_market">Tem certeza de que deseja remover o script "%1$s" do mercado? Esta ação fechará a Issue correspondente, mas não excluirá seu repositório de publicação.</string>
     <string name="confirm_remove_package_from_market">Tem certeza de que deseja remover o pacote "%1$s" do mercado? Esta ação fechará a Issue correspondente, mas não excluirá seu repositório de publicação.</string>
-    <string name="script_publish_info_description">O script será primeiro enviado para seu próprio repositório de publicação no OperitForge e, em seguida, os metadados serão registrados no OperitScriptMarket. Verifique se o conteúdo, a versão e a descrição do script estão corretos.</string>
+    <string name="script_publish_info_description">O script será primeiro enviado para seu próprio repositório de publicação no 霖川Forge e, em seguida, os metadados serão registrados no 霖川ScriptMarket. Verifique se o conteúdo, a versão e a descrição do script estão corretos.</string>
     <string name="script_edit_info_description">Você está editando as informações de um script já publicado. Após a atualização, os metadados da Issue correspondente no repositório do mercado serão substituídos.</string>
-    <string name="package_publish_info_description">O pacote será primeiro enviado para seu próprio repositório de publicação no OperitForge e, em seguida, os metadados serão registrados no OperitPackageMarket. Verifique se o conteúdo, a versão e a descrição do pacote estão corretos.</string>
+    <string name="package_publish_info_description">O pacote será primeiro enviado para seu próprio repositório de publicação no 霖川Forge e, em seguida, os metadados serão registrados no 霖川PackageMarket. Verifique se o conteúdo, a versão e a descrição do pacote estão corretos.</string>
     <string name="package_edit_info_description">Você está editando as informações de um pacote já publicado. Após a atualização, os metadados da Issue correspondente no repositório do mercado serão substituídos.</string>
     <string name="script_publish_success_message">Seu script foi publicado com sucesso no mercado.</string>
     <string name="script_update_success_message">As informações do seu script foram atualizadas com sucesso.</string>
@@ -6761,7 +6761,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="chat_message_token_speed_compact">%1$s t/s</string>
     <string name="software_identity_title">Identidade do software</string>
     <string name="software_identity_description">Altera a identidade do software exibida no topo da barra lateral.</string>
-    <string name="software_identity_option_operit">Operit AI</string>
+    <string name="software_identity_option_operit">霖川 AI</string>
     <string name="software_identity_option_lingshu">Lingshu AI</string>
     <string name="hide_runtime_task_view">Ocultar visualização de tarefa em execução</string>
     <string name="hide_runtime_task_view_description">Quando a IA está processando mensagens ou executando ferramentas, oculta o cartão de tarefa do aplicativo da lista de tarefas recentes do sistema, evitando que seja fechado acidentalmente ao deslizar.</string>
@@ -7017,7 +7017,7 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="artifact_publish_normalized_id_exists">O ID normalizado do mercado «%1$s» já existe.</string>
     <string name="artifact_publish_identity_conflict_message">%1$s. Se esta for uma nova versão, clique no botão "Publicar versão de atualização" na página do plugin correspondente, em vez de republicar um novo plugin.</string>
     <string name="artifact_publish_stage_validating">Validando itens locais</string>
-    <string name="artifact_publish_stage_ensuring_repo">Verificando repositório OperitForge</string>
+    <string name="artifact_publish_stage_ensuring_repo">Verificando repositório 霖川Forge</string>
     <string name="artifact_publish_stage_creating_release">Criando ou atualizando GitHub Release</string>
     <string name="artifact_publish_stage_uploading_asset">Enviando recurso de publicação</string>
     <string name="artifact_publish_stage_registering_market">Registrando item no mercado</string>
@@ -7116,11 +7116,11 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="artifact_project_node_selection_hint">Clique no nó para selecionar, clique novamente para cancelar.</string>
     <string name="plugin_creation_fresh_task_line">Ative o operit editor e use o kit de desenvolvimento sandbox para desenvolver um novo pacote sandbox.</string>
     <string name="plugin_creation_fresh_package_rule_line">Primeiro, determine o ID do novo pacote sandbox e não o renomeie depois.</string>
-    <string name="plugin_creation_fresh_dev_directory_line">O diretório de desenvolvimento é fixo em Download/Operit/dev_package/ID definido. Desenvolvimento, instalação e teste são feitos apenas aqui.</string>
+    <string name="plugin_creation_fresh_dev_directory_line">O diretório de desenvolvimento é fixo em Download/霖川/dev_package/ID definido. Desenvolvimento, instalação e teste são feitos apenas aqui.</string>
     <string name="plugin_creation_continue_task_line">Ative o operit editor, localize o pacote sandbox %1$s e continue o desenvolvimento e teste com base nesta versão.</string>
     <string name="plugin_creation_merge_task_line">Ative o operit editor, localize o pacote sandbox %1$s e faça o desenvolvimento de mesclagem e teste com base nesta versão.</string>
     <string name="plugin_creation_existing_package_rule_line">O ID do pacote sandbox atual é %1$s. O ID do pacote e o nome do plugin devem ser mantidos, não renomeie nem crie um novo pacote.</string>
-    <string name="plugin_creation_existing_dev_directory_line">O diretório de desenvolvimento é fixo em Download/Operit/dev_package/%1$s. Desenvolvimento, instalação e teste são feitos apenas aqui.</string>
+    <string name="plugin_creation_existing_dev_directory_line">O diretório de desenvolvimento é fixo em Download/霖川/dev_package/%1$s. Desenvolvimento, instalação e teste são feitos apenas aqui.</string>
     <string name="plugin_creation_update_sandbox_package_dev">Primeiro, atualize o SandboxPackage_DEV.</string>
     <string name="plugin_creation_copy_types_to_dev_dir">Copie os types de skills para o diretório de desenvolvimento, substituindo os existentes.</string>
     <string name="plugin_creation_use_terminal_ts_js_hint">Use o terminal sempre que possível, priorize escrever ts e js, depois compile para o js final. Consulte os exemplos para tsconfig.</string>
@@ -7147,8 +7147,8 @@ Agora é possível usar o modo AutoGLM na interface de diálogo.</string>
     <string name="market_review_step_scheduled">Agendado</string>
     <string name="market_review_step_unlisted">Não listado</string>
     <string name="artifact_publish_stage_resolving_release_asset">Verificando ativos do GitHub Release</string>
-    <string name="operit2_version_warning_title">Confirmar suporte ao Operit 2?</string>
-    <string name="operit2_version_warning_message">Isso permitirá que o Operit 2 use este plugin. Certifique-se de que o plugin funciona corretamente no Operit 2.</string>
+    <string name="operit2_version_warning_title">Confirmar suporte ao 霖川 2?</string>
+    <string name="operit2_version_warning_message">Isso permitirá que o 霖川 2 use este plugin. Certifique-se de que o plugin funciona corretamente no 霖川 2.</string>
     <string name="market_filter_featured_only">Destaques</string>
     <string name="market_detail_deleting_comment">Excluindo comentário</string>
     <string name="market_detail_deleting_comment_message">Aguarde, sincronizando com o servidor...</string>

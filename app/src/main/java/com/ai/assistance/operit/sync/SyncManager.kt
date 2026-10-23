@@ -154,11 +154,11 @@ object SyncManager {
         prefs.edit()
             .putString(KEY_ACCESS_TOKEN, resp.accessToken)
             .putString(KEY_REFRESH_TOKEN, resp.refreshToken)
-            .putString(KEY_USER_ID, resp.user.id)
+            .putString(KEY_USER_ID, resp.user.idText)
             .putString(KEY_USERNAME, resp.user.username)
             .putString(KEY_PBKDF2_SALT, pbkdf2Salt)
             .apply()
-        _state.value = AuthState.LoggedIn(resp.user.id, resp.user.username)
+        _state.value = AuthState.LoggedIn(resp.user.idText, resp.user.username)
         cachedKey = null // 清除缓存，下次 pull/push 前需要 re-derive
     }
 

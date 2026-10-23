@@ -1,4 +1,4 @@
-import java.io.File
+﻿import java.io.File
 import java.io.FileInputStream
 import java.net.HttpURLConnection
 import java.net.URI
@@ -397,8 +397,8 @@ android {
         applicationId = "com.ai.assistance.operit"
         minSdk = 26
         targetSdk = 34
-        versionCode = 51
-        versionName = "1.12.2"
+        versionCode = 52
+        versionName = "1.12.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -843,3 +843,4 @@ dependencies {
     implementation(libs.glance.appwidget)
     implementation(libs.glance.material3)
 }
+

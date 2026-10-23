@@ -4,12 +4,16 @@ import android.util.Patterns
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.EaseInOutCubic
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,22 +25,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,17 +47,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ai.assistance.operit.sync.AuthState
@@ -71,17 +72,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * 霖川云服务 · Telegram 风格登录/注册页
+ * 霖川云服务 · 登录 / 注册
  *
- * 多步骤流程（AnimatedContent 滑动过渡）：
- *   步骤 1 — 邮箱（输入邮箱，自动取 @ 前缀当 username）
- *   步骤 2 — 验证码（6 格独立格子 + 翻转动画 + 60s 重发倒计时）
- *   步骤 3 — 密码（注册时有确认密码；登录时只有一个密码）
- *
- * 优雅降级：后端未实现 send-code/verify-code 端点（404）时自动跳过验证步骤。
- * 后端加端点后无需改 UI 代码即可生效。
+ * 视觉规范：纯色底、单层标题栏（外层导航已提供返回）、字段聚焦描边、分步横向滑动。
+ * 流程：邮箱 → 邮箱验证码 → 密码（注册时含确认密码）。
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CloudAuthScreen(onGoBack: () -> Unit) {
     val scope = rememberCoroutineScope()
@@ -101,14 +96,12 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
     var busy by remember { mutableStateOf(false) }
     var errorText by remember { mutableStateOf<String?>(null) }
     var successText by remember { mutableStateOf<String?>(null) }
-    var verificationSupported by remember { mutableStateOf(true) } // 后端是否支持验证码
+    var verificationSupported by remember { mutableStateOf(true) }
     var codeSent by remember { mutableStateOf(false) }
     var countdown by remember { mutableIntStateOf(0) }
     var countdownJob by remember { mutableStateOf<Job?>(null) }
 
-    val telegramBlue = Color(0xFF2AABEE)
-    val telegramBlueDark = Color(0xFF229ED9)
-
+    val cs = MaterialTheme.colorScheme
     val emailValid = Patterns.EMAIL_ADDRESS.matcher(email.text.trim()).matches()
     val passwordValid = password.length >= 6
     val confirmValid = confirmPassword.isEmpty() || confirmPassword == password
@@ -117,387 +110,525 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
         Step.EMAIL -> emailValid
         Step.CODE -> code.length == 6 || !verificationSupported
         Step.PASSWORD -> passwordValid && (mode != AuthMode.REGISTER || confirmValid)
-        else -> false
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = when (step) {
-                            Step.EMAIL -> if (mode == AuthMode.REGISTER) "注册霖川账号" else "登录霖川账号"
-                            Step.CODE -> "输入验证码"
-                            Step.PASSWORD -> if (mode == AuthMode.REGISTER) "设置密码" else "输入密码"
-                            else -> ""
-                        },
-                        color = Color.White
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        if (step > Step.EMAIL) {
-                            step = when (step) {
-                                Step.PASSWORD -> Step.CODE
-                                Step.CODE -> Step.EMAIL
-                                else -> Step.EMAIL
-                            }
-                        } else onGoBack()
-                    }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回", tint = Color.White)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = telegramBlue)
-            )
-        }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Brush.verticalGradient(listOf(telegramBlue, telegramBlueDark)))
-                .padding(padding)
-        ) {
-            AnimatedContent(
-                targetState = step,
-                transitionSpec = {
-                    val forward = targetState > initialState
-                    val slideDir = if (forward) AnimatedContentTransitionScope.SlideDirection.Left
-                    else AnimatedContentTransitionScope.SlideDirection.Right
-                    slideIntoContainer(
-                        towards = slideDir,
-                        animationSpec = tween(300, easing = EaseInOutCubic)
-                    ).togetherWith(
-                        slideOutOfContainer(
-                            towards = slideDir,
-                            animationSpec = tween(300, easing = EaseInOutCubic)
-                        )
-                    )
-                },
-                contentAlignment = Alignment.Center,
-                label = "auth-steps"
-            ) { currentStep ->
-                Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(cs.surface)
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 26.dp)
+    ) {
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // 步骤回退（页面级返回由外层导航提供，避免双层返回栏）
+        Box(modifier = Modifier.height(34.dp), contentAlignment = Alignment.CenterStart) {
+            if (step != Step.EMAIL) {
+                Text(
+                    text = "← 上一步",
+                    color = cs.primary,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Medium,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 28.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    when (currentStep) {
-                        Step.EMAIL -> EmailStep(
-                            mode = mode,
-                            email = email.text,
-                            onEmailChange = { email = TextFieldValue(it) },
-                            onSwitchMode = {
-                                mode = if (mode == AuthMode.LOGIN) AuthMode.REGISTER else AuthMode.LOGIN
-                                errorText = null
-                            },
-                            busy = busy
+                        .clickable {
+                            if (busy) return@clickable
+                            errorText = null
+                            step = when (step) {
+                                Step.PASSWORD -> if (codeSent) Step.CODE else Step.EMAIL
+                                Step.CODE -> Step.EMAIL
+                                Step.EMAIL -> Step.EMAIL
+                            }
+                        }
+                        .padding(vertical = 6.dp, horizontal = 2.dp)
+                )
+            }
+        }
+
+        // 品牌标识
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            BrandMark(size = 64)
+        }
+        Spacer(modifier = Modifier.height(18.dp))
+
+        Text(
+            text = when (step) {
+                Step.EMAIL -> if (mode == AuthMode.REGISTER) "注册霖川账号" else "登录霖川账号"
+                Step.CODE -> "输入验证码"
+                Step.PASSWORD -> if (mode == AuthMode.REGISTER) "设置同步密码" else "输入密码"
+            },
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = cs.onSurface,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = when (step) {
+                Step.EMAIL ->
+                    if (mode == AuthMode.REGISTER) "使用邮箱注册，配置与对话记录将在设备之间加密同步。"
+                    else "使用已注册邮箱登录，继续同步你的配置与对话。"
+                Step.CODE -> "6 位验证码已发送至 ${email.text.trim().lowercase()}"
+                Step.PASSWORD -> "密码用于派生加密密钥，服务端全程无法解密你的数据。"
+            },
+            fontSize = 12.5.sp,
+            color = cs.onSurfaceVariant,
+            lineHeight = 20.sp,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(22.dp))
+
+        AnimatedContent(
+            targetState = step,
+            transitionSpec = {
+                val forward = targetState.ordinal > initialState.ordinal
+                val dir = if (forward) AnimatedContentTransitionScope.SlideDirection.Left
+                else AnimatedContentTransitionScope.SlideDirection.Right
+                slideIntoContainer(towards = dir, animationSpec = tween(320, easing = EaseInOutCubic))
+                    .togetherWith(
+                        slideOutOfContainer(towards = dir, animationSpec = tween(320, easing = EaseInOutCubic))
+                    )
+            },
+            label = "auth-steps"
+        ) { currentStep ->
+            Column(modifier = Modifier.fillMaxWidth()) {
+                when (currentStep) {
+                    Step.EMAIL -> {
+                        FieldLabel("邮箱地址")
+                        BrandTextField(
+                            value = email.text,
+                            onValueChange = { email = TextFieldValue(it.trim().lowercase()); errorText = null },
+                            placeholder = "you@example.com",
+                            keyboardType = KeyboardType.Email,
+                            enabled = !busy
                         )
-                        Step.CODE -> CodeStep(
+                        Spacer(modifier = Modifier.height(7.dp))
+                        HelperText("该邮箱将作为账号，验证码会发送到这里。")
+                    }
+                    Step.CODE -> {
+                        FieldLabel("验证码")
+                        CodeCells(
                             code = code,
                             focused = codeFocused,
                             onCodeChange = { code = it; errorText = null },
-                            onFocusChange = { codeFocused = it },
-                            countdown = countdown,
-                            onResend = {
-                                scope.launch {
-                                    busy = true
-                                    SyncManager.sendCode(email.text.trim().lowercase(), if (mode == AuthMode.REGISTER) "register" else "login")
-                                        .fold(
-                                            onSuccess = { res ->
-                                                when (res) {
-                                                    is CodeSendResult.Sent -> {
-                                                        codeSent = true
-                                                        startCountdown { countdown = it; if (it == 0) countdownJob = null }
-                                                        countdown = 60
-                                                        errorText = null
-                                                    }
-                                                    is CodeSendResult.NotSupported -> {
-                                                        verificationSupported = false
-                                                        step = Step.PASSWORD // 自动跳到密码步
-                                                    }
-                                                }
+                            onFocusChange = { codeFocused = it }
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = if (countdown > 0) "重新发送需等待 $countdown 秒" else "未收到？可重新发送",
+                                fontSize = 11.5.sp,
+                                color = cs.onSurfaceVariant
+                            )
+                            Text(
+                                text = "重新发送",
+                                fontSize = 11.5.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                color = if (countdown == 0) cs.primary else cs.onSurfaceVariant.copy(alpha = 0.5f),
+                                modifier = Modifier.clickable(enabled = countdown == 0) {
+                                    if (countdown != 0 || busy) return@clickable
+                                    scope.launch {
+                                        val cleanEmail = email.text.trim().lowercase()
+                                        SyncManager.sendCode(
+                                            cleanEmail,
+                                            if (mode == AuthMode.REGISTER) "register" else "login"
+                                        ).fold(
+                                            onSuccess = {
+                                                codeSent = true
+                                                startCountdown { countdown = it; if (it == 0) countdownJob = null }
+                                                countdown = 60
+                                                errorText = null
                                             },
                                             onFailure = { errorText = "验证码发送失败，请稍后重试" }
                                         )
-                                    busy = false
-                                }
-                            }
-                        )
-                        Step.PASSWORD -> PasswordStep(
-                            mode = mode,
-                            password = password,
-                            confirmPassword = confirmPassword,
-                            onPasswordChange = { password = it },
-                            onConfirmChange = { confirmPassword = it }
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(36.dp))
-
-                    // 错误/成功提示
-                    if (errorText != null) {
-                        Text(text = errorText!!, color = Color(0xFFFFDAD6), style = MaterialTheme.typography.bodyMedium)
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
-                    if (successText != null) {
-                        Text(text = successText!!, color = Color(0xFFC8FFD4), style = MaterialTheme.typography.bodyMedium)
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
-
-                    // 主按钮
-                    Button(
-                        onClick = {
-                            scope.launch {
-                                busy = true
-                                errorText = null
-                                val cleanEmail = email.text.trim().lowercase()
-                                val username = cleanEmail.substringBefore("@")
-
-                                when (step) {
-                                    Step.EMAIL -> {
-                                        // 触发 send-code → 等结果后自动判断是否要跳 CODE 步还是 PASSWORD 步
-                                        SyncManager.sendCode(cleanEmail, if (mode == AuthMode.REGISTER) "register" else "login")
-                                            .fold(
-                                                onSuccess = { res ->
-                                                    when (res) {
-                                                        is CodeSendResult.Sent -> {
-                                                            codeSent = true
-                                                            startCountdown { countdown = it; if (it == 0) countdownJob = null }
-                                                            countdown = 60
-                                                            step = Step.CODE
-                                                        }
-                                                        is CodeSendResult.NotSupported -> {
-                                                            verificationSupported = false
-                                                            step = Step.PASSWORD
-                                                        }
-                                                    }
-                                                },
-                                                onFailure = { errorText = shortenBackendError(it.message ?: "发送失败") }
-                                            )
-                                        busy = false
-                                    }
-                                    Step.CODE -> {
-                                        // 验证验证码
-                                        if (verificationSupported) {
-                                            SyncManager.verifyCode(cleanEmail, code, if (mode == AuthMode.REGISTER) "register" else "login")
-                                                .fold(
-                                                    onSuccess = { res ->
-                                                        when (res) {
-                                                            is CodeVerifyResult.Ok -> step = Step.PASSWORD
-                                                            is CodeVerifyResult.NotSupported -> {
-                                                                verificationSupported = false
-                                                                step = Step.PASSWORD
-                                                            }
-                                                        }
-                                                    },
-                                                    onFailure = { errorText = "验证码错误或已过期，请重试" }
-                                                )
-                                        } else {
-                                            step = Step.PASSWORD
-                                        }
-                                        busy = false
-                                    }
-                                    Step.PASSWORD -> {
-                                        // 提交注册/登录
-                                        val result = if (mode == AuthMode.REGISTER) {
-                                            if (confirmPassword.isNotEmpty() && confirmPassword != password) {
-                                                errorText = "两次密码不一致"; busy = false; return@launch
-                                            }
-                                            SyncManager.register(username, cleanEmail, password, code)
-                                        } else {
-                                            SyncManager.login(username, password)
-                                        }
-                                        result.fold(
-                                            onSuccess = { user ->
-                                                runCatching {
-                                                    SyncManager.deriveKey(password)
-                                                    if (mode == AuthMode.REGISTER) {
-                                                        SyncManager.pushSettings()
-                                                        SyncManager.pushTopics()
-                                                    } else {
-                                                        SyncManager.pullSettings()
-                                                        SyncManager.pullTopics()
-                                                    }
-                                                    SyncManager.pullProviderTemplatesAndImport()
-                                                        .onFailure { AppLogger.e("CloudSync", "拉服务商模板失败", it) }
-                                                }.onFailure { AppLogger.e("CloudSync", "首次同步失败", it) }
-                                                successText = "欢迎，${user.username}，正在进入..."
-                                                kotlinx.coroutines.delay(700)
-                                                onGoBack()
-                                            },
-                                            onFailure = { e ->
-                                                errorText = shortenBackendError(e.message ?: "操作失败")
-                                                busy = false
-                                            }
-                                        )
                                     }
                                 }
-                            }
-                        },
-                        enabled = !busy && nextEnabled,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = telegramBlue,
-                            disabledContainerColor = Color.White.copy(alpha = 0.4f),
-                            disabledContentColor = telegramBlue.copy(alpha = 0.5f)
-                        ),
-                        modifier = Modifier.fillMaxWidth().height(50.dp),
-                        shape = RoundedCornerShape(25.dp)
-                    ) {
-                        if (busy) {
-                            CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp, color = telegramBlue)
-                        } else {
-                            Text(
-                                text = when (currentStep) {
-                                    Step.EMAIL -> "继续"
-                                    Step.CODE -> "验证"
-                                    Step.PASSWORD -> if (mode == AuthMode.REGISTER) "注册" else "登录"
-                                    else -> "继续"
-                                },
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Medium
                             )
                         }
                     }
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    // 底部提示
-                    Text(
-                        text = when (currentStep) {
-                            Step.EMAIL -> if (mode == AuthMode.REGISTER) "注册即表示同意霖川网络服务条款与隐私政策" else "使用邮箱注册的账号登录"
-                            Step.CODE -> if (countdown > 0) "验证码已发送到 ${email.text.trim().lowercase()} ($countdown s 后可重发)" else "验证码已发送到 ${email.text.trim().lowercase()}"
-                            Step.PASSWORD -> "密码用于派生加密密钥，云端无法读取你的数据"
-                            else -> ""
-                        },
-                        color = Color.White.copy(alpha = 0.75f),
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    Step.PASSWORD -> {
+                        FieldLabel("密码")
+                        BrandTextField(
+                            value = password,
+                            onValueChange = { password = it; errorText = null },
+                            placeholder = "至少 6 位",
+                            keyboardType = KeyboardType.Password,
+                            visualTransformation = PasswordVisualTransformation(),
+                            enabled = !busy
+                        )
+                        Spacer(modifier = Modifier.height(7.dp))
+                        HelperText("建议字母与数字组合，请牢记该密码。")
+                        if (mode == AuthMode.REGISTER) {
+                            Spacer(modifier = Modifier.height(16.dp))
+                            FieldLabel("确认密码")
+                            BrandTextField(
+                                value = confirmPassword,
+                                onValueChange = { confirmPassword = it; errorText = null },
+                                placeholder = "再次输入密码",
+                                keyboardType = KeyboardType.Password,
+                                visualTransformation = PasswordVisualTransformation(),
+                                enabled = !busy
+                            )
+                            if (!confirmValid) {
+                                Spacer(modifier = Modifier.height(7.dp))
+                                HelperText("两次输入的密码不一致", isError = true)
+                            }
+                        }
+                    }
                 }
             }
         }
-    }
-}
 
-// =============== 三个步骤 Composable ===============
+        if (errorText != null) {
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = errorText!!,
+                color = cs.error,
+                fontSize = 12.sp,
+                lineHeight = 18.sp
+            )
+        }
+        if (successText != null) {
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(text = successText!!, color = Color(0xFF2E6E63), fontSize = 12.sp)
+        }
 
-@Composable
-private fun EmailStep(
-    mode: AuthMode,
-    email: String,
-    onEmailChange: (String) -> Unit,
-    onSwitchMode: () -> Unit,
-    busy: Boolean
-) {
-    val telegramBlue = Color(0xFF2AABEE)
-    Text(
-        text = "请输入邮箱地址",
-        fontSize = 22.sp,
-        fontWeight = FontWeight.Bold,
-        color = Color.White,
-        modifier = Modifier.fillMaxWidth()
-    )
-    Spacer(modifier = Modifier.height(8.dp))
-    Text(
-        text = "我们将发送一个验证码到你的邮箱",
-        fontSize = 14.sp,
-        color = Color.White.copy(alpha = 0.8f),
-        modifier = Modifier.fillMaxWidth()
-    )
-    Spacer(modifier = Modifier.height(32.dp))
-    BasicTextField(
-        value = email,
-        onValueChange = { onEmailChange(it.trim().lowercase()) },
-        singleLine = true,
-        textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
-        enabled = !busy,
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(1.5.dp, Color.White.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color.White.copy(alpha = 0.15f))
-            .padding(horizontal = 16.dp, vertical = 14.dp)
-    )
-    Spacer(modifier = Modifier.height(20.dp))
-    TextButton(onClick = onSwitchMode, enabled = !busy) {
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = {
+                scope.launch {
+                    busy = true
+                    errorText = null
+                    val cleanEmail = email.text.trim().lowercase()
+                    val username = cleanEmail.substringBefore("@")
+
+                    when (step) {
+                        Step.EMAIL -> {
+                            SyncManager.sendCode(
+                                cleanEmail,
+                                if (mode == AuthMode.REGISTER) "register" else "login"
+                            ).fold(
+                                onSuccess = { res ->
+                                    when (res) {
+                                        is CodeSendResult.Sent -> {
+                                            codeSent = true
+                                            startCountdown { countdown = it; if (it == 0) countdownJob = null }
+                                            countdown = 60
+                                            step = Step.CODE
+                                        }
+                                        is CodeSendResult.NotSupported -> {
+                                            verificationSupported = false
+                                            step = Step.PASSWORD
+                                        }
+                                    }
+                                },
+                                onFailure = { errorText = shortenBackendError(it.message ?: "发送失败") }
+                            )
+                            busy = false
+                        }
+                        Step.CODE -> {
+                            if (verificationSupported) {
+                                SyncManager.verifyCode(
+                                    cleanEmail,
+                                    code,
+                                    if (mode == AuthMode.REGISTER) "register" else "login"
+                                ).fold(
+                                    onSuccess = { res ->
+                                        when (res) {
+                                            is CodeVerifyResult.Ok -> step = Step.PASSWORD
+                                            is CodeVerifyResult.NotSupported -> {
+                                                verificationSupported = false
+                                                step = Step.PASSWORD
+                                            }
+                                        }
+                                    },
+                                    onFailure = { errorText = "验证码错误或已过期，请重试" }
+                                )
+                            } else {
+                                step = Step.PASSWORD
+                            }
+                            busy = false
+                        }
+                        Step.PASSWORD -> {
+                            val result = if (mode == AuthMode.REGISTER) {
+                                if (confirmPassword.isNotEmpty() && confirmPassword != password) {
+                                    errorText = "两次密码不一致"; busy = false; return@launch
+                                }
+                                SyncManager.register(username, cleanEmail, password, code)
+                            } else {
+                                SyncManager.login(username, password)
+                            }
+                            result.fold(
+                                onSuccess = { user ->
+                                    runCatching {
+                                        SyncManager.deriveKey(password)
+                                        if (mode == AuthMode.REGISTER) {
+                                            SyncManager.pushSettings()
+                                            SyncManager.pushTopics()
+                                        } else {
+                                            SyncManager.pullSettings()
+                                            SyncManager.pullTopics()
+                                        }
+                                        SyncManager.pullProviderTemplatesAndImport()
+                                            .onFailure { AppLogger.e("CloudSync", "拉服务商模板失败", it) }
+                                    }.onFailure { AppLogger.e("CloudSync", "首次同步失败", it) }
+                                    successText = "欢迎，${user.username}，正在进入..."
+                                    delay(700)
+                                    onGoBack()
+                                },
+                                onFailure = { e ->
+                                    errorText = shortenBackendError(e.message ?: "操作失败")
+                                    busy = false
+                                }
+                            )
+                        }
+                    }
+                }
+            },
+            enabled = !busy && nextEnabled,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = cs.primary,
+                contentColor = Color.White,
+                disabledContainerColor = cs.outlineVariant,
+                disabledContentColor = cs.onSurfaceVariant.copy(alpha = 0.6f)
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            if (busy) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                    color = Color.White
+                )
+            } else {
+                Text(
+                    text = when (step) {
+                        Step.EMAIL -> "继续"
+                        Step.CODE -> "验证并继续"
+                        Step.PASSWORD -> if (mode == AuthMode.REGISTER) "创建账号并登录" else "登录"
+                    },
+                    fontSize = 14.5.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(14.dp))
+
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            TextButton(
+                onClick = {
+                    if (busy) return@TextButton
+                    mode = if (mode == AuthMode.LOGIN) AuthMode.REGISTER else AuthMode.LOGIN
+                    step = Step.EMAIL
+                    errorText = null
+                    successText = null
+                    code = ""
+                    password = ""
+                    confirmPassword = ""
+                }
+            ) {
+                Text(
+                    text = if (mode == AuthMode.LOGIN) "还没有账号？注册新账号" else "已有账号？直接登录",
+                    color = cs.primary,
+                    fontSize = 12.5.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
+
         Text(
-            text = if (mode == AuthMode.LOGIN) "没有账号？去注册" else "已有账号？去登录",
-            color = Color.White.copy(alpha = 0.9f),
-            fontSize = 14.sp
+            text = if (mode == AuthMode.REGISTER) "注册即代表同意《用户协议》与《隐私政策》" else "登录后可在任意设备恢复你的配置",
+            fontSize = 10.5.sp,
+            color = cs.onSurfaceVariant.copy(alpha = 0.8f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 24.dp),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
     }
 }
 
+// =============== 通用组件 ===============
+
 @Composable
-private fun CodeStep(
+private fun BrandMark(size: Int) {
+    Box(
+        modifier = Modifier
+            .size(size.dp)
+            .background(MaterialTheme.colorScheme.primary, RoundedCornerShape((size / 4).dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        Canvas(modifier = Modifier.size((size * 0.52f).dp)) {
+            val w = this.size.width
+            val h = this.size.height
+            val stroke = w * 0.14f
+            drawLine(
+                color = Color.White,
+                start = Offset(w * 0.22f, h * 0.12f),
+                end = Offset(w * 0.22f, h * 0.88f),
+                strokeWidth = stroke,
+                cap = StrokeCap.Round
+            )
+            drawLine(
+                color = Color.White,
+                start = Offset(w * 0.5f, h * 0.26f),
+                end = Offset(w * 0.5f, h * 0.74f),
+                strokeWidth = stroke,
+                cap = StrokeCap.Round
+            )
+            drawLine(
+                color = Color.White,
+                start = Offset(w * 0.78f, h * 0.38f),
+                end = Offset(w * 0.78f, h * 0.62f),
+                strokeWidth = stroke,
+                cap = StrokeCap.Round
+            )
+        }
+    }
+}
+
+@Composable
+private fun FieldLabel(text: String) {
+    Text(
+        text = text,
+        fontSize = 10.5.sp,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.primary,
+        letterSpacing = 0.6.sp,
+        modifier = Modifier.padding(bottom = 6.dp)
+    )
+}
+
+@Composable
+private fun HelperText(text: String, isError: Boolean = false) {
+    Text(
+        text = text,
+        fontSize = 11.sp,
+        lineHeight = 16.sp,
+        color = if (isError) MaterialTheme.colorScheme.error
+        else MaterialTheme.colorScheme.onSurfaceVariant
+    )
+}
+
+@Composable
+private fun BrandTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    placeholder: String,
+    keyboardType: KeyboardType,
+    enabled: Boolean,
+    visualTransformation: VisualTransformation = VisualTransformation.None
+) {
+    val cs = MaterialTheme.colorScheme
+    var focused by remember { mutableStateOf(false) }
+    BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
+        singleLine = true,
+        enabled = enabled,
+        textStyle = TextStyle(color = cs.onSurface, fontSize = 14.5.sp),
+        cursorBrush = SolidColor(cs.primary),
+        visualTransformation = visualTransformation,
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .onFocusChanged { focused = it.isFocused }
+            .border(
+                width = if (focused) 1.5.dp else 1.dp,
+                color = if (focused) cs.primary else cs.outlineVariant,
+                shape = RoundedCornerShape(12.dp)
+            )
+            .background(cs.surface, RoundedCornerShape(12.dp))
+            .padding(horizontal = 14.dp),
+        decorationBox = { innerTextField ->
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterStart) {
+                if (value.isEmpty()) {
+                    Text(
+                        text = placeholder,
+                        color = cs.onSurfaceVariant.copy(alpha = 0.65f),
+                        fontSize = 14.5.sp
+                    )
+                }
+                innerTextField()
+            }
+        }
+    )
+}
+
+@Composable
+private fun CodeCells(
     code: String,
     focused: Boolean,
     onCodeChange: (String) -> Unit,
-    onFocusChange: (Boolean) -> Unit,
-    countdown: Int,
-    onResend: () -> Unit
+    onFocusChange: (Boolean) -> Unit
 ) {
-    val telegramBlue = Color(0xFF2AABEE)
+    val cs = MaterialTheme.colorScheme
     val focusRequester = remember { FocusRequester() }
-
-    Text(
-        text = "输入 6 位验证码",
-        fontSize = 22.sp,
-        fontWeight = FontWeight.Bold,
-        color = Color.White,
-        modifier = Modifier.fillMaxWidth()
+    val transition = rememberInfiniteTransition(label = "code-caret")
+    val caretAlpha by transition.animateFloat(
+        initialValue = 1f,
+        targetValue = 0f,
+        animationSpec = infiniteRepeatable(tween(520), RepeatMode.Reverse),
+        label = "caret-alpha"
     )
-    Spacer(modifier = Modifier.height(32.dp))
 
-    Box {
-        // 6 个独立格子
+    Box(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             repeat(6) { idx ->
                 val digit = code.getOrNull(idx)?.toString() ?: ""
-                val active = focused && code.length == idx && countdown != 0
+                val active = focused && code.length == idx
+                val borderColor = when {
+                    active -> cs.primary
+                    digit.isNotEmpty() -> cs.primary.copy(alpha = 0.55f)
+                    else -> cs.outlineVariant
+                }
                 Box(
                     modifier = Modifier
-                        .size(44.dp, 54.dp)
+                        .weight(1f)
+                        .height(56.dp)
                         .border(
-                            width = if (active) 2.dp else 1.5.dp,
-                            color = if (active) Color.White else Color.White.copy(alpha = 0.4f),
-                            shape = RoundedCornerShape(8.dp)
+                            width = if (active) 1.5.dp else 1.dp,
+                            color = borderColor,
+                            shape = RoundedCornerShape(10.dp)
                         )
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(
-                            if (active) Color.White.copy(alpha = 0.25f)
-                            else Color.White.copy(alpha = 0.1f)
-                        ),
+                        .background(cs.surface, RoundedCornerShape(10.dp)),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = digit,
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                    if (active) {
+                    if (digit.isNotEmpty()) {
+                        Text(
+                            text = digit,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = cs.onSurface
+                        )
+                    } else if (active) {
                         Box(
                             modifier = Modifier
-                                .width(2.dp)
-                                .height(26.dp)
-                                .background(Color.White)
+                                .width(1.5.dp)
+                                .height(22.dp)
+                                .background(cs.primary.copy(alpha = caretAlpha))
                         )
                     }
                 }
             }
         }
 
-        // 隐藏的 TextField 接收输入
         BasicTextField(
             value = code,
             onValueChange = { if (it.length <= 6 && it.all { c -> c.isDigit() }) onCodeChange(it) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
             singleLine = true,
             modifier = Modifier
                 .matchParentSize()
@@ -505,88 +636,16 @@ private fun CodeStep(
                 .onFocusChanged { onFocusChange(it.isFocused) },
             textStyle = TextStyle(color = Color.Transparent)
         )
+
+        // 点击整块区域即聚焦输入
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .clickable { focusRequester.requestFocus() }
+        )
     }
 
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
-
-    Spacer(modifier = Modifier.height(24.dp))
-
-    TextButton(
-        onClick = onResend,
-        enabled = countdown == 0,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = if (countdown > 0) "$countdown 秒后可重发" else "重新发送验证码",
-            color = if (countdown == 0) Color.White.copy(alpha = 0.9f) else Color.White.copy(alpha = 0.4f),
-            fontSize = 14.sp
-        )
-    }
-}
-
-@Composable
-private fun PasswordStep(
-    mode: AuthMode,
-    password: String,
-    confirmPassword: String,
-    onPasswordChange: (String) -> Unit,
-    onConfirmChange: (String) -> Unit
-) {
-    Text(
-        text = if (mode == AuthMode.REGISTER) "设置你的密码" else "输入密码",
-        fontSize = 22.sp,
-        fontWeight = FontWeight.Bold,
-        color = Color.White,
-        modifier = Modifier.fillMaxWidth()
-    )
-    Spacer(modifier = Modifier.height(8.dp))
-    Text(
-        text = "至少 6 位",
-        fontSize = 14.sp,
-        color = Color.White.copy(alpha = 0.8f),
-        modifier = Modifier.fillMaxWidth()
-    )
-    Spacer(modifier = Modifier.height(32.dp))
-
-    PasswordInput(
-        value = password,
-        onValueChange = onPasswordChange,
-        placeholder = "密码"
-    )
-
-    if (mode == AuthMode.REGISTER) {
-        Spacer(modifier = Modifier.height(14.dp))
-        PasswordInput(
-            value = confirmPassword,
-            onValueChange = onConfirmChange,
-            placeholder = "再次输入密码"
-        )
-    }
-}
-
-@Composable
-private fun PasswordInput(value: String, onValueChange: (String) -> Unit, placeholder: String) {
-    BasicTextField(
-        value = value,
-        onValueChange = { onValueChange(it) },
-        singleLine = true,
-        visualTransformation = PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        textStyle = TextStyle(color = Color.White, fontSize = 18.sp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(1.5.dp, Color.White.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
-            .clip(RoundedCornerShape(12.dp))
-            .background(Color.White.copy(alpha = 0.15f))
-            .padding(horizontal = 16.dp, vertical = 14.dp)
-    ) { inner ->
-        Box {
-            if (value.isEmpty()) {
-                Text(placeholder, color = Color.White.copy(alpha = 0.5f), fontSize = 18.sp)
-            }
-            inner()
-        }
-    }
 }
 
 // =============== Helpers ===============
@@ -613,6 +672,8 @@ private fun shortenBackendError(raw: String): String {
         lower.contains("404") || lower.contains("not found") -> "账号不存在，请先注册"
         lower.contains("already exists") || lower.contains("duplicate") -> "该邮箱已注册，请直接登录"
         lower.contains("rate limit") || lower.contains("too many") -> "操作频繁，请稍后再试"
+        lower.contains("json") || lower.contains("quotation mark") || lower.contains("unexpected token") ->
+            "服务返回数据异常，请更新到最新版本后重试"
         lower.contains("server") -> "服务器繁忙，请稍后重试"
         raw.length > 80 -> raw.take(80) + "…"
         else -> raw

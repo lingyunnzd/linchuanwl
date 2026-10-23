@@ -2,6 +2,7 @@ package com.ai.assistance.operit.sync
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
 
 // ============ Auth ============
 
@@ -47,9 +48,12 @@ data class RefreshRequest(
 
 @Serializable
 data class AuthUser(
-    val id: String,
+    // 后端返回数字 id，旧版本按 String 解析会抛 "Expected quotation mark" 异常
+    val id: JsonElement,
     val username: String,
-)
+) {
+    val idText: String get() = id.toString().trim('"')
+}
 
 @Serializable
 data class AuthResponse(

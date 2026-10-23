@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -857,16 +858,17 @@ fun AboutScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Surface(
-                        modifier = Modifier.size(80.dp),
-                        shape = CircleShape,
-                        tonalElevation = 1.dp,
-                        color = MaterialTheme.colorScheme.surfaceVariant
+                        modifier = Modifier.size(72.dp),
+                        shape = RoundedCornerShape(18.dp),
+                        tonalElevation = 0.dp,
+                        color = Color(0xFF1E4FA3)
                     ) {
                         Box(contentAlignment = Alignment.Center) {
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_launcher_simple_foreground),
-                                contentDescription = stringResource(R.string.app_logo_description),
-                                modifier = Modifier.size(80.dp)
+                            Text(
+                                text = "川",
+                                color = Color.White,
+                                fontSize = 34.sp,
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
@@ -952,11 +954,11 @@ fun AboutScreen(
                 SettingsGroup {
                     SettingsRow(
                         icon = Icons.Default.Language,
-                        iconTint = MaterialTheme.colorScheme.secondary,
-                        title = stringResource(id = R.string.project_url),
-                        subtitleText = GITHUB_PROJECT_URL,
+                        iconTint = MaterialTheme.colorScheme.primary,
+                        title = "官方网站",
+                        subtitleText = "ag.linchuanwl.xyz",
                         onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PROJECT_URL)).apply {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://ag.linchuanwl.xyz")).apply {
                                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             }
                             context.startActivity(intent)
@@ -966,11 +968,12 @@ fun AboutScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
 
                     SettingsRow(
-                        icon = Icons.Default.Star,
-                        iconTint = MaterialTheme.colorScheme.secondary,
-                        title = stringResource(id = R.string.star_on_github),
+                        icon = Icons.Default.Email,
+                        iconTint = MaterialTheme.colorScheme.primary,
+                        title = "联系我们",
+                        subtitleText = "support@linchuanwl.xyz",
                         onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PROJECT_URL)).apply {
+                            val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:support@linchuanwl.xyz")).apply {
                                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             }
                             context.startActivity(intent)
@@ -981,7 +984,7 @@ fun AboutScreen(
 
                     SettingsRow(
                         icon = Icons.Default.History,
-                        iconTint = MaterialTheme.colorScheme.secondary,
+                        iconTint = MaterialTheme.colorScheme.primary,
                         title = stringResource(R.string.update_log),
                         onClick = { navigateToUpdateHistory() }
                     )
@@ -990,7 +993,7 @@ fun AboutScreen(
 
                     SettingsRow(
                         icon = Icons.Default.Source,
-                        iconTint = MaterialTheme.colorScheme.secondary,
+                        iconTint = MaterialTheme.colorScheme.primary,
                         title = stringResource(id = R.string.open_source_licenses),
                         onClick = { showLicenseDialog = true }
                     )
@@ -998,35 +1001,8 @@ fun AboutScreen(
             }
 
             item {
-                SettingsGroup {
-                    SettingsRow(
-                        icon = Icons.Default.Email,
-                        iconTint = MaterialTheme.colorScheme.primary,
-                        title = stringResource(id = R.string.contact),
-                        subtitleText = stringResource(id = R.string.about_contact)
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
-
-                    SettingsRow(
-                        icon = Icons.Default.Person,
-                        iconTint = MaterialTheme.colorScheme.primary,
-                        title = stringResource(id = R.string.developer),
-                        subtitleContent = {
-                            HtmlText(
-                                html = stringResource(id = R.string.about_developer),
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            )
-                        }
-                    )
-                }
-            }
-
-            item {
                 Text(
-                    text = stringResource(id = R.string.about_copyright),
+                    text = "© 2025–2026 霖川网络 · 保留所有权利",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,

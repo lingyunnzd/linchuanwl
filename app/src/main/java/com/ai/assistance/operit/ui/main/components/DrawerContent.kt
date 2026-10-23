@@ -557,49 +557,50 @@ private fun SidebarInfoCard(
         networkType: String,
         appearance: NavigationDrawerAppearance
 ) {
-        Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 6.dp)
+        Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
         ) {
-                Text(
-                        text = brandName,
-                        style = MaterialTheme.typography.titleLarge.copy(
-                                letterSpacing = 0.5.sp
-                        ),
-                        color = appearance.titleColor,
-                        fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Surface(
-                        shape = RoundedCornerShape(50),
-                        color = appearance.statusAvailableColor.copy(alpha = 0.12f)
+                Box(
+                        modifier = Modifier
+                                .size(42.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(Color(0xFF1E4FA3)),
+                        contentAlignment = Alignment.Center
                 ) {
-                        Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                        ) {
+                        Text(
+                                text = "川",
+                                color = Color.White,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                        )
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Column {
+                        Text(
+                                text = brandName,
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                        letterSpacing = 0.4.sp
+                                ),
+                                color = appearance.titleColor,
+                                fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                                 Box(
                                         modifier = Modifier
                                                 .size(6.dp)
                                                 .clip(CircleShape)
                                                 .background(
-                                                        if (isNetworkAvailable) Color(0xFF4CAF50)
-                                                        else Color(0xFFEF5350)
+                                                        if (isNetworkAvailable) Color(0xFF38A169)
+                                                        else Color(0xFFE53E3E)
                                                 )
                                 )
                                 Spacer(modifier = Modifier.width(6.dp))
-                                Icon(
-                                        imageVector =
-                                                if (isNetworkAvailable) Icons.Default.Wifi else Icons.Default.WifiOff,
-                                        contentDescription = stringResource(id = R.string.network_status_label),
-                                        tint = appearance.statusAvailableColor,
-                                        modifier = Modifier.size(14.dp)
-                                )
-                                Spacer(modifier = Modifier.width(4.dp))
                                 Text(
-                                        text = networkType,
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = appearance.statusAvailableColor,
-                                        fontWeight = FontWeight.Medium
+                                        text = if (isNetworkAvailable) "服务正常 · $networkType" else "网络不可用",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = appearance.itemColor
                                 )
                         }
                 }
@@ -623,10 +624,9 @@ private fun SidebarQuickActionCard(
                 } else {
                         Color.Transparent
                 }
-        val accentColor = appearance.selectedContentColor
         Surface(
                 modifier =
-                        modifier.height(76.dp)
+                        modifier.height(62.dp)
                                 .liquidGlass(
                                         enabled = appearance.buttonLiquidGlassEnabled,
                                         shape = itemShape,
@@ -650,56 +650,32 @@ private fun SidebarQuickActionCard(
                         },
                 shape = itemShape
         ) {
-                Box(modifier = Modifier.fillMaxWidth().height(76.dp)) {
-                        if (selected) {
-                                Box(
-                                        modifier = Modifier
-                                                .align(Alignment.BottomCenter)
-                                                .fillMaxWidth(0.5f)
-                                                .height(2.dp)
-                                                .padding(bottom = 4.dp)
-                                                .clip(RoundedCornerShape(2.dp))
-                                                .background(accentColor.copy(alpha = 0.7f))
-                                )
-                        }
-                        SidebarQuickActionBadge(
+                Column(
+                        modifier = Modifier.fillMaxWidth().height(62.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                ) {
+                        Text(
                                 text = badgeText,
-                                appearance = appearance,
-                                selected = selected,
-                                modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .padding(top = 6.dp, end = 6.dp)
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                color =
+                                        if (selected) appearance.selectedContentColor
+                                        else appearance.titleColor
                         )
-                        Column(
-                                modifier = Modifier
-                                        .align(Alignment.Center)
-                                        .padding(horizontal = 4.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
-                        ) {
-                                Icon(
-                                        imageVector = icon,
-                                        contentDescription = null,
-                                        tint =
-                                                if (selected) appearance.selectedContentColor
-                                                else appearance.itemColor,
-                                        modifier = Modifier.size(20.dp)
-                                )
-                                Spacer(modifier = Modifier.height(6.dp))
-                                Text(
-                                        text = label,
-                                        style = MaterialTheme.typography.labelMedium.copy(
-                                                letterSpacing = 0.2.sp
-                                        ),
-                                        fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
-                                        color =
-                                                if (selected) appearance.selectedContentColor
-                                                else appearance.itemColor,
-                                        textAlign = TextAlign.Center,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis
-                                )
-                        }
+                        Spacer(modifier = Modifier.height(3.dp))
+                        Text(
+                                text = label,
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                        letterSpacing = 0.2.sp
+                                ),
+                                color =
+                                        if (selected) appearance.selectedContentColor
+                                        else appearance.itemColor,
+                                textAlign = TextAlign.Center,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                        )
                 }
         }
 }
