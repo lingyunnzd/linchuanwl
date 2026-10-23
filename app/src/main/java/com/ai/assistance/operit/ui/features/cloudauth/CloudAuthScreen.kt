@@ -92,7 +92,7 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
     }
 
     var mode by remember { mutableStateOf(AuthMode.REGISTER) }
-    var step by remember { mutableIntStateOf(Step.EMAIL) }
+    var step by remember { mutableStateOf(Step.EMAIL) }
     var email by remember { mutableStateOf(TextFieldValue("")) }
     var code by remember { mutableStateOf("") }
     var codeFocused by remember { mutableStateOf(false) }
@@ -136,7 +136,13 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        if (step > Step.EMAIL) step-- else onGoBack()
+                        if (step > Step.EMAIL) {
+                            step = when (step) {
+                                Step.PASSWORD -> Step.CODE
+                                Step.CODE -> Step.EMAIL
+                                else -> Step.EMAIL
+                            }
+                        } else onGoBack()
                     }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回", tint = Color.White)
                     }
