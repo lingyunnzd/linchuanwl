@@ -1,12 +1,15 @@
 package com.ai.assistance.operit.sync
 
 import com.ai.assistance.operit.data.dao.ChatDao
+import com.ai.assistance.operit.data.model.ApiProviderType
 import com.ai.assistance.operit.data.model.ChatEntity
+import com.ai.assistance.operit.data.model.ModelConfigData
 import com.ai.assistance.operit.data.preferences.ModelConfigManager
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.UUID
 
 /**
  * SyncStorage 在 Operit 上的落地：
@@ -86,5 +89,33 @@ class OperitSyncAdapter(
 
     override suspend fun deleteTopic(topicId: String) {
         chatDao.deleteChat(topicId)
+    }
+
+    /**
+     * 把云端 ProviderTemplate 列表灌入本地 ModelConfigManager。
+     * 每个模板映射为一个 ModelConfigData：
+     * - id: 以 cloud- 前缀 + template.id，区分于本地自建
+     * - apiEndpoint: template.baseUrl
+     * - modelName: template.models 的首个
+     * - apiKey: 空字符串（公共模板不带密钥，用户自行填写）
+     * - apiProviderType: 统一 OPENAI（通用 Chat Completions 端点）
+     */
+    override suspend fun importProviderTemplates(templates: List<ProviderTemplate>): Int {
+        if (templates.isEmpty()) return 0
+        val configs = templates.map { t ->
+            ModelConfigData(
+                id = "cloud-${t.id}",
+                name = t.name,
+                apiEndpoint = t.baseUrl,
+                modelName = t.models.firstOrNull() ?: "",
+                apiKey = "",
+                apiProviderType = ApiProviderType.OPENAI,
+                apiProviderTypeId = ApiProviderType.OPENAI.name,
+            )
+        }
+        val jsonStr = Json { encodeDefaults = true; prettyPrint = false }
+            .encodeToString(configs)
+        val (newCount, _updated, _skipped) = modelConfigManager.importConfigs(jsonStr)
+        return newCount
     }
 }

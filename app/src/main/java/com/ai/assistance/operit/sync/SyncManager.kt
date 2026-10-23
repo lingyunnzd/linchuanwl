@@ -29,6 +29,13 @@ interface SyncStorage {
     suspend fun upsertTopic(topicId: String, json: String)
     /** 删除话题 */
     suspend fun deleteTopic(topicId: String)
+
+    /**
+     * 把云端公共 Provider 模板灌入本地 ModelConfigManager。
+     * 模板不带 API Key，只填 baseUrl / name / 首批 modelName，
+     * 用户首次使用时再填自己的 key。已存在同名 provider 跳过。
+     */
+    suspend fun importProviderTemplates(templates: List<ProviderTemplate>): Int
 }
 
 /**
@@ -295,9 +302,21 @@ object SyncManager {
 
     // ============ Provider Templates ============
 
+    /** 拉取云端公共 Provider 模板列表（无鉴权） */
     suspend fun pullProviderTemplates(): Result<ProviderTemplatesResponse> {
         return when (val resp = api.listProviderTemplates()) {
             is ApiResult.Ok -> Result.success(resp.data)
+            is ApiResult.Error -> Result.failure(resp.ex)
+        }
+    }
+
+    /** 拉取云端 Provider 模板并灌入本地 ModelConfigManager，返回新增数量 */
+    suspend fun pullProviderTemplatesAndImport(): Result<Int> {
+        return when (val resp = api.listProviderTemplates()) {
+            is ApiResult.Ok -> {
+                val n = storage.importProviderTemplates(resp.data.providers)
+                Result.success(n)
+            }
             is ApiResult.Error -> Result.failure(resp.ex)
         }
     }

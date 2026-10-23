@@ -553,7 +553,7 @@
     <string name="danger_zone">危险区域</string>
     <string name="chat_statistics">聊天记录统计</string>
     <string name="current_chats">当前共有 %1$d 条聊天记录</string>
-    <string name="backup_location">备份文件保存在「下载/Operit/backup」文件夹中</string>
+    <string name="backup_location">备份文件保存在「下载/霖川AI/backup」文件夹中</string>
     <string name="faq_backup">常见问题</string>
     <string name="history_filter_role_card">按角色卡分类</string>
     <string name="history_filter_role_card_desc">角色卡-文件夹-对话三级分类</string>
@@ -583,17 +583,17 @@
     <string name="termux_setup_guide">Termux 设置向导</string>
     
     <!-- About Screen -->
-    <string name="about_title">关于 Operit AI</string>
+    <string name="about_title">关于霖川 AI</string>
     <string name="about_version">版本: %1$s</string>
-    <string name="about_description">Operit AI是一个智能助手应用，能够帮助用户更高效地使用设备，提供界面分析、聊天对话等功能。</string>
-    <string name="about_developer">开发者: &lt;a href="https://github.com/AAswordman"&gt;AAswordman&lt;/a&gt;</string>
-    <string name="about_contact">联系我们: aaswordsman@foxmail.com</string>
-    <string name="about_website">&lt;a href="https://github.com/AAswordman/Operit"&gt;GitHub: https://github.com/AAswordman/Operit&lt;/a&gt;</string>
-    <string name="about_copyright">© 2025 - 2026 Operit. 保留所有权利。</string>
-    <string name="star_on_github">在 GitHub 点个 Star</string>
+    <string name="about_description">霖川 AI 是一款强大的设备智能助手，提供界面分析、聊天对话、端到端加密云同步等功能。</string>
+    <string name="about_developer">开发者: 霖川网络</string>
+    <string name="about_contact">联系我们: support@linchuanwl.xyz</string>
+    <string name="about_website">&lt;a href="https://ag.linchuanwl.xyz"&gt;官网: https://ag.linchuanwl.xyz&lt;/a&gt;</string>
+    <string name="about_copyright">© 2025 - 2026 霖川网络 · 保留所有权利。</string>
+    <string name="star_on_github">访问霖川官网</string>
     <string name="update_log">更新日志</string>
     <string name="app_logo_description">应用图标</string>
-    <string name="github_star_description">GitHub Star</string>
+    <string name="github_star_description">霖川网络官方网站</string>
 
     <!-- AI Chat Screen -->
     <string name="configure_ai">配置 AI 接口</string>
@@ -608,7 +608,7 @@
     <string name="network_status_label">网络状态</string>
 
     <!-- Configuration Screen -->
-    <string name="config_title">Operit AI 助手</string>
+    <string name="config_title">霖川 AI 助手</string>
     <string name="config_description">使用 DeepSeek API Key，或配置其他模型服务</string>
     <string name="config_api_key_label">API密钥</string>
     <string name="config_api_key_placeholder">DeepSeek API密钥</string>
@@ -1758,7 +1758,8 @@
     <string name="developer">开发者</string>
     <string name="contact">联系方式</string>
     <string name="project_url">项目地址</string>
-    <string name="open_source_licenses">开源许可声明</string>
+    <string name="open_source_licenses">第三方开源组件声明</string>
+    <string name="cloud_auth_title">霖川云服务</string>
     <string name="license_format">许可: %1$s</string>
     <string name="visit_project">访问项目</string>
     

@@ -603,6 +603,7 @@ sealed class Screen(
                     navigateToUserPreferences = { navigateTo(UserPreferencesSettings) },
                     navigateToToolPermissions = { navigateTo(ToolPermission) },
                     navigateToGitHubAccount = { navigateTo(GitHubAccount) },
+                    navigateToCloudAuth = { navigateTo(CloudAuth) },
                     navigateToModelConfig = { navigateTo(ModelConfig) },
                     navigateToThemeSettings = { navigateTo(ThemeSettings) },
                     navigateToGlobalDisplaySettings = { navigateTo(GlobalDisplaySettings) },
@@ -635,6 +636,21 @@ sealed class Screen(
             onGestureConsumed: (Boolean) -> Unit
         ) {
             GitHubAccountScreen()
+        }
+    }
+
+    data object CloudAuth : Screen(navItem = NavItem.Settings, titleRes = com.ai.assistance.operit.R.string.cloud_auth_title) {
+        @Composable
+        override fun Content(
+            navController: NavController,
+            navigateTo: ScreenNavigationHandler,
+            onGoBack: () -> Unit,
+            hasBackgroundImage: Boolean,
+            onLoading: (Boolean) -> Unit,
+            onError: (String) -> Unit,
+            onGestureConsumed: (Boolean) -> Unit
+        ) {
+            com.ai.assistance.operit.ui.features.cloudauth.CloudAuthScreen(onGoBack = onGoBack)
         }
     }
 
