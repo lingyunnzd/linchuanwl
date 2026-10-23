@@ -360,7 +360,7 @@ fun BubbleAiMessageComposable(
                 } else {
                     val bubbleShape =
                         if (bubbleRoundedCornersEnabled) {
-                            RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
+                            RoundedCornerShape(14.dp, 4.dp, 14.dp, 14.dp)
                         } else {
                             RoundedCornerShape(0.dp)
                         }
@@ -565,7 +565,7 @@ fun BubbleAiMessageComposable(
                     // Message bubble
                     val bubbleShape =
                         if (bubbleRoundedCornersEnabled) {
-                            RoundedCornerShape(4.dp, 20.dp, 20.dp, 20.dp)
+                            RoundedCornerShape(14.dp, 4.dp, 14.dp, 14.dp)
                         } else {
                             RoundedCornerShape(0.dp)
                         }
