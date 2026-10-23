@@ -69,24 +69,70 @@ import io.github.fletchmckee.liquid.liquefiable
 import io.github.fletchmckee.liquid.rememberLiquidState
 
 private val DarkColorScheme =
-        darkColorScheme(primary = Purple80, secondary = PurpleGrey80, tertiary = Pink80)
+        darkColorScheme(
+            primary = BrandBlueOnDark,
+            onPrimary = Color(0xFF0F3057),
+            primaryContainer = BrandBlueContainerDark,
+            onPrimaryContainer = BrandBlueContainerLight,
+            secondary = BrandSecondaryOnDark,
+            onSecondary = Color(0xFF14263F),
+            secondaryContainer = BrandSecondaryContainerDark,
+            onSecondaryContainer = BrandSecondaryContainerLight,
+            tertiary = BrandTertiaryOnDark,
+            onTertiary = Color(0xFF0E2A25),
+            tertiaryContainer = BrandTertiaryContainerDark,
+            onTertiaryContainer = BrandTertiaryContainerLight,
+            background = DarkBackground,
+            onBackground = DarkOnBackground,
+            surface = DarkSurface,
+            onSurface = DarkOnBackground,
+            surfaceVariant = DarkSurfaceVariant,
+            onSurfaceVariant = DarkOnSurfaceVariant,
+            surfaceContainerLowest = Color(0xFF0C0E11),
+            surfaceContainerLow = Color(0xFF181B20),
+            surfaceContainer = DarkSurfaceContainer,
+            surfaceContainerHigh = DarkSurfaceContainerHigh,
+            surfaceContainerHighest = Color(0xFF30353E),
+            outline = DarkOutline,
+            outlineVariant = DarkOutlineVariant,
+            error = Color(0xFFF2B8B5),
+            onError = Color(0xFF601410),
+            errorContainer = Color(0xFF8C1D18),
+            onErrorContainer = Color(0xFFF9DEDC),
+        )
 
 private val LightColorScheme =
         lightColorScheme(
-                primary = Purple40,
-                secondary = PurpleGrey40,
-                tertiary = Pink40,
-
-                /* Other default colors to override
-                background = Color(0xFFFFFBFE),
-                surface = Color(0xFFFFFBFE),
-                onPrimary = Color.White,
-                onSecondary = Color.White,
-                onTertiary = Color.White,
-                onBackground = Color(0xFF1C1B1F),
-                onSurface = Color(0xFF1C1B1F),
-                */
-                )
+            primary = BrandBlue,
+            onPrimary = Color.White,
+            primaryContainer = BrandBlueContainerLight,
+            onPrimaryContainer = Color(0xFF0A2E68),
+            secondary = BrandSecondary,
+            onSecondary = Color.White,
+            secondaryContainer = BrandSecondaryContainerLight,
+            onSecondaryContainer = Color(0xFF1D3355),
+            tertiary = BrandTertiary,
+            onTertiary = Color.White,
+            tertiaryContainer = BrandTertiaryContainerLight,
+            onTertiaryContainer = Color(0xFF0F352E),
+            background = LightBackground,
+            onBackground = LightOnBackground,
+            surface = LightSurface,
+            onSurface = LightOnBackground,
+            surfaceVariant = LightSurfaceVariant,
+            onSurfaceVariant = LightOnSurfaceVariant,
+            surfaceContainerLowest = Color.White,
+            surfaceContainerLow = Color(0xFFF3F4F7),
+            surfaceContainer = Color(0xFFEDEFF3),
+            surfaceContainerHigh = Color(0xFFE7E9EE),
+            surfaceContainerHighest = Color(0xFFE1E3E9),
+            outline = LightOutline,
+            outlineVariant = LightOutlineVariant,
+            error = Color(0xFFBA1A1A),
+            onError = Color.White,
+            errorContainer = Color(0xFFFFDAD6),
+            onErrorContainer = Color(0xFF410002),
+        )
 
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
@@ -153,8 +199,8 @@ fun OperitTheme(content: @Composable () -> Unit) {
                 themeMode == UserPreferencesManager.THEME_MODE_DARK
             }
 
-    // Dynamic color is available on Android 12+
-    val dynamicColor = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    // Dynamic color：禁用 Material You 动态取色，保持品牌色一致性
+    val dynamicColor = false
 
     // 基础主题色调
     var colorScheme =
@@ -351,7 +397,7 @@ fun OperitTheme(content: @Composable () -> Unit) {
                     modifier =
                         Modifier
                             .fillMaxSize()
-                            .background(if (darkTheme) Color.Black else Color.White)
+                            .background(colorScheme.background)
                             .then(
                                 if (waterGlassState != null) {
                                     Modifier.liquefiable(waterGlassState)
