@@ -91,8 +91,8 @@ object RootAuthorizer {
             // 配置Shell
             Shell.enableVerboseLogging = true
             Shell.setDefaultBuilder(Shell.Builder.create()
-                .setFlags(Shell.FLAG_MOUNT_MASTER)
-                .setTimeout(10)
+                .setFlags(Shell.FLAG_MOUNT_MASTER or Shell.FLAG_REDIRECT_STDERR)
+                .setTimeout(30)
             )
             AppLogger.d(TAG, "libsu Shell全局配置已初始化")
         } catch (e: Exception) {

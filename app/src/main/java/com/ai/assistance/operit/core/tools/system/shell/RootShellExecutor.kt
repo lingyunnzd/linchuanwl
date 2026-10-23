@@ -37,17 +37,48 @@ class RootShellExecutor(private val context: Context) : ShellExecutor {
     companion object {
         private const val TAG = "RootShellExecutor"
         private var rootAvailable: Boolean? = null
-        
+
+        /** 已注入 SELinux/PATH 环境准备的命令前缀，仅执行一次 */
+        @Volatile private var envSetupInjected = false
+
         // 静态初始化，确保Shell配置只被设置一次
         init {
             // 配置 libsu 库的全局设置
             Shell.enableVerboseLogging = true
             Shell.setDefaultBuilder(Shell.Builder.create()
-                .setFlags(Shell.FLAG_MOUNT_MASTER)
-                .setTimeout(10)
+                .setFlags(Shell.FLAG_MOUNT_MASTER or Shell.FLAG_REDIRECT_STDERR)
+                .setTimeout(30)
             )
-            
+
             AppLogger.d(TAG, "libsu Shell静态初始化完成")
+        }
+
+        /**
+         * 构造一次注入式的环境准备命令前缀。
+         * - setenforce 0：把 SELinux 切 permissive，让真正的 root 可以读写 /system、/data、/proc
+         * - export PATH：Magisk/KernelSU 等 rootless 环境下 su 后的 PATH 极受限
+         *   （可能只有 /sbin:/system/sbin），导致 toybox/busybox/sh 全部找不到
+         *
+         * 这段前缀只需在 su 会话启动时跑一次；exec 模式每次都是新 su 进程，
+         * 所以每条命令都必须 prepend。
+         */
+        private fun buildEnvSetupPrefix(): String {
+            val paths = listOf(
+                "/data/adb/magisk",
+                "/data/adb/ksu/bin",
+                "/data/adb/ksu",
+                "/system/bin",
+                "/system/xbin",
+                "/sbin",
+                "/product/bin",
+                "/apex/com.android.runtime/bin",
+                "/usr/bin",
+                "/usr/local/bin",
+                "/vendor/bin",
+                "/oem/bin"
+            ).distinct()
+            return "setenforce 0 2>/dev/null; export PATH=${paths.joinToString(":")}:" +
+                    "'\$PATH'; "
         }
     }
 
@@ -303,8 +334,11 @@ class RootShellExecutor(private val context: Context) : ShellExecutor {
             try {
                 AppLogger.d(TAG, "使用exec执行Root命令: $command")
 
+                // exec 模式每次都是新 su 进程，必须在每条命令里都 prepend 环境准备
+                val fullCommand = buildEnvSetupPrefix() + command
+
                 // 执行su -c命令
-                val process = Runtime.getRuntime().exec(buildSuExecCommand(command))
+                val process = Runtime.getRuntime().exec(buildSuExecCommand(fullCommand))
                 
                 // 读取标准输出
                 val stdoutReader = BufferedReader(InputStreamReader(process.inputStream))
@@ -367,6 +401,7 @@ class RootShellExecutor(private val context: Context) : ShellExecutor {
                     }
 
                     val actualCommand = extractActualCommand(command)
+                    val envPrefix = buildEnvSetupPrefix()
 
                     return@withContext when (identity) {
                         ShellIdentity.SHELL -> {
@@ -382,7 +417,7 @@ class RootShellExecutor(private val context: Context) : ShellExecutor {
                                 )
                             } else {
                                 if (useExecMode) {
-                                    val fullCmd = "$launcherPath $actualCommand"
+                                    val fullCmd = "$envPrefix$launcherPath $actualCommand"
                                     val process = Runtime.getRuntime().exec(buildSuExecCommand(fullCmd))
 
                                     val stdoutReader = BufferedReader(InputStreamReader(process.inputStream))
@@ -418,7 +453,7 @@ class RootShellExecutor(private val context: Context) : ShellExecutor {
                                         exitCode
                                     )
                                 } else {
-                                    val shellCommand = "$launcherPath $actualCommand"
+                                    val shellCommand = "$envPrefix$launcherPath $actualCommand"
                                     val shellResult = Shell.cmd(shellCommand).exec()
 
                                     val stdout = shellResult.out.joinToString("\n")
@@ -448,7 +483,9 @@ class RootShellExecutor(private val context: Context) : ShellExecutor {
                                 executeCommandWithExec(actualCommand)
                             } else {
                                 AppLogger.d(TAG, "执行Root命令: $actualCommand (原始命令: $command)")
-                                val shellResult = Shell.cmd(actualCommand).exec()
+                                // 每次命令都注入 SELinux + PATH 环境准备，确保跨 Shell 会话
+                                val shellCommand = "$envPrefix$actualCommand"
+                                val shellResult = Shell.cmd(shellCommand).exec()
 
                                 val stdout = shellResult.out.joinToString("\n")
                                 val stderr = shellResult.err.joinToString("\n")
@@ -480,11 +517,15 @@ class RootShellExecutor(private val context: Context) : ShellExecutor {
         if (!hasPermission().granted) {
             throw SecurityException("Root permission not granted.")
         }
-        
+
+        // 持久进程同样需要先注入环境准备
+        val envPrefix = buildEnvSetupPrefix()
+        val prefixedCommand = envPrefix + command
+
         return if (useExecMode) {
-            ExecRootShellProcess(command, buildSuInteractiveCommand())
+            ExecRootShellProcess(prefixedCommand, buildSuInteractiveCommand())
         } else {
-            LibSuShellProcess(command)
+            LibSuShellProcess(prefixedCommand)
         }
     }
 }
