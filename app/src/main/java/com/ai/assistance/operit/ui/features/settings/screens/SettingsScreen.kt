@@ -124,14 +124,20 @@ fun SettingsScreen(
                         )
                 }
 
-                // ======= 界面与外观 =======
-                SettingsSection(title = "界面与外观") {
+                // ======= 系统 =======
+                SettingsSection(title = "系统") {
+                        CompactSettingsItem(
+                                title = stringResource(id = R.string.settings_tool_permissions),
+                                subtitle = stringResource(id = R.string.settings_tool_permissions_subtitle),
+                                icon = Icons.Default.AdminPanelSettings,
+                                onClick = navigateToToolPermissions,
+                                showDivider = false
+                        )
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_theme_appearance),
                                 subtitle = stringResource(id = R.string.settings_theme_subtitle),
                                 icon = Icons.Default.Palette,
-                                onClick = navigateToThemeSettings,
-                                showDivider = false
+                                onClick = navigateToThemeSettings
                         )
                         CompactSettingsItem(
                                 title = stringResource(R.string.layout_adjustment),
@@ -156,17 +162,6 @@ fun SettingsScreen(
                                 subtitle = stringResource(id = R.string.settings_language_subtitle),
                                 icon = Icons.Default.Language,
                                 onClick = navigateToLanguageSettings
-                        )
-                }
-
-                // ======= 安全与数据 =======
-                SettingsSection(title = "安全与数据") {
-                        CompactSettingsItem(
-                                title = stringResource(id = R.string.settings_tool_permissions),
-                                subtitle = stringResource(id = R.string.settings_tool_permissions_subtitle),
-                                icon = Icons.Default.AdminPanelSettings,
-                                onClick = navigateToToolPermissions,
-                                showDivider = false
                         )
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_data_backup),

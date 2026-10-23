@@ -5,8 +5,6 @@ import com.ai.assistance.operit.util.AppLogger
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ai.assistance.operit.R
-import com.ai.assistance.operit.data.api.GitHubApiService
-import com.ai.assistance.operit.data.preferences.UserPreferencesManager
 import com.ai.assistance.operit.util.GithubReleaseUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -62,12 +60,6 @@ class UpdateManager private constructor(private val context: Context) {
          * @return -1 如果v1 < v2, 0 如果 v1 == v2, 1 如果 v1 > v2
          */
         private data class ParsedVersion(val major: Int, val minor: Int, val patch: Int, val patchIndex: Int)
-
-        private fun baseVersionOf(v: String): String {
-            val s = v.trim().removePrefix("v")
-            val plusIdx = s.indexOf('+')
-            return if (plusIdx >= 0) s.substring(0, plusIdx) else s
-        }
 
         private fun parseVersion(v: String): ParsedVersion {
             val s = v.trim().removePrefix("v")
@@ -133,31 +125,10 @@ class UpdateManager private constructor(private val context: Context) {
     private suspend fun checkForUpdatesInternal(currentVersion: String): UpdateStatus {
         return withContext(Dispatchers.IO) {
             try {
-                val betaEnabled = try {
-                    UserPreferencesManager.getInstance(context).isBetaPlanEnabled()
-                } catch (_: Exception) {
-                    false
-                }
+                AppLogger.d(TAG, "checkForUpdatesInternal(): currentVersion=$currentVersion")
 
-                AppLogger.d(TAG, "checkForUpdatesInternal(): currentVersion=$currentVersion betaEnabled=$betaEnabled")
-
-                val patchUpdate: UpdateStatus? =
-                    if (betaEnabled) {
-                        AppLogger.d(TAG, "beta enabled, trying patch update releases...")
-                        val patch = tryFetchLatestPatchUpdate(currentVersion)
-                        if (patch != null) {
-                            val p = patch as? UpdateStatus.PatchAvailable
-                            AppLogger.i(
-                                TAG,
-                                "patch update found: newVersion=${p?.newVersion} patchUrl=${p?.patchUrl} metaUrl=${p?.metaUrl}"
-                            )
-                        } else {
-                            AppLogger.d(TAG, "no patch update found")
-                        }
-                        patch
-                    } else {
-                        null
-                    }
+                // Beta 补丁更新渠道已下线（原上游开源仓库），始终视为无补丁更新
+                val patchUpdate: UpdateStatus? = null
 
                 // 从字符串资源中获取GitHub仓库信息
                 val aboutWebsite = context.getString(R.string.about_website)
@@ -220,91 +191,4 @@ class UpdateManager private constructor(private val context: Context) {
         }
     }
 
-    private suspend fun tryFetchLatestPatchUpdate(currentVersion: String): UpdateStatus? {
-        val api = GitHubApiService(context)
-
-        val owner = "AAswordman"
-        val repo = "OperitNightlyRelease"
-
-        AppLogger.d(TAG, "tryFetchLatestPatchUpdate(): currentVersion=$currentVersion repo=$owner/$repo")
-        val result = api.getRepositoryReleases(owner = owner, repo = repo, page = 1, perPage = 20)
-
-        result.exceptionOrNull()?.let { e ->
-            AppLogger.w(TAG, "tryFetchLatestPatchUpdate(): api getRepositoryReleases failed", e)
-        }
-
-        val releases = result.getOrNull() ?: return null
-
-        AppLogger.d(TAG, "tryFetchLatestPatchUpdate(): fetched releases=${releases.size}")
-        val currentBase = baseVersionOf(currentVersion)
-
-        var matchedBase = 0
-        var newerThanCurrent = 0
-        var withAssets = 0
-        var best: UpdateStatus.PatchAvailable? = null
-        var bestVersion = ""
-
-        for (r in releases) {
-            if (r.draft) continue
-
-            val tag = r.tag_name
-            val version = tag.removePrefix("v")
-
-            // Patch updates are only valid within the same base version (x.y.z).
-            // This prevents cases like 1.7.0+1 being offered 1.7.1+3 (should take 1.7.1 full APK first).
-            if (baseVersionOf(version) != currentBase) {
-                continue
-            }
-
-            matchedBase += 1
-
-            if (compareVersions(version, currentVersion) <= 0) {
-                continue
-            }
-
-            newerThanCurrent += 1
-
-            val metaAsset =
-                r.assets.firstOrNull { it.name.startsWith("patch_") && it.name.endsWith(".json") }
-                    ?: r.assets.firstOrNull { it.name.endsWith(".json") }
-            val patchAsset =
-                r.assets.firstOrNull { it.name.startsWith("apkrawpatch_") && it.name.endsWith(".zip") }
-                    ?: r.assets.firstOrNull { it.name.endsWith(".zip") }
-            if (metaAsset == null || patchAsset == null) {
-                AppLogger.d(
-                    TAG,
-                    "patch skip: tag=$tag version=$version hasPatch=${patchAsset != null} hasMeta=${metaAsset != null}"
-                )
-                continue
-            }
-
-            withAssets += 1
-
-            AppLogger.d(
-                TAG,
-                "patch candidate: tag=$tag version=$version patch=${patchAsset.name} meta=${metaAsset.name}"
-            )
-
-            if (best == null || compareVersions(version, bestVersion) > 0) {
-                bestVersion = version
-                best = UpdateStatus.PatchAvailable(
-                    newVersion = version,
-                    updateUrl = r.html_url,
-                    releaseNotes = r.body ?: "",
-                    patchUrl = patchAsset.browser_download_url,
-                    metaUrl = metaAsset.browser_download_url
-                )
-            }
-        }
-
-        AppLogger.d(
-            TAG,
-            "tryFetchLatestPatchUpdate(): scan done matchedBase=$matchedBase newerThanCurrent=$newerThanCurrent withAssets=$withAssets best=$bestVersion"
-        )
-
-        if (best == null) {
-            AppLogger.d(TAG, "tryFetchLatestPatchUpdate(): no valid patch candidates")
-        }
-        return best
-    }
 }

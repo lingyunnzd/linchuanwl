@@ -467,7 +467,6 @@ fun AboutScreen(
     val scope = rememberCoroutineScope()
 
     val preferences = remember { UserPreferencesManager.getInstance(context) }
-    val betaEnabled = preferences.betaPlanEnabled.collectAsState(initial = false).value
 
     // 获取UpdateManager实例
     val updateManager = remember { UpdateManager.getInstance(context) }
@@ -886,6 +885,16 @@ fun AboutScreen(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 2.dp)
                     )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = "运行在你设备上的智能助手。支持应用操作、文件处理、工作流编排与多模型接入，数据默认留在本机。",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(horizontal = 28.dp)
+                    )
                 }
             }
 
@@ -930,23 +939,6 @@ fun AboutScreen(
                             }
                         }
                     )
-
-                    HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
-
-                    SettingsRow(
-                        icon = Icons.Default.NewReleases,
-                        iconTint = MaterialTheme.colorScheme.tertiary,
-                        title = stringResource(id = R.string.beta_plan),
-                        subtitleText = stringResource(id = R.string.beta_plan_desc),
-                        trailing = {
-                            Switch(
-                                checked = betaEnabled,
-                                onCheckedChange = { enabled ->
-                                    scope.launch { preferences.saveBetaPlanEnabled(enabled) }
-                                }
-                            )
-                        }
-                    )
                 }
             }
 
@@ -956,9 +948,9 @@ fun AboutScreen(
                         icon = Icons.Default.Language,
                         iconTint = MaterialTheme.colorScheme.primary,
                         title = "官方网站",
-                        subtitleText = "www.linchuanwl.xyz",
+                        subtitleText = "ag.linchuanwl.xyz",
                         onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linchuanwl.xyz")).apply {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://ag.linchuanwl.xyz")).apply {
                                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             }
                             context.startActivity(intent)
@@ -1487,7 +1479,7 @@ fun DownloadSourceDialog(
         status?.let {
             buildMap {
                 putAll(mirroredUrls)
-                put("GitHub", it.downloadUrl)
+                put("Official", it.downloadUrl)
             }
         } ?: emptyMap()
     }
@@ -1618,13 +1610,13 @@ fun DownloadSourceDialog(
                 LazyColumn {
                     items(orderedProbeKeys) { name ->
                         val probe = probeResults[name]
-                        val isGitHub = name == "GitHub"
+                        val isOfficial = name == "Official"
                         val url = probeUrls[name] ?: return@items
                         val enabled = probe?.ok == true
                         MirrorSourceRow(
-                            title = if (isGitHub) stringResource(id = R.string.github_source) else stringResource(id = R.string.mirror_download, name),
-                            desc = if (isGitHub) stringResource(id = R.string.github_source_desc) else null,
-                            icon = if (isGitHub) Icons.Default.Language else Icons.Default.Storage,
+                            title = if (isOfficial) stringResource(id = R.string.github_source) else stringResource(id = R.string.mirror_download, name),
+                            desc = if (isOfficial) stringResource(id = R.string.github_source_desc) else null,
+                            icon = if (isOfficial) Icons.Default.Language else Icons.Default.Storage,
                             probe = probe,
                             enabled = enabled,
                             onClick = { onDownload(url) }
@@ -1666,7 +1658,7 @@ fun PatchDownloadSourceDialog(
         val set = LinkedHashSet<String>()
         set.addAll(patchMirrors.keys)
         set.addAll(metaMirrors.keys)
-        set.add("GitHub")
+        set.add("Official")
         set.toList()
     }
 
@@ -1679,8 +1671,8 @@ fun PatchDownloadSourceDialog(
         coroutineScope {
             keys.forEach { key ->
                 launch {
-                    val patchProbeUrl = if (key == "GitHub") patchUrl else patchMirrors[key] ?: patchUrl
-                    val metaProbeUrl = if (key == "GitHub") metaUrl else metaMirrors[key] ?: metaUrl
+                    val patchProbeUrl = if (key == "Official") patchUrl else patchMirrors[key] ?: patchUrl
+                    val metaProbeUrl = if (key == "Official") metaUrl else metaMirrors[key] ?: metaUrl
 
                     val patchRes = withContext(Dispatchers.IO) {
                         GithubReleaseUtil.probeMirrorUrls(mapOf(key to patchProbeUrl))[key]
@@ -1808,18 +1800,18 @@ fun PatchDownloadSourceDialog(
                     items(orderedKeys) { name ->
                         val summary = probeResults[name]
                         val title =
-                            if (name == "GitHub") {
+                            if (name == "Official") {
                                 stringResource(id = R.string.github_source)
                             } else {
                                 stringResource(id = R.string.mirror_download, name)
                             }
                         val desc =
-                            if (name == "GitHub") {
+                            if (name == "Official") {
                                 stringResource(id = R.string.github_source_desc)
                             } else {
                                 stringResource(id = R.string.china_mirror_desc)
                             }
-                        val icon = if (name == "GitHub") Icons.Default.Language else Icons.Default.Storage
+                        val icon = if (name == "Official") Icons.Default.Language else Icons.Default.Storage
                         val enabled = summary?.ok == true
                         MirrorSourceRow(
                             title = title,

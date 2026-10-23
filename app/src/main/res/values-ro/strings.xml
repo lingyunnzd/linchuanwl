@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Linchuan AI</string>
     <string name="accessibility_service_description">Utilizat pentru a obțineUIIerarhie, pentruAIAsistentul oferă capacități mai rapide de analiză a interfeței și nu colectează sau stochează nicio informație personală.</string>
@@ -587,11 +587,11 @@
     <string name="about_title">Despre 霖川 AI</string>
     <string name="about_version">Versiune: %1$s</string>
     <string name="about_description">霖川 AIEste o aplicație de asistență inteligentă, care ajută utilizatorii să-și folosească dispozitivele mai eficient, oferind funcții precum analiza interfeței și conversații prin chat.</string>
-    <string name="about_developer">Dezvoltator: &lt;a href="https://github.com/AAswordman"&gt;AAswordman&lt;/a&gt;</string>
-    <string name="about_contact">Contactați-ne: aaswordsman@foxmail.com</string>
+    <string name="about_developer">Developer: Linchuan Network</string>
+    <string name="about_contact">Contact: support@linchuanwl.xyz</string>
     <string name="about_website">&lt;a href="https://ag.linchuanwl.xyz"&gt;官网: https://ag.linchuanwl.xyz&lt;/a&gt;</string>
     <string name="about_copyright">© 2025 - 2026 霖川. Toate drepturile rezervate.</string>
-    <string name="star_on_github">în GitHub Dă un clic pe Star</string>
+    <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Jurnalul de actualizări</string>
     <string name="app_logo_description">Pictograma aplicației</string>
     <string name="github_star_description">GitHub Star</string>

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="workflow_enabled_label">Aktifkan Alur Kerja</string>
     <string name="workflow_disabled">Dinonaktifkan</string>
@@ -503,11 +503,11 @@
     <string name="about_title">Tentang 霖川 AI</string>
     <string name="about_version">Versi: %1$s</string>
     <string name="about_description">霖川 AI adalah aplikasi asisten cerdas yang membantu pengguna menggunakan perangkat dengan lebih efisien, menyediakan analisis antarmuka, percakapan obrolan, dan fungsi lainnya.</string>
-    <string name="about_developer">Pengembang: &lt;a href="https://github.com/AAswordman"&gt;AAswordman&lt;/a&gt;</string>
-    <string name="about_contact">Hubungi kami: aaswordsman@foxmail.com</string>
+    <string name="about_developer">Developer: Linchuan Network</string>
+    <string name="about_contact">Contact: support@linchuanwl.xyz</string>
     <string name="about_website">&lt;a href="https://ag.linchuanwl.xyz"&gt;官网: https://ag.linchuanwl.xyz&lt;/a&gt;</string>
     <string name="about_copyright">© 2025 - 2026 霖川. Hak cipta dilindungi undang-undang.</string>
-    <string name="star_on_github">Beri Bintang di GitHub</string>
+    <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Catatan Pembaruan</string>
     <string name="app_logo_description">Ikon Aplikasi</string>
     <string name="github_star_description">Bintang GitHub</string>

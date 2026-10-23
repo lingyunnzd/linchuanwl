@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
     <string name="app_name">Linchuan AI</string>
     <string name="accessibility_service_description">Se utiliza para obtener la jerarquía de la interfaz de usuario, proporcionando al asistente de IA capacidades de análisis de interfaz más rápidas. No recopilará ni almacenará ninguna información personal.</string>
 
@@ -86,8 +86,8 @@
     <string name="about_title">Acerca de 霖川 AI</string>
     <string name="about_version">Versión: %1$s</string>
     <string name="about_description">霖川 AI es una aplicación de asistente inteligente que ayuda a los usuarios a utilizar sus dispositivos de manera más eficiente, proporcionando funciones como análisis de interfaz y chat.</string>
-    <string name="about_developer">Desarrollador: &lt;a href="https://github.com/AAswordman"&gt;AAswordman&lt;/a&gt;</string>
-    <string name="about_contact">Contáctenos: aaswordsman@foxmail.com</string>
+    <string name="about_developer">Developer: Linchuan Network</string>
+    <string name="about_contact">Contact: support@linchuanwl.xyz</string>
     <string name="about_website">&lt;a href="https://ag.linchuanwl.xyz"&gt;官网: https://ag.linchuanwl.xyz&lt;/a&gt;</string>
     <string name="about_copyright">© 2025 - 2026 霖川. Todos los derechos reservados.</string>
 
@@ -1846,7 +1846,7 @@
     <string name="history_auto_switch_character_desc">Al cambiar de conversación, emparejar automáticamente la tarjeta de personaje vinculada</string>
     <string name="history_auto_switch_chat">Cambiar automáticamente de chat</string>
     <string name="history_auto_switch_chat_desc">Al cambiar de tarjeta de personaje o grupo, entrar automáticamente en la conversación más reciente correspondiente; si no existe, se crea</string>
-    <string name="star_on_github">Dar estrella en GitHub</string>
+    <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Registro de actualizaciones</string>
     <string name="app_logo_description">Icono de la aplicación</string>
     <string name="github_star_description">Estrella de GitHub</string>

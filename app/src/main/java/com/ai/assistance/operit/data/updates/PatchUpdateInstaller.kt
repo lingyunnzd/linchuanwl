@@ -1,4 +1,4 @@
-package com.ai.assistance.operit.data.updates
+﻿package com.ai.assistance.operit.data.updates
 
 import android.content.Context
 import android.content.Intent
@@ -554,7 +554,7 @@ object PatchUpdateInstaller {
     }
 
     private fun selectMirrorUrl(originalUrl: String, mirrorKey: String): String {
-        if (mirrorKey == "GitHub") return originalUrl
+        if (mirrorKey == "Official") return originalUrl
         val mirrors = GithubReleaseUtil.getMirroredUrls(originalUrl)
         return mirrors[mirrorKey] ?: originalUrl
     }
@@ -570,16 +570,16 @@ object PatchUpdateInstaller {
         val keys = LinkedHashSet<String>().apply {
             addAll(patchMirrors.keys)
             addAll(metaMirrors.keys)
-            add("GitHub")
+            add("Official")
         }
 
         onEvent(ProgressEvent.MirrorProbeStarted(keys.size))
 
         val patchProbeMap = keys.associateWith { key ->
-            if (key == "GitHub") patchUrl else patchMirrors[key] ?: patchUrl
+            if (key == "Official") patchUrl else patchMirrors[key] ?: patchUrl
         }
         val metaProbeMap = keys.associateWith { key ->
-            if (key == "GitHub") metaUrl else metaMirrors[key] ?: metaUrl
+            if (key == "Official") metaUrl else metaMirrors[key] ?: metaUrl
         }
 
         val patchResults = GithubReleaseUtil.probeMirrorUrls(patchProbeMap, timeoutMs = PROBE_TIMEOUT_MS)
@@ -637,7 +637,7 @@ object PatchUpdateInstaller {
             }
         }
 
-        return bestKey ?: "GitHub"
+        return bestKey ?: "Official"
     }
 
     private suspend fun downloadToFile(

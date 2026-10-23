@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+﻿<?xml version='1.0' encoding='utf-8'?>
 <resources><string name="app_name">Linchuan AI</string>
     <string name="accessibility_service_description">Ele é usado para obter a hierarquia da IU e fornecer recursos de análise de interface mais rápidos para o assistente de IA. Nenhuma informação pessoal será coletada ou armazenada.</string>
     <string name="model_selector_title">Selecione a configuração do modelo</string>
@@ -530,11 +530,11 @@
     <string name="about_title">Sobre a 霖川 AI</string>
     <string name="about_version">Versão: %1$s</string>
     <string name="about_description">霖川 AI é um aplicativo assistente inteligente que pode ajudar os usuários a usar os dispositivos com mais eficiência, fornecendo análise de interface, diálogo de chat e outras funções.</string>
-    <string name="about_developer">Desenvolvedor: &lt;a href="https://github.com/AAswordman"&gt;AAswordman&lt;/a&gt;</string>
-    <string name="about_contact">Contate-nos: aaswordsman@foxmail.com</string>
+    <string name="about_developer">Developer: Linchuan Network</string>
+    <string name="about_contact">Contact: support@linchuanwl.xyz</string>
     <string name="about_website">&lt;a href="https://ag.linchuanwl.xyz"&gt;官网: https://ag.linchuanwl.xyz&lt;/a&gt;</string>
     <string name="about_copyright">© 2025 - 2026 霖川. Todos os direitos reservados.</string>
-    <string name="star_on_github">Clique em uma estrela no GitHub</string>
+    <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Registro de alterações</string>
     <string name="app_logo_description">ícone do aplicativo</string>
     <string name="github_star_description">Estrela do GitHub</string>
