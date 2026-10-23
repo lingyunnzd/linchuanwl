@@ -490,7 +490,7 @@ private fun CloudSyncSection(cardContainerColor: Color) {
                                         subtitle = "上传并拉取模型配置与聊天话题",
                                         icon = Icons.Default.Sync,
                                         onClick = {
-                                                if (busy) return@CompactSettingsItem
+                                                if (!busy) {
                                                 busy = true
                                                 statusText = null
                                                 scope.launch {
@@ -512,6 +512,7 @@ private fun CloudSyncSection(cardContainerColor: Color) {
                                                                 errors.distinct().joinToString("，")
                                                         }
                                                         busy = false
+                                                }
                                                 }
                                         }
                                 )
