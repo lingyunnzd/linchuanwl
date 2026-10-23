@@ -55,7 +55,7 @@ fun RemoteAnnouncementDialog(
 ) {
     val cs = MaterialTheme.colorScheme
 
-    val (levelColor, levelBg, levelIcon): Triple<Color, Color, ImageVector> = when (level) {
+    val (levelColor, levelBg, levelIcon) = when (level) {
         "warning" -> Triple(Color(0xFFD48806), Color(0xFFFFF4E0), Icons.Default.Warning)
         "critical" -> Triple(Color(0xFFE0483D), Color(0xFFFBE9E7), Icons.Default.Error)
         else -> Triple(cs.primary, cs.primary.copy(alpha = 0.10f), Icons.Default.Info)
