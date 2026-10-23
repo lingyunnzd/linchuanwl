@@ -176,6 +176,20 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
         initUserPreferencesManager(applicationContext, defaultProfileName)
         AppLogger.d(TAG, "【启动计时】用户偏好管理器初始化完成 - ${System.currentTimeMillis() - startTime}ms")
 
+        // 霖川云同步模块初始化（本地优先：未登录时完全不影响任何本地功能）
+        try {
+            com.ai.assistance.operit.sync.SyncManager.init(
+                context = applicationContext,
+                storage = com.ai.assistance.operit.sync.OperitSyncAdapter(
+                    modelConfigManager = com.ai.assistance.operit.data.preferences.ModelConfigManager(applicationContext),
+                    chatDao = database.chatDao(),
+                ),
+            )
+            AppLogger.d(TAG, "【启动计时】霖川云同步模块初始化完成 - ${System.currentTimeMillis() - startTime}ms")
+        } catch (e: Exception) {
+            AppLogger.e(TAG, "霖川云同步模块初始化失败", e)
+        }
+
         // Run the legacy token import during startup so upgrades retain statistics
         // even when the user opens another screen before visiting token stats.
         applicationScope.launch {

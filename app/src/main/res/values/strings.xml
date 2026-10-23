@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Operit AI</string>
+    <string name="app_name">霖川 AI</string>
     <string name="accessibility_service_description">用于获取UI层次结构，为AI助手提供更快速的界面分析能力，不会收集或存储任何个人信息。</string>
     
     <!-- 模型选择器相关 -->
@@ -667,7 +667,7 @@
     
     <!-- Plugin Loading Screen -->
     <string name="plugin_skip">跳过</string>
-    <string name="plugin_app_name">OPERIT</string>
+    <string name="plugin_app_name">霖川AI</string>
     <string name="plugin_status">已启动: %1$d / %2$d</string>
     <string name="plugin_loading_status_title">插件加载状态</string>
     <string name="plugin_loading_success">加载成功</string>

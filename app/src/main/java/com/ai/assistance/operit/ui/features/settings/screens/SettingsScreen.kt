@@ -25,11 +25,14 @@ import com.ai.assistance.operit.core.tools.defaultTool.standard.CookiePrivacyMan
 import com.ai.assistance.operit.data.model.FunctionType
 import com.ai.assistance.operit.data.preferences.GitHubAuthPreferences
 import com.ai.assistance.operit.data.repository.ChatHistoryManager
+import com.ai.assistance.operit.sync.AuthState
+import com.ai.assistance.operit.sync.SyncManager
 import com.ai.assistance.operit.ui.features.github.GitHubLoginDialog
 import com.ai.assistance.operit.ui.theme.LocalThemePreferenceSnapshot
 import com.ai.assistance.operit.util.AppLogger
 import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 // 保存滑动状态变量，使其跨重组保持
 private val SettingsScreenScrollPosition = mutableStateOf(0)
@@ -129,6 +132,9 @@ fun SettingsScreen(
                                 onDismissRequest = { showGitHubLogin = false }
                         )
                 }
+
+                // ======= 霖川云服务 =======
+                CloudSyncSection(cardContainerColor = cardContainerColor)
 
                 // ======= 个性化配置 =======
                 SettingsSection(
@@ -449,4 +455,207 @@ private fun CompactSettingsItem(
                         modifier = Modifier.size(16.dp)
                 )
         }
+}
+
+// ==================== 霖川云服务 ====================
+
+/** 霖川云服务区块：账号登录/注册 + 配置与话题的端到端加密同步 */
+@Composable
+private fun CloudSyncSection(cardContainerColor: Color) {
+        // 同步模块初始化失败时（极少数情况）不显示入口，避免崩溃
+        val syncReady = remember { runCatching { SyncManager.isInitialized() }.getOrDefault(false) }
+        if (!syncReady) return
+
+        val authState by SyncManager.state.collectAsState()
+        val scope = rememberCoroutineScope()
+        var showAuthDialog by remember { mutableStateOf(false) }
+        var busy by remember { mutableStateOf(false) }
+        var statusText by remember { mutableStateOf<String?>(null) }
+
+        SettingsSection(
+                title = "霖川云服务",
+                icon = Icons.Default.Cloud,
+                containerColor = cardContainerColor
+        ) {
+                when (val state = authState) {
+                        is AuthState.LoggedIn -> {
+                                CompactSettingsItem(
+                                        title = "已登录：${state.username}",
+                                        subtitle = statusText ?: "数据经 AES-256-GCM 端到端加密后同步",
+                                        icon = Icons.Default.CloudDone,
+                                        onClick = {}
+                                )
+                                CompactSettingsItem(
+                                        title = if (busy) "同步中…" else "立即同步",
+                                        subtitle = "上传并拉取模型配置与聊天话题",
+                                        icon = Icons.Default.Sync,
+                                        onClick = {
+                                                if (busy) return@CompactSettingsItem
+                                                busy = true
+                                                statusText = null
+                                                scope.launch {
+                                                        val errors = mutableListOf<String>()
+                                                        var pulledCount = 0
+                                                        SyncManager.pushSettings()
+                                                                .onFailure { errors.add("配置上传失败") }
+                                                        SyncManager.pullSettings()
+                                                                .onFailure { errors.add("配置拉取失败") }
+                                                        SyncManager.pullTopics()
+                                                                .onSuccess { pulledCount = it }
+                                                                .onFailure { errors.add("话题拉取失败") }
+                                                        SyncManager.pushTopics()
+                                                                .onFailure { errors.add("话题上传失败") }
+                                                        statusText = if (errors.isEmpty()) {
+                                                                if (pulledCount > 0) "同步完成，拉取 $pulledCount 条话题更新"
+                                                                else "同步完成，已是最新"
+                                                        } else {
+                                                                errors.distinct().joinToString("，")
+                                                        }
+                                                        busy = false
+                                                }
+                                        }
+                                )
+                                CompactSettingsItem(
+                                        title = "退出登录",
+                                        subtitle = "停止云端同步，本地数据完全保留",
+                                        icon = Icons.Default.Logout,
+                                        onClick = {
+                                                SyncManager.logout()
+                                                statusText = null
+                                        }
+                                )
+                        }
+                        AuthState.LoggedOut -> {
+                                CompactSettingsItem(
+                                        title = "登录 / 注册霖川账号",
+                                        subtitle = statusText ?: "登录后自动加密同步配置与话题到霖川云端",
+                                        icon = Icons.Default.CloudUpload,
+                                        onClick = { showAuthDialog = true }
+                                )
+                        }
+                }
+        }
+
+        if (showAuthDialog) {
+                CloudAuthDialog(
+                        onDismiss = { showAuthDialog = false },
+                        onSuccess = { username ->
+                                showAuthDialog = false
+                                statusText = "欢迎，$username"
+                        }
+                )
+        }
+}
+
+/** 登录/注册对话框：成功后自动派生加密密钥并做首次同步 */
+@Composable
+private fun CloudAuthDialog(onDismiss: () -> Unit, onSuccess: (String) -> Unit) {
+        var isRegister by remember { mutableStateOf(false) }
+        var username by remember { mutableStateOf("") }
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        var busy by remember { mutableStateOf(false) }
+        var errorText by remember { mutableStateOf<String?>(null) }
+        val scope = rememberCoroutineScope()
+
+        AlertDialog(
+                onDismissRequest = { if (!busy) onDismiss() },
+                title = { Text(if (isRegister) "注册霖川账号" else "登录霖川账号") },
+                text = {
+                        Column {
+                                OutlinedTextField(
+                                        value = username,
+                                        onValueChange = { username = it },
+                                        label = { Text("用户名") },
+                                        singleLine = true,
+                                        enabled = !busy,
+                                        modifier = Modifier.fillMaxWidth()
+                                )
+                                if (isRegister) {
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        OutlinedTextField(
+                                                value = email,
+                                                onValueChange = { email = it },
+                                                label = { Text("邮箱") },
+                                                singleLine = true,
+                                                enabled = !busy,
+                                                modifier = Modifier.fillMaxWidth()
+                                        )
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                OutlinedTextField(
+                                        value = password,
+                                        onValueChange = { password = it },
+                                        label = { Text("密码") },
+                                        singleLine = true,
+                                        enabled = !busy,
+                                        visualTransformation = PasswordVisualTransformation(),
+                                        modifier = Modifier.fillMaxWidth()
+                                )
+                                if (errorText != null) {
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Text(
+                                                text = errorText!!,
+                                                color = MaterialTheme.colorScheme.error,
+                                                style = MaterialTheme.typography.bodySmall
+                                        )
+                                }
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                        text = "密码用于派生加密密钥，云端无法读取你的数据",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                TextButton(
+                                        onClick = { isRegister = !isRegister; errorText = null },
+                                        enabled = !busy,
+                                        modifier = Modifier.align(Alignment.End)
+                                ) {
+                                        Text(if (isRegister) "已有账号？去登录" else "没有账号？去注册")
+                                }
+                        }
+                },
+                confirmButton = {
+                        TextButton(
+                                enabled = !busy && username.isNotBlank() && password.length >= 6 &&
+                                        (!isRegister || email.contains("@")),
+                                onClick = {
+                                        busy = true
+                                        errorText = null
+                                        scope.launch {
+                                                val result = if (isRegister) {
+                                                        SyncManager.register(username.trim(), email.trim(), password)
+                                                } else {
+                                                        SyncManager.login(username.trim(), password)
+                                                }
+                                                result.fold(
+                                                        onSuccess = { user ->
+                                                                // 派生密钥 → 首次同步：注册推送本地，登录拉取云端
+                                                                runCatching {
+                                                                        SyncManager.deriveKey(password)
+                                                                        if (isRegister) {
+                                                                                SyncManager.pushSettings()
+                                                                                SyncManager.pushTopics()
+                                                                        } else {
+                                                                                SyncManager.pullSettings()
+                                                                                SyncManager.pullTopics()
+                                                                        }
+                                                                }.onFailure { AppLogger.e("CloudSync", "首次同步失败", it) }
+                                                                onSuccess(user.username)
+                                                        },
+                                                        onFailure = { e ->
+                                                                errorText = e.message ?: "操作失败，请检查网络"
+                                                                busy = false
+                                                        }
+                                                )
+                                        }
+                                }
+                        ) {
+                                Text(if (busy) "请稍候…" else if (isRegister) "注册" else "登录")
+                        }
+                },
+                dismissButton = {
+                        TextButton(onClick = { if (!busy) onDismiss() }) { Text("取消") }
+                }
+        )
 }
