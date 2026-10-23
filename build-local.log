@@ -1,0 +1,1238 @@
+﻿To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.13/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :app
+WARNING: BuildType(clone): resValue 'string/app_name' value is being replaced.
+
+> Task :app:objectboxPrepareBuild UP-TO-DATE
+> Task :app:syncSttModelAssets
+> Task :app:syncMainAssets UP-TO-DATE
+> Task :app:verifyExternallyBuiltNativeLibraries
+> Task :app:preBuild
+> Task :app:preDebugBuild
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :showerclient:preBuild UP-TO-DATE
+> Task :showerclient:preDebugBuild UP-TO-DATE
+> Task :showerclient:compileDebugAidl NO-SOURCE
+> Task :terminal:preBuild UP-TO-DATE
+> Task :terminal:preDebugBuild UP-TO-DATE
+> Task :terminal:compileDebugAidl UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :dragonbones:preBuild UP-TO-DATE
+> Task :dragonbones:preDebugBuild UP-TO-DATE
+> Task :dragonbones:writeDebugAarMetadata UP-TO-DATE
+> Task :fbx:preBuild UP-TO-DATE
+> Task :fbx:preDebugBuild UP-TO-DATE
+> Task :fbx:writeDebugAarMetadata UP-TO-DATE
+> Task :llama:preBuild UP-TO-DATE
+> Task :llama:preDebugBuild UP-TO-DATE
+> Task :llama:writeDebugAarMetadata UP-TO-DATE
+> Task :mmd:preBuild UP-TO-DATE
+> Task :mmd:preDebugBuild UP-TO-DATE
+> Task :mmd:writeDebugAarMetadata UP-TO-DATE
+> Task :mnn:preBuild UP-TO-DATE
+> Task :mnn:preDebugBuild UP-TO-DATE
+> Task :mnn:writeDebugAarMetadata UP-TO-DATE
+> Task :quickjs:preBuild UP-TO-DATE
+> Task :quickjs:preDebugBuild UP-TO-DATE
+> Task :quickjs:writeDebugAarMetadata UP-TO-DATE
+> Task :showerclient:writeDebugAarMetadata UP-TO-DATE
+> Task :terminal:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :dragonbones:processDebugNavigationResources UP-TO-DATE
+> Task :fbx:processDebugNavigationResources UP-TO-DATE
+> Task :llama:processDebugNavigationResources UP-TO-DATE
+> Task :mmd:processDebugNavigationResources UP-TO-DATE
+> Task :mnn:processDebugNavigationResources UP-TO-DATE
+> Task :quickjs:processDebugNavigationResources UP-TO-DATE
+> Task :showerclient:processDebugNavigationResources UP-TO-DATE
+> Task :terminal:processDebugNavigationResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :dragonbones:generateDebugResValues UP-TO-DATE
+> Task :dragonbones:generateDebugResources UP-TO-DATE
+> Task :dragonbones:packageDebugResources UP-TO-DATE
+> Task :fbx:generateDebugResValues UP-TO-DATE
+> Task :fbx:generateDebugResources UP-TO-DATE
+> Task :fbx:packageDebugResources UP-TO-DATE
+> Task :llama:generateDebugResValues UP-TO-DATE
+> Task :llama:generateDebugResources UP-TO-DATE
+> Task :llama:packageDebugResources UP-TO-DATE
+> Task :mmd:generateDebugResValues UP-TO-DATE
+> Task :mmd:generateDebugResources UP-TO-DATE
+> Task :mmd:packageDebugResources UP-TO-DATE
+> Task :mnn:generateDebugResValues UP-TO-DATE
+> Task :mnn:generateDebugResources UP-TO-DATE
+> Task :mnn:packageDebugResources UP-TO-DATE
+> Task :quickjs:generateDebugResValues UP-TO-DATE
+> Task :quickjs:generateDebugResources UP-TO-DATE
+> Task :quickjs:packageDebugResources UP-TO-DATE
+> Task :showerclient:generateDebugResValues UP-TO-DATE
+> Task :showerclient:generateDebugResources UP-TO-DATE
+> Task :showerclient:packageDebugResources UP-TO-DATE
+> Task :terminal:generateDebugResValues UP-TO-DATE
+> Task :terminal:generateDebugResources UP-TO-DATE
+> Task :terminal:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :dragonbones:extractDeepLinksDebug UP-TO-DATE
+> Task :dragonbones:processDebugManifest UP-TO-DATE
+> Task :fbx:extractDeepLinksDebug UP-TO-DATE
+> Task :fbx:processDebugManifest UP-TO-DATE
+> Task :llama:extractDeepLinksDebug UP-TO-DATE
+> Task :llama:processDebugManifest UP-TO-DATE
+> Task :mmd:extractDeepLinksDebug UP-TO-DATE
+> Task :mmd:processDebugManifest UP-TO-DATE
+> Task :mnn:extractDeepLinksDebug UP-TO-DATE
+> Task :mnn:processDebugManifest UP-TO-DATE
+> Task :quickjs:extractDeepLinksDebug UP-TO-DATE
+> Task :quickjs:processDebugManifest UP-TO-DATE
+> Task :showerclient:extractDeepLinksDebug UP-TO-DATE
+> Task :showerclient:processDebugManifest UP-TO-DATE
+> Task :terminal:extractDeepLinksDebug UP-TO-DATE
+> Task :terminal:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :dragonbones:compileDebugLibraryResources UP-TO-DATE
+> Task :dragonbones:parseDebugLocalResources UP-TO-DATE
+> Task :dragonbones:generateDebugRFile UP-TO-DATE
+> Task :fbx:compileDebugLibraryResources UP-TO-DATE
+> Task :fbx:parseDebugLocalResources UP-TO-DATE
+> Task :fbx:generateDebugRFile UP-TO-DATE
+> Task :llama:compileDebugLibraryResources UP-TO-DATE
+> Task :llama:parseDebugLocalResources UP-TO-DATE
+> Task :llama:generateDebugRFile UP-TO-DATE
+> Task :mmd:compileDebugLibraryResources UP-TO-DATE
+> Task :mmd:parseDebugLocalResources UP-TO-DATE
+> Task :mmd:generateDebugRFile UP-TO-DATE
+> Task :mnn:compileDebugLibraryResources UP-TO-DATE
+> Task :mnn:parseDebugLocalResources UP-TO-DATE
+> Task :mnn:generateDebugRFile UP-TO-DATE
+> Task :quickjs:compileDebugLibraryResources UP-TO-DATE
+> Task :quickjs:parseDebugLocalResources UP-TO-DATE
+> Task :quickjs:generateDebugRFile UP-TO-DATE
+> Task :showerclient:compileDebugLibraryResources UP-TO-DATE
+> Task :showerclient:parseDebugLocalResources UP-TO-DATE
+> Task :showerclient:generateDebugRFile UP-TO-DATE
+> Task :terminal:compileDebugLibraryResources UP-TO-DATE
+> Task :terminal:parseDebugLocalResources UP-TO-DATE
+> Task :terminal:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :dragonbones:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dragonbones:compileDebugKotlin UP-TO-DATE
+> Task :dragonbones:javaPreCompileDebug UP-TO-DATE
+> Task :dragonbones:compileDebugJavaWithJavac NO-SOURCE
+> Task :dragonbones:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :fbx:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :fbx:compileDebugKotlin UP-TO-DATE
+> Task :fbx:javaPreCompileDebug UP-TO-DATE
+> Task :fbx:compileDebugJavaWithJavac NO-SOURCE
+> Task :fbx:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :llama:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :llama:compileDebugKotlin UP-TO-DATE
+> Task :llama:javaPreCompileDebug UP-TO-DATE
+> Task :llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :llama:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :mmd:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mmd:compileDebugKotlin UP-TO-DATE
+> Task :mmd:javaPreCompileDebug UP-TO-DATE
+> Task :mmd:compileDebugJavaWithJavac NO-SOURCE
+> Task :mmd:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :mnn:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mnn:compileDebugKotlin UP-TO-DATE
+> Task :mnn:javaPreCompileDebug UP-TO-DATE
+> Task :mnn:compileDebugJavaWithJavac NO-SOURCE
+> Task :mnn:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :quickjs:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :quickjs:compileDebugKotlin UP-TO-DATE
+> Task :quickjs:javaPreCompileDebug UP-TO-DATE
+> Task :quickjs:compileDebugJavaWithJavac NO-SOURCE
+> Task :quickjs:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :showerclient:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :showerclient:compileDebugKotlin UP-TO-DATE
+> Task :showerclient:javaPreCompileDebug UP-TO-DATE
+> Task :showerclient:compileDebugJavaWithJavac UP-TO-DATE
+> Task :showerclient:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :terminal:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :terminal:compileDebugKotlin UP-TO-DATE
+> Task :terminal:javaPreCompileDebug UP-TO-DATE
+> Task :terminal:compileDebugJavaWithJavac UP-TO-DATE
+> Task :terminal:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :app:kaptDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :dragonbones:mergeDebugShaders UP-TO-DATE
+> Task :dragonbones:compileDebugShaders NO-SOURCE
+> Task :dragonbones:generateDebugAssets UP-TO-DATE
+> Task :dragonbones:mergeDebugAssets UP-TO-DATE
+> Task :fbx:mergeDebugShaders UP-TO-DATE
+> Task :fbx:compileDebugShaders NO-SOURCE
+> Task :fbx:generateDebugAssets UP-TO-DATE
+> Task :fbx:mergeDebugAssets UP-TO-DATE
+> Task :llama:mergeDebugShaders UP-TO-DATE
+> Task :llama:compileDebugShaders NO-SOURCE
+> Task :llama:generateDebugAssets UP-TO-DATE
+> Task :llama:mergeDebugAssets UP-TO-DATE
+> Task :mmd:mergeDebugShaders UP-TO-DATE
+> Task :mmd:compileDebugShaders NO-SOURCE
+> Task :mmd:generateDebugAssets UP-TO-DATE
+> Task :mmd:mergeDebugAssets UP-TO-DATE
+> Task :mnn:mergeDebugShaders UP-TO-DATE
+> Task :mnn:compileDebugShaders NO-SOURCE
+> Task :mnn:generateDebugAssets UP-TO-DATE
+> Task :mnn:mergeDebugAssets UP-TO-DATE
+> Task :quickjs:mergeDebugShaders UP-TO-DATE
+> Task :quickjs:compileDebugShaders NO-SOURCE
+> Task :quickjs:generateDebugAssets UP-TO-DATE
+> Task :quickjs:mergeDebugAssets UP-TO-DATE
+> Task :showerclient:mergeDebugShaders UP-TO-DATE
+> Task :showerclient:compileDebugShaders NO-SOURCE
+> Task :showerclient:generateDebugAssets UP-TO-DATE
+> Task :showerclient:mergeDebugAssets UP-TO-DATE
+> Task :terminal:mergeDebugShaders UP-TO-DATE
+> Task :terminal:compileDebugShaders NO-SOURCE
+> Task :terminal:generateDebugAssets UP-TO-DATE
+> Task :terminal:mergeDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:l8DexDesugarLibDebug UP-TO-DATE
+> Task :dragonbones:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :terminal:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :mnn:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :llama:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :mmd:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :fbx:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :showerclient:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :quickjs:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :dragonbones:processDebugJavaRes UP-TO-DATE
+> Task :fbx:processDebugJavaRes UP-TO-DATE
+> Task :llama:processDebugJavaRes UP-TO-DATE
+> Task :mmd:processDebugJavaRes UP-TO-DATE
+> Task :mnn:processDebugJavaRes UP-TO-DATE
+> Task :quickjs:processDebugJavaRes UP-TO-DATE
+> Task :showerclient:processDebugJavaRes UP-TO-DATE
+> Task :terminal:processDebugJavaRes UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :dragonbones:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :terminal:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :mnn:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :llama:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :mmd:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :fbx:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :showerclient:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :quickjs:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:preCloneBuild
+> Task :app:compileDebugKotlin
+> Task :app:configureCMakeDebug[arm64-v8a]
+
+> Task :app:compileDebugKotlin
+gradle.bat : e: file:///C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/main/java/com/ai/assistance/ope
+rit/sync/SyncManager.kt:87:17 Assignment type mismatch: actual type is 'SharedPreferences', but 'EncryptedSharedPrefere
+nces' was expected.
+At line:15 char:1830
++ ... $env:PATH"; & "C:\Users\lingyun\Documents\Trae-CN\default\tools\gradl ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (e: file:///C:/U...' was expected.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+> Task :app:compileDebugKotlin FAILED
+
+> Task :app:configureCMakeDebug[arm64-v8a]
+C/C++: -- Downloading...
+C/C++:    dst='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/v3.12.0.tar.gz'
+C/C++:    timeout='none'
+C/C++:    inactivity timeout='none'
+C/C++: -- Using src='https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz'
+C/C++: -- [download 0% complete]
+C/C++: -- [download 1% complete]
+C/C++: -- [download 2% complete]
+C/C++: -- [download 3% complete]
+C/C++: -- [download 4% complete]
+C/C++: -- [download 5% complete]
+C/C++: -- [download 6% complete]
+C/C++: -- [download 7% complete]
+C/C++: -- [download 8% complete]
+C/C++: -- [download 9% complete]
+C/C++: -- [download 10% complete]
+C/C++: -- [download 11% complete]
+C/C++: -- [download 12% complete]
+C/C++: -- [download 13% complete]
+C/C++: -- [download 14% complete]
+C/C++: -- [download 15% complete]
+C/C++: -- [download 16% complete]
+C/C++: -- [download 17% complete]
+C/C++: -- [download 18% complete]
+C/C++: -- [download 19% complete]
+C/C++: -- [download 20% complete]
+C/C++: -- [download 21% complete]
+C/C++: -- [download 22% complete]
+C/C++: -- [download 23% complete]
+C/C++: -- [download 24% complete]
+C/C++: -- [download 25% complete]
+C/C++: -- [download 26% complete]
+C/C++: -- [download 27% complete]
+C/C++: -- [download 28% complete]
+C/C++: -- [download 29% complete]
+C/C++: -- [download 30% complete]
+C/C++: -- [download 31% complete]
+C/C++: -- [download 32% complete]
+C/C++: -- [download 33% complete]
+C/C++: -- [download 34% complete]
+C/C++: -- [download 35% complete]
+C/C++: -- [download 36% complete]
+C/C++: -- [download 37% complete]
+C/C++: -- [download 38% complete]
+C/C++: -- [download 39% complete]
+C/C++: -- [download 40% complete]
+C/C++: -- [download 41% complete]
+C/C++: -- [download 42% complete]
+C/C++: -- [download 43% complete]
+C/C++: -- [download 44% complete]
+C/C++: -- [download 45% complete]
+C/C++: -- [download 46% complete]
+C/C++: -- [download 47% complete]
+C/C++: -- [download 48% complete]
+C/C++: -- [download 49% complete]
+C/C++: -- [download 50% complete]
+C/C++: -- [download 51% complete]
+C/C++: -- [download 52% complete]
+C/C++: -- [download 53% complete]
+C/C++: -- [download 54% complete]
+C/C++: -- [download 55% complete]
+C/C++: -- [download 56% complete]
+C/C++: -- [download 57% complete]
+C/C++: -- [download 58% complete]
+C/C++: -- [download 59% complete]
+C/C++: -- [download 60% complete]
+C/C++: -- [download 61% complete]
+C/C++: -- [download 62% complete]
+C/C++: -- [download 63% complete]
+C/C++: -- [download 64% complete]
+C/C++: -- [download 65% complete]
+C/C++: -- [download 66% complete]
+C/C++: -- [download 67% complete]
+C/C++: -- [download 68% complete]
+C/C++: -- [download 69% complete]
+C/C++: -- [download 70% complete]
+C/C++: -- [download 71% complete]
+C/C++: -- [download 72% complete]
+C/C++: -- [download 73% complete]
+C/C++: -- [download 74% complete]
+C/C++: -- [download 75% complete]
+C/C++: -- [download 76% complete]
+C/C++: -- [download 77% complete]
+C/C++: -- [download 78% complete]
+C/C++: -- [download 79% complete]
+C/C++: -- [download 80% complete]
+C/C++: -- [download 81% complete]
+C/C++: -- [download 82% complete]
+C/C++: -- [download 83% complete]
+C/C++: -- [download 84% complete]
+C/C++: -- [download 85% complete]
+C/C++: -- [download 86% complete]
+C/C++: -- [download 87% complete]
+C/C++: -- [download 88% complete]
+C/C++: -- [download 89% complete]
+C/C++: -- [download 90% complete]
+C/C++: -- [download 91% complete]
+C/C++: -- [download 92% complete]
+C/C++: -- [download 93% complete]
+C/C++: -- [download 94% complete]
+C/C++: -- [download 95% complete]
+C/C++: -- [download 96% complete]
+C/C++: -- [download 97% complete]
+C/C++: -- [download 98% complete]
+C/C++: -- [download 99% complete]
+C/C++: -- [download 100% complete]
+C/C++: -- verifying file...
+C/C++:        file='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/v3.12.0.tar.gz'
+C/C++: -- Downloading... done
+C/C++: -- extracting...
+C/C++:      src='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/v3.12.0.tar.gz'
+C/C++:      dst='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-src'
+C/C++: -- extracting... [tar xfz]
+C/C++: -- extracting... [analysis]
+C/C++: -- extracting... [rename]
+C/C++: -- extracting... [clean up]
+C/C++: -- extracting... done
+C/C++: [1/9] Creating directories for 'json-populate'
+C/C++: [1/9] Performing download step (download, verify and extract) for 'json-populate'
+C/C++: [2/9] No update step for 'json-populate'
+C/C++: [4/9] No patch step for 'json-populate'
+C/C++: [5/9] No configure step for 'json-populate'
+C/C++: FAILED: json-populate-prefix/src/json-populate-stamp/json-populate-configure C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/json-populate-stamp/json-populate-configure 
+C/C++: cmd.exe /C "cd /D C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\app\.cxx\Debug\66g4x1a4\arm64-v8a\_deps\json-build && C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe -E echo_append && C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe -E touch C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/json-populate-stamp/json-populate-configure"
+C/C++: 系统找不到指定的路径。
+C/C++: ninja: build stopped: subcommand failed.
+C/C++: CMake Error at C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchContent.cmake:1087 (message):
+C/C++:   Build step for json failed: 1
+C/C++: Call Stack (most recent call first):
+C/C++:   C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchContent.cmake:1216:EVAL:2 (__FetchContent_directPopulate)
+C/C++:   C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchContent.cmake:1216 (cmake_language)
+C/C++:   .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/cmake/json.cmake:37 (FetchContent_Populate)
+C/C++:   .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/cmake/json.cmake:44 (download_json)
+C/C++:   .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/CMakeLists.txt:188 (include)
+
+> Task :app:configureCMakeDebug[arm64-v8a] FAILED
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCo
+mpilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:configureCMakeDebug[arm64-v8a]'.
+> [CXX1429] error when building with cmake using C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\app\src\main\c
+pp\CMakeLists.txt: -- The C compiler identification is Clang 18.0.1
+  -- The CXX compiler identification is Clang 18.0.1
+  -- Detecting C compiler ABI info
+  -- Detecting C compiler ABI info - done
+  -- Check for working C compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/ll
+vm/prebuilt/windows-x86_64/bin/clang.exe - skipped
+  -- Detecting C compile features
+  -- Detecting C compile features - done
+  -- Detecting CXX compiler ABI info
+  -- Detecting CXX compiler ABI info - done
+  -- Check for working CXX compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/
+llvm/prebuilt/windows-x86_64/bin/clang++.exe - skipped
+  -- Detecting CXX compile features
+  -- Detecting CXX compile features - done
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/ma
+in/cpp/.cxx/operit_deps/pre/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2.tar.gz
+  -- CMAKE_EXPORT_COMPILE_COMMANDS: ON
+  -- BUILD_SHARED_LIBS OFF
+  -- SHERPA_NCNN_ENABLE_PYTHON OFF
+  -- SHERPA_NCNN_ENABLE_PORTAUDIO OFF
+  -- SHERPA_NCNN_ENABLE_JNI ON
+  -- SHERPA_NCNN_ENABLE_BINARY OFF
+  -- SHERPA_NCNN_ENABLE_TEST OFF
+  -- SHERPA_NCNN_ENABLE_C_API OFF
+  -- SHERPA_NCNN_ENABLE_GENERATE_INT8_SCALE_TABLE OFF
+  -- SHERPA_NCNN_ENABLE_FFMPEG_EXAMPLES OFF
+  -- SHERPA_NCNN_ENABLE_WASM OFF
+  -- SHERPA_NCNN_ENABLE_WASM_FOR_NODEJS OFF
+  -- CMAKE_BUILD_TYPE: Debug
+  -- Downloading kaldi-native-fbank from https://github.com/csukuangfj/kaldi-native-fbank/archive/refs/tags/v1.22.3.tar
+.gz
+  -- kaldi-native-fbank is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a
+4/arm64-v8a/_deps/kaldi_native_fbank-src
+  -- kaldi-native-fbank's binary dir is C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4
+/arm64-v8a/_deps/kaldi_native_fbank-build
+  -- CMAKE_BUILD_TYPE: Debug
+  -- CMAKE_EXPORT_COMPILE_COMMANDS: ON
+  -- BUILD_SHARED_LIBS: OFF
+  -- KALDI_NATIVE_FBANK_BUILD_TESTS: OFF
+  -- KALDI_NATIVE_FBANK_BUILD_PYTHON: OFF
+  -- KALDI_NATIVE_FBANK_ENABLE_CHECK: OFF
+  -- KALDI_NATIVE_FBANK_ENABLE_CHECK: OFF
+  -- CMAKE_CXX_FLAGS: -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-can
+onical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17
+  -- CMAKE_INSTALL_PREFIX: C:/Program Files (x86)/streamnative
+  -- Looking for C++ include cxxabi.h
+  -- Looking for C++ include cxxabi.h - found
+  -- Looking for C++ include execinfo.h
+  -- Looking for C++ include execinfo.h - found
+  -- Downloading kissfft from https://github.com/mborgerding/kissfft/archive/febd4caeed32e33ad8b2e0bb5ea77542c40f18ec.z
+ip
+  -- kissfft is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a
+/_deps/kissfft-src
+  -- kissfft's binary dir is C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/
+_deps/kissfft-build
+  -- Building KissFFT with datatype: float
+  -- Building static library
+  -- PKGINCLUDEDIR is /kissfft
+  -- Disable building Python
+  -- Downloading kaldifst from https://github.com/k2-fsa/kaldifst/archive/refs/tags/v1.7.17.tar.gz
+  -- kaldifst is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8
+a/_deps/kaldifst-src
+  -- kaldifst's binary dir is C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a
+/_deps/kaldifst-build
+  -- CMAKE_BUILD_TYPE: Debug
+  -- CMAKE_BUILD_TYPE: Debug
+  -- CMAKE_INSTALL_PREFIX: C:/Program Files (x86)/streamnative
+  -- BUILD_SHARED_LIBS OFF
+  -- C++ Standard version: 17
+  -- CMAKE_CXX_FLAGS: -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-can
+onical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17
+  -- Downloading openfst from https://github.com/csukuangfj/openfst/archive/refs/tags/sherpa-onnx-2024-06-19.tar.gz
+  -- openfst is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a
+/_deps/openfst-src
+  -- Found the following ICU libraries:
+  --   data (required)
+  --   i18n (required)
+  --   io (required)
+  --   test (required)
+  --   tu (required)
+  --   uc (required)
+  -- Failed to find all ICU components (missing: ICU_LIBRARY) (found version "75.1")
+  -- Found ZLIB: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/window
+s-x86_64/sysroot/usr/lib/aarch64-linux-android/26/libz.so (found version "1.3.0.1") 
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/ma
+in/cpp/.cxx/operit_deps/pre/ncnn-11bfbb4b2206023d34f32579a14abf9241052d09.tar.gz
+  -- ncnn source dir: C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/main/cpp/.cxx/operit_deps/ncnn-11
+bfbb4b2206023d34f32579a14abf9241052d09-src
+  -- ncnn binary dir: C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/main/cpp/.cxx/operit_deps/ncnn-11
+bfbb4b2206023d34f32579a14abf9241052d09-build
+  -- CMAKE_TOOLCHAIN_FILE = C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/build/cmake/android.
+toolchain.cmake
+  -- CMAKE_INSTALL_PREFIX = C:/Program Files (x86)/streamnative
+  -- NCNN_VERSION_STRING = 1.0.20261022
+  -- Performing Test NCNN_COMPILER_SUPPORT_GNU_INLINE_ASM
+  -- Performing Test NCNN_COMPILER_SUPPORT_GNU_INLINE_ASM - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM_VFPV4
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM_VFPV4 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_DOTPROD
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_DOTPROD - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16FML
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16FML - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_BF16
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_BF16 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_I8MM
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_I8MM - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE2
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE2 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEBF16
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEBF16 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEI8MM
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEI8MM - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEF32MM
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEF32MM - Success
+  -- Target arch: arm 64bit
+  -- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY
+  -- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY - Success
+  -- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+  -- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY - Success
+  -- Performing Test COMPILER_HAS_DEPRECATED_ATTR
+  -- Performing Test COMPILER_HAS_DEPRECATED_ATTR - Success
+  -- Looking for pthread.h
+  -- Looking for pthread.h - found
+  -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+  -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+  -- Check if compiler accepts -pthread
+  -- Check if compiler accepts -pthread - yes
+  -- Found Threads: TRUE  
+  -- Downloading json from https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz
+  -- Configuring incomplete, errors occurred!
+  
+  C++ build system [configure] failed while executing:
+      @echo off
+      "C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\cmake.exe" ^
+        "-HC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\src\\main\\cpp" ^
+        "-DCMAKE_SYSTEM_NAME=Android" ^
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" ^
+        "-DCMAKE_SYSTEM_VERSION=26" ^
+        "-DANDROID_PLATFORM=android-26" ^
+        "-DANDROID_ABI=arm64-v8a" ^
+        "-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a" ^
+        "-DANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_ANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_TOOLCHAIN_FILE=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973\\build\
+\cmake\\android.toolchain.cmake" ^
+        "-DCMAKE_MAKE_PROGRAM=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\ninja.ex
+e" ^
+        "-DCMAKE_CXX_FLAGS=-std=c++17" ^
+        "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\build\\i
+ntermediates\\cxx\\Debug\\66g4x1a4\\obj\\arm64-v8a" ^
+        "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\build\\i
+ntermediates\\cxx\\Debug\\66g4x1a4\\obj\\arm64-v8a" ^
+        "-DCMAKE_BUILD_TYPE=Debug" ^
+        "-BC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\.cxx\\Debug\\66g4x1a4\\arm64-v8a" ^
+        -GNinja
+    from C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\app
+  -- Downloading...
+     dst='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild
+/json-populate-prefix/src/v3.12.0.tar.gz'
+     timeout='none'
+     inactivity timeout='none'
+  -- Using src='https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz'
+  -- [download 0% complete]
+  -- [download 1% complete]
+  -- [download 2% complete]
+  -- [download 3% complete]
+  -- [download 4% complete]
+  -- [download 5% complete]
+  -- [download 6% complete]
+  -- [download 7% complete]
+  -- [download 8% complete]
+  -- [download 9% complete]
+  -- [download 10% complete]
+  -- [download 11% complete]
+  -- [download 12% complete]
+  -- [download 13% complete]
+  -- [download 14% complete]
+  -- [download 15% complete]
+  -- [download 16% complete]
+  -- [download 17% complete]
+  -- [download 18% complete]
+  -- [download 19% complete]
+  -- [download 20% complete]
+  -- [download 21% complete]
+  -- [download 22% complete]
+  -- [download 23% complete]
+  -- [download 24% complete]
+  -- [download 25% complete]
+  -- [download 26% complete]
+  -- [download 27% complete]
+  -- [download 28% complete]
+  -- [download 29% complete]
+  -- [download 30% complete]
+  -- [download 31% complete]
+  -- [download 32% complete]
+  -- [download 33% complete]
+  -- [download 34% complete]
+  -- [download 35% complete]
+  -- [download 36% complete]
+  -- [download 37% complete]
+  -- [download 38% complete]
+  -- [download 39% complete]
+  -- [download 40% complete]
+  -- [download 41% complete]
+  -- [download 42% complete]
+  -- [download 43% complete]
+  -- [download 44% complete]
+  -- [download 45% complete]
+  -- [download 46% complete]
+  -- [download 47% complete]
+  -- [download 48% complete]
+  -- [download 49% complete]
+  -- [download 50% complete]
+  -- [download 51% complete]
+  -- [download 52% complete]
+  -- [download 53% complete]
+  -- [download 54% complete]
+  -- [download 55% complete]
+  -- [download 56% complete]
+  -- [download 57% complete]
+  -- [download 58% complete]
+  -- [download 59% complete]
+  -- [download 60% complete]
+  -- [download 61% complete]
+  -- [download 62% complete]
+  -- [download 63% complete]
+  -- [download 64% complete]
+  -- [download 65% complete]
+  -- [download 66% complete]
+  -- [download 67% complete]
+  -- [download 68% complete]
+  -- [download 69% complete]
+  -- [download 70% complete]
+  -- [download 71% complete]
+  -- [download 72% complete]
+  -- [download 73% complete]
+  -- [download 74% complete]
+  -- [download 75% complete]
+  -- [download 76% complete]
+  -- [download 77% complete]
+  -- [download 78% complete]
+  -- [download 79% complete]
+  -- [download 80% complete]
+  -- [download 81% complete]
+  -- [download 82% complete]
+  -- [download 83% complete]
+  -- [download 84% complete]
+  -- [download 85% complete]
+  -- [download 86% complete]
+  -- [download 87% complete]
+  -- [download 88% complete]
+  -- [download 89% complete]
+  -- [download 90% complete]
+  -- [download 91% complete]
+  -- [download 92% complete]
+  -- [download 93% complete]
+  -- [download 94% complete]
+  -- [download 95% complete]
+  -- [download 96% complete]
+  -- [download 97% complete]
+  -- [download 98% complete]
+  -- [download 99% complete]
+  -- [download 100% complete]
+  -- verifying file...
+         file='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-sub
+build/json-populate-prefix/src/v3.12.0.tar.gz'
+  -- Downloading... done
+  -- extracting...
+       src='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbui
+ld/json-populate-prefix/src/v3.12.0.tar.gz'
+       dst='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-src'
+  -- extracting... [tar xfz]
+  -- extracting... [analysis]
+  -- extracting... [rename]
+  -- extracting... [clean up]
+  -- extracting... done
+  [1/9] Creating directories for 'json-populate'
+  [1/9] Performing download step (download, verify and extract) for 'json-populate'
+  [2/9] No update step for 'json-populate'
+  [4/9] No patch step for 'json-populate'
+  [5/9] No configure step for 'json-populate'
+  FAILED: json-populate-prefix/src/json-populate-stamp/json-populate-configure C:/Users/lingyun/Documents/Trae-CN/defau
+lt/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/json-populate-stamp/json
+-populate-configure 
+  cmd.exe /C "cd /D C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\app\.cxx\Debug\66g4x1a4\arm64-v8a\_deps\jso
+n-build && C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe -E echo_append && C:\Users\l
+ingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe -E touch C:/Users/lingyun/Documents/Trae-CN/defau
+lt/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/json-populate-stamp/json
+-populate-configure"
+  系统找不到指定的路径。
+  ninja: build stopped: subcommand failed.
+  
+  CMake Error at C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchConten
+t.cmake:1087 (message):
+    Build step for json failed: 1
+  Call Stack (most recent call first):
+    C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchContent.cmake:1216:
+EVAL:2 (__FetchContent_directPopulate)
+    C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchContent.cmake:1216 
+(cmake_language)
+    .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/cmake/json.cmake:37 (FetchContent_Populat
+e)
+    .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/cmake/json.cmake:44 (download_json)
+    .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/CMakeLists.txt:188 (include) : com.androi
+d.ide.common.process.ProcessException: -- The C compiler identification is Clang 18.0.1
+  -- The CXX compiler identification is Clang 18.0.1
+  -- Detecting C compiler ABI info
+  -- Detecting C compiler ABI info - done
+  -- Check for working C compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/ll
+vm/prebuilt/windows-x86_64/bin/clang.exe - skipped
+  -- Detecting C compile features
+  -- Detecting C compile features - done
+  -- Detecting CXX compiler ABI info
+  -- Detecting CXX compiler ABI info - done
+  -- Check for working CXX compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/
+llvm/prebuilt/windows-x86_64/bin/clang++.exe - skipped
+  -- Detecting CXX compile features
+  -- Detecting CXX compile features - done
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/ma
+in/cpp/.cxx/operit_deps/pre/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2.tar.gz
+  -- CMAKE_EXPORT_COMPILE_COMMANDS: ON
+  -- BUILD_SHARED_LIBS OFF
+  -- SHERPA_NCNN_ENABLE_PYTHON OFF
+  -- SHERPA_NCNN_ENABLE_PORTAUDIO OFF
+  -- SHERPA_NCNN_ENABLE_JNI ON
+  -- SHERPA_NCNN_ENABLE_BINARY OFF
+  -- SHERPA_NCNN_ENABLE_TEST OFF
+  -- SHERPA_NCNN_ENABLE_C_API OFF
+  -- SHERPA_NCNN_ENABLE_GENERATE_INT8_SCALE_TABLE OFF
+  -- SHERPA_NCNN_ENABLE_FFMPEG_EXAMPLES OFF
+  -- SHERPA_NCNN_ENABLE_WASM OFF
+  -- SHERPA_NCNN_ENABLE_WASM_FOR_NODEJS OFF
+  -- CMAKE_BUILD_TYPE: Debug
+  -- Downloading kaldi-native-fbank from https://github.com/csukuangfj/kaldi-native-fbank/archive/refs/tags/v1.22.3.tar
+.gz
+  -- kaldi-native-fbank is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a
+4/arm64-v8a/_deps/kaldi_native_fbank-src
+  -- kaldi-native-fbank's binary dir is C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4
+/arm64-v8a/_deps/kaldi_native_fbank-build
+  -- CMAKE_BUILD_TYPE: Debug
+  -- CMAKE_EXPORT_COMPILE_COMMANDS: ON
+  -- BUILD_SHARED_LIBS: OFF
+  -- KALDI_NATIVE_FBANK_BUILD_TESTS: OFF
+  -- KALDI_NATIVE_FBANK_BUILD_PYTHON: OFF
+  -- KALDI_NATIVE_FBANK_ENABLE_CHECK: OFF
+  -- KALDI_NATIVE_FBANK_ENABLE_CHECK: OFF
+  -- CMAKE_CXX_FLAGS: -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-can
+onical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17
+  -- CMAKE_INSTALL_PREFIX: C:/Program Files (x86)/streamnative
+  -- Looking for C++ include cxxabi.h
+  -- Looking for C++ include cxxabi.h - found
+  -- Looking for C++ include execinfo.h
+  -- Looking for C++ include execinfo.h - found
+  -- Downloading kissfft from https://github.com/mborgerding/kissfft/archive/febd4caeed32e33ad8b2e0bb5ea77542c40f18ec.z
+ip
+  -- kissfft is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a
+/_deps/kissfft-src
+  -- kissfft's binary dir is C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/
+_deps/kissfft-build
+  -- Building KissFFT with datatype: float
+  -- Building static library
+  -- PKGINCLUDEDIR is /kissfft
+  -- Disable building Python
+  -- Downloading kaldifst from https://github.com/k2-fsa/kaldifst/archive/refs/tags/v1.7.17.tar.gz
+  -- kaldifst is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8
+a/_deps/kaldifst-src
+  -- kaldifst's binary dir is C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a
+/_deps/kaldifst-build
+  -- CMAKE_BUILD_TYPE: Debug
+  -- CMAKE_BUILD_TYPE: Debug
+  -- CMAKE_INSTALL_PREFIX: C:/Program Files (x86)/streamnative
+  -- BUILD_SHARED_LIBS OFF
+  -- C++ Standard version: 17
+  -- CMAKE_CXX_FLAGS: -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-can
+onical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -std=c++17
+  -- Downloading openfst from https://github.com/csukuangfj/openfst/archive/refs/tags/sherpa-onnx-2024-06-19.tar.gz
+  -- openfst is downloaded to C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a
+/_deps/openfst-src
+  -- Found the following ICU libraries:
+  --   data (required)
+  --   i18n (required)
+  --   io (required)
+  --   test (required)
+  --   tu (required)
+  --   uc (required)
+  -- Failed to find all ICU components (missing: ICU_LIBRARY) (found version "75.1")
+  -- Found ZLIB: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/window
+s-x86_64/sysroot/usr/lib/aarch64-linux-android/26/libz.so (found version "1.3.0.1") 
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/ma
+in/cpp/.cxx/operit_deps/pre/ncnn-11bfbb4b2206023d34f32579a14abf9241052d09.tar.gz
+  -- ncnn source dir: C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/main/cpp/.cxx/operit_deps/ncnn-11
+bfbb4b2206023d34f32579a14abf9241052d09-src
+  -- ncnn binary dir: C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/src/main/cpp/.cxx/operit_deps/ncnn-11
+bfbb4b2206023d34f32579a14abf9241052d09-build
+  -- CMAKE_TOOLCHAIN_FILE = C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/build/cmake/android.
+toolchain.cmake
+  -- CMAKE_INSTALL_PREFIX = C:/Program Files (x86)/streamnative
+  -- NCNN_VERSION_STRING = 1.0.20261022
+  -- Performing Test NCNN_COMPILER_SUPPORT_GNU_INLINE_ASM
+  -- Performing Test NCNN_COMPILER_SUPPORT_GNU_INLINE_ASM - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM_VFPV4
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM_VFPV4 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_DOTPROD
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_DOTPROD - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16FML
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM82_FP16FML - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_BF16
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_BF16 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_I8MM
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM84_I8MM - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE2
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVE2 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEBF16
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEBF16 - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEI8MM
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEI8MM - Success
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEF32MM
+  -- Performing Test NCNN_COMPILER_SUPPORT_ARM86_SVEF32MM - Success
+  -- Target arch: arm 64bit
+  -- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY
+  -- Performing Test COMPILER_HAS_HIDDEN_VISIBILITY - Success
+  -- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY
+  -- Performing Test COMPILER_HAS_HIDDEN_INLINE_VISIBILITY - Success
+  -- Performing Test COMPILER_HAS_DEPRECATED_ATTR
+  -- Performing Test COMPILER_HAS_DEPRECATED_ATTR - Success
+  -- Looking for pthread.h
+  -- Looking for pthread.h - found
+  -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+  -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+  -- Check if compiler accepts -pthread
+  -- Check if compiler accepts -pthread - yes
+  -- Found Threads: TRUE  
+  -- Downloading json from https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz
+  -- Configuring incomplete, errors occurred!
+  
+  C++ build system [configure] failed while executing:
+      @echo off
+      "C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\cmake.exe" ^
+        "-HC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\src\\main\\cpp" ^
+        "-DCMAKE_SYSTEM_NAME=Android" ^
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" ^
+        "-DCMAKE_SYSTEM_VERSION=26" ^
+        "-DANDROID_PLATFORM=android-26" ^
+        "-DANDROID_ABI=arm64-v8a" ^
+        "-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a" ^
+        "-DANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_ANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_TOOLCHAIN_FILE=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973\\build\
+\cmake\\android.toolchain.cmake" ^
+        "-DCMAKE_MAKE_PROGRAM=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\ninja.ex
+e" ^
+        "-DCMAKE_CXX_FLAGS=-std=c++17" ^
+        "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\build\\i
+ntermediates\\cxx\\Debug\\66g4x1a4\\obj\\arm64-v8a" ^
+        "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\build\\i
+ntermediates\\cxx\\Debug\\66g4x1a4\\obj\\arm64-v8a" ^
+        "-DCMAKE_BUILD_TYPE=Debug" ^
+        "-BC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\app\\.cxx\\Debug\\66g4x1a4\\arm64-v8a" ^
+        -GNinja
+    from C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\app
+  -- Downloading...
+     dst='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild
+/json-populate-prefix/src/v3.12.0.tar.gz'
+     timeout='none'
+     inactivity timeout='none'
+  -- Using src='https://github.com/nlohmann/json/archive/refs/tags/v3.12.0.tar.gz'
+  -- [download 0% complete]
+  -- [download 1% complete]
+  -- [download 2% complete]
+  -- [download 3% complete]
+  -- [download 4% complete]
+  -- [download 5% complete]
+  -- [download 6% complete]
+  -- [download 7% complete]
+  -- [download 8% complete]
+  -- [download 9% complete]
+  -- [download 10% complete]
+  -- [download 11% complete]
+  -- [download 12% complete]
+  -- [download 13% complete]
+  -- [download 14% complete]
+  -- [download 15% complete]
+  -- [download 16% complete]
+  -- [download 17% complete]
+  -- [download 18% complete]
+  -- [download 19% complete]
+  -- [download 20% complete]
+  -- [download 21% complete]
+  -- [download 22% complete]
+  -- [download 23% complete]
+  -- [download 24% complete]
+  -- [download 25% complete]
+  -- [download 26% complete]
+  -- [download 27% complete]
+  -- [download 28% complete]
+  -- [download 29% complete]
+  -- [download 30% complete]
+  -- [download 31% complete]
+  -- [download 32% complete]
+  -- [download 33% complete]
+  -- [download 34% complete]
+  -- [download 35% complete]
+  -- [download 36% complete]
+  -- [download 37% complete]
+  -- [download 38% complete]
+  -- [download 39% complete]
+  -- [download 40% complete]
+  -- [download 41% complete]
+  -- [download 42% complete]
+  -- [download 43% complete]
+  -- [download 44% complete]
+  -- [download 45% complete]
+  -- [download 46% complete]
+  -- [download 47% complete]
+  -- [download 48% complete]
+  -- [download 49% complete]
+  -- [download 50% complete]
+  -- [download 51% complete]
+  -- [download 52% complete]
+  -- [download 53% complete]
+  -- [download 54% complete]
+  -- [download 55% complete]
+  -- [download 56% complete]
+  -- [download 57% complete]
+  -- [download 58% complete]
+  -- [download 59% complete]
+  -- [download 60% complete]
+  -- [download 61% complete]
+  -- [download 62% complete]
+  -- [download 63% complete]
+  -- [download 64% complete]
+  -- [download 65% complete]
+  -- [download 66% complete]
+  -- [download 67% complete]
+  -- [download 68% complete]
+  -- [download 69% complete]
+  -- [download 70% complete]
+  -- [download 71% complete]
+  -- [download 72% complete]
+  -- [download 73% complete]
+  -- [download 74% complete]
+  -- [download 75% complete]
+  -- [download 76% complete]
+  -- [download 77% complete]
+  -- [download 78% complete]
+  -- [download 79% complete]
+  -- [download 80% complete]
+  -- [download 81% complete]
+  -- [download 82% complete]
+  -- [download 83% complete]
+  -- [download 84% complete]
+  -- [download 85% complete]
+  -- [download 86% complete]
+  -- [download 87% complete]
+  -- [download 88% complete]
+  -- [download 89% complete]
+  -- [download 90% complete]
+  -- [download 91% complete]
+  -- [download 92% complete]
+  -- [download 93% complete]
+  -- [download 94% complete]
+  -- [download 95% complete]
+  -- [download 96% complete]
+  -- [download 97% complete]
+  -- [download 98% complete]
+  -- [download 99% complete]
+  -- [download 100% complete]
+  -- verifying file...
+         file='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-sub
+build/json-populate-prefix/src/v3.12.0.tar.gz'
+  -- Downloading... done
+  -- extracting...
+       src='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbui
+ld/json-populate-prefix/src/v3.12.0.tar.gz'
+       dst='C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-src'
+  -- extracting... [tar xfz]
+  -- extracting... [analysis]
+  -- extracting... [rename]
+  -- extracting... [clean up]
+  -- extracting... done
+  [1/9] Creating directories for 'json-populate'
+  [1/9] Performing download step (download, verify and extract) for 'json-populate'
+  [2/9] No update step for 'json-populate'
+  [4/9] No patch step for 'json-populate'
+  [5/9] No configure step for 'json-populate'
+  FAILED: json-populate-prefix/src/json-populate-stamp/json-populate-configure C:/Users/lingyun/Documents/Trae-CN/defau
+lt/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/json-populate-stamp/json
+-populate-configure 
+  cmd.exe /C "cd /D C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\app\.cxx\Debug\66g4x1a4\arm64-v8a\_deps\jso
+n-build && C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe -E echo_append && C:\Users\l
+ingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe -E touch C:/Users/lingyun/Documents/Trae-CN/defau
+lt/build/Operit/app/.cxx/Debug/66g4x1a4/arm64-v8a/_deps/json-subbuild/json-populate-prefix/src/json-populate-stamp/json
+-populate-configure"
+  系统找不到指定的路径。
+  ninja: build stopped: subcommand failed.
+  
+  CMake Error at C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchConten
+t.cmake:1087 (message):
+    Build step for json failed: 1
+  Call Stack (most recent call first):
+    C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchContent.cmake:1216:
+EVAL:2 (__FetchContent_directPopulate)
+    C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/cmake/3.22.1/share/cmake-3.22/Modules/FetchContent.cmake:1216 
+(cmake_language)
+    .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/cmake/json.cmake:37 (FetchContent_Populat
+e)
+    .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/cmake/json.cmake:44 (download_json)
+    .cxx/operit_deps/sherpa_ncnn-c61e50d61e9fbed5972afa4d95bc560e168affe2-src/CMakeLists.txt:188 (include)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:288)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:108)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:106)
+  	at com.android.build.gradle.internal.cxx.timing.TimingEnvironmentKt.time(TimingEnvironment.kt:32)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess(ExecuteProcess.kt:106)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess$default(ExecuteProcess.kt:85)
+  	at com.android.build.gradle.tasks.CmakeQueryMetadataGenerator.executeProcess(CmakeFileApiMetadataGenerator.kt:59)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator$configureOneAbi$1$1$3.invoke(ExternalNativeJsonGenerat
+or.kt:247)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator$configureOneAbi$1$1$3.invoke(ExternalNativeJsonGenerat
+or.kt:247)
+  	at com.android.build.gradle.internal.cxx.timing.TimingEnvironmentKt.time(TimingEnvironment.kt:32)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator.configureOneAbi(ExternalNativeJsonGenerator.kt:247)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator.configure(ExternalNativeJsonGenerator.kt:113)
+  	at com.android.build.gradle.tasks.ExternalNativeBuildJsonTask.doTaskAction(ExternalNativeBuildJsonTask.kt:89)
+  	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask$taskAction$$inlined$recordTaskAction$1.invoke(BaseTask.
+kt:78)
+  	at com.android.build.gradle.internal.tasks.Blocks.recordSpan(Blocks.java:51)
+  	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask.taskAction(UnsafeOutputsTask.kt:81)
+  	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+  	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:125)
+  	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.doExecute(StandardTaskAction.java:58)
+  	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:51)
+  	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:29)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution$3.run(TaskExecution.java:244)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:30)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:27)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:48)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.executeAction(TaskExecution.java:229)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.executeActions(TaskExecution.java:212)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.executeWithPreviousOutputFiles(TaskExecution.java:195)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.execute(TaskExecution.java:162)
+  	at org.gradle.internal.execution.steps.ExecuteStep.executeInternal(ExecuteStep.java:105)
+  	at org.gradle.internal.execution.steps.ExecuteStep.access$000(ExecuteStep.java:44)
+  	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:59)
+  	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:56)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:210)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:205)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+  	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
+  	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:44)
+  	at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
+  	at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
+  	at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
+  	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:50)
+  	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:28)
+  	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:67)
+  	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:37)
+  	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:61)
+  	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:26)
+  	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.jav
+a:69)
+  	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.jav
+a:46)
+  	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:40)
+  	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:29)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$1(BuildCacheStep.java:75)
+  	at org.gradle.internal.Either$Right.fold(Either.java:175)
+  	at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:73)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:48)
+  	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:46)
+  	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
+  	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
+  	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinis
+hedStep.java:37)
+  	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinis
+hedStep.java:27)
+  	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingS
+tateStep.java:49)
+  	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingS
+tateStep.java:27)
+  	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:
+71)
+  	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:
+39)
+  	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:65)
+  	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:36)
+  	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:107)
+  	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:56)
+  	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExe
+cutionStep.java:64)
+  	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExe
+cutionStep.java:43)
+  	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkSte
+p.java:125)
+  	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:56)
+  	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:36)
+  	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStarte
+dStep.java:38)
+  	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36
+)
+  	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23
+)
+  	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
+  	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
+  	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:3
+5)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:289)
+  	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
+  	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
+  	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
+  	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
+  	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperatio
+nFiringStep.java:67)
+  	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+  	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringSt
+ep.java:67)
+  	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringSt
+ep.java:39)
+  	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
+  	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
+  	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:48)
+  	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:35)
+  	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:61)
+  	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java
+:127)
+  	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+  	at org.gradle.api.internal.tasks.execution.ProblemsTaskPathTrackingTaskExecuter.execute(ProblemsTaskPathTrackingTask
+Executer.java:40)
+  	at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.jav
+a:46)
+  	at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter
+.java:51)
+  	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:
+57)
+  	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+  	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+181 actionable tasks: 4 executed, 177 up-to-date
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:210)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:205)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+  	at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGr
+aph.java:331)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGr
+aph.java:318)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(Defa
+ultTaskExecutionGraph.java:314)
+  	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskEx
+ecutionGraph.java:314)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskEx
+ecutionGraph.java:303)
+  	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+  	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+  	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+  	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+  	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+  	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  	at java.base/java.lang.Thread.run(Thread.java:1583)
+  Caused by: com.android.ide.common.process.ProcessException: Error while executing process C:\Users\lingyun\Documents\
+Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe with arguments {-HC:\Users\lingyun\Documents\Trae-CN\default\build
+\Operit\app\src\main\cpp -DCMAKE_SYSTEM_NAME=Android -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_SYSTEM_VERSION=26 -DAND
+ROID_PLATFORM=android-26 -DANDROID_ABI=arm64-v8a -DCMAKE_ANDROID_ARCH_ABI=arm64-v8a -DANDROID_NDK=C:\Users\lingyun\Docu
+ments\Trae-CN\default\tools\sdk\ndk\27.0.12077973 -DCMAKE_ANDROID_NDK=C:\Users\lingyun\Documents\Trae-CN\default\tools\
+sdk\ndk\27.0.12077973 -DCMAKE_TOOLCHAIN_FILE=C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\ndk\27.0.12077973\bui
+ld\cmake\android.toolchain.cmake -DCMAKE_MAKE_PROGRAM=C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1
+\bin\ninja.exe -DCMAKE_CXX_FLAGS=-std=c++17 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\Users\lingyun\Documents\Trae-CN\default
+\build\Operit\app\build\intermediates\cxx\Debug\66g4x1a4\obj\arm64-v8a -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\Users\lingyu
+n\Documents\Trae-CN\default\build\Operit\app\build\intermediates\cxx\Debug\66g4x1a4\obj\arm64-v8a -DCMAKE_BUILD_TYPE=De
+bug -BC:\Users\lingyun\Documents\Trae-CN\default\build\Operit\app\.cxx\Debug\66g4x1a4\arm64-v8a -GNinja}
+  	at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:73)
+  	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:48)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:277)
+  	... 140 more
+  Caused by: org.gradle.process.internal.ExecException: Process 'command 'C:\Users\lingyun\Documents\Trae-CN\default\to
+ols\sdk\cmake\3.22.1\bin\cmake.exe'' finished with non-zero exit value 1
+  	at org.gradle.process.internal.DefaultExecHandle$ExecResultImpl.assertNormalExitValue(DefaultExecHandle.java:442)
+  	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:46)
+  	... 141 more
+
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+BUILD FAILED in 11m 55s

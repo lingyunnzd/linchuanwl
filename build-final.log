@@ -1,0 +1,759 @@
+﻿To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.13/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :app
+WARNING: BuildType(clone): resValue 'string/app_name' value is being replaced.
+
+> Task :app:objectboxPrepareBuild UP-TO-DATE
+> Task :app:syncSttModelAssets
+> Task :app:syncMainAssets UP-TO-DATE
+> Task :app:verifyExternallyBuiltNativeLibraries
+> Task :app:preBuild
+> Task :app:preDebugBuild
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :showerclient:preBuild UP-TO-DATE
+> Task :showerclient:preDebugBuild UP-TO-DATE
+> Task :showerclient:compileDebugAidl NO-SOURCE
+> Task :terminal:preBuild UP-TO-DATE
+> Task :terminal:preDebugBuild UP-TO-DATE
+> Task :terminal:compileDebugAidl UP-TO-DATE
+> Task :app:compileDebugAidl UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :dragonbones:preBuild UP-TO-DATE
+> Task :dragonbones:preDebugBuild UP-TO-DATE
+> Task :dragonbones:writeDebugAarMetadata UP-TO-DATE
+> Task :fbx:preBuild UP-TO-DATE
+> Task :fbx:preDebugBuild UP-TO-DATE
+> Task :fbx:writeDebugAarMetadata UP-TO-DATE
+> Task :llama:preBuild UP-TO-DATE
+> Task :llama:preDebugBuild UP-TO-DATE
+> Task :llama:writeDebugAarMetadata UP-TO-DATE
+> Task :mmd:preBuild UP-TO-DATE
+> Task :mmd:preDebugBuild UP-TO-DATE
+> Task :mmd:writeDebugAarMetadata UP-TO-DATE
+> Task :mnn:preBuild UP-TO-DATE
+> Task :mnn:preDebugBuild UP-TO-DATE
+> Task :mnn:writeDebugAarMetadata UP-TO-DATE
+> Task :quickjs:preBuild UP-TO-DATE
+> Task :quickjs:preDebugBuild UP-TO-DATE
+> Task :quickjs:writeDebugAarMetadata UP-TO-DATE
+> Task :showerclient:writeDebugAarMetadata UP-TO-DATE
+> Task :terminal:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :dragonbones:processDebugNavigationResources UP-TO-DATE
+> Task :fbx:processDebugNavigationResources UP-TO-DATE
+> Task :llama:processDebugNavigationResources UP-TO-DATE
+> Task :mmd:processDebugNavigationResources UP-TO-DATE
+> Task :mnn:processDebugNavigationResources UP-TO-DATE
+> Task :quickjs:processDebugNavigationResources UP-TO-DATE
+> Task :showerclient:processDebugNavigationResources UP-TO-DATE
+> Task :terminal:processDebugNavigationResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :dragonbones:generateDebugResValues UP-TO-DATE
+> Task :dragonbones:generateDebugResources UP-TO-DATE
+> Task :dragonbones:packageDebugResources UP-TO-DATE
+> Task :fbx:generateDebugResValues UP-TO-DATE
+> Task :fbx:generateDebugResources UP-TO-DATE
+> Task :fbx:packageDebugResources UP-TO-DATE
+> Task :llama:generateDebugResValues UP-TO-DATE
+> Task :llama:generateDebugResources UP-TO-DATE
+> Task :llama:packageDebugResources UP-TO-DATE
+> Task :mmd:generateDebugResValues UP-TO-DATE
+> Task :mmd:generateDebugResources UP-TO-DATE
+> Task :mmd:packageDebugResources UP-TO-DATE
+> Task :mnn:generateDebugResValues UP-TO-DATE
+> Task :mnn:generateDebugResources UP-TO-DATE
+> Task :mnn:packageDebugResources UP-TO-DATE
+> Task :quickjs:generateDebugResValues UP-TO-DATE
+> Task :quickjs:generateDebugResources UP-TO-DATE
+> Task :quickjs:packageDebugResources UP-TO-DATE
+> Task :showerclient:generateDebugResValues UP-TO-DATE
+> Task :showerclient:generateDebugResources UP-TO-DATE
+> Task :showerclient:packageDebugResources UP-TO-DATE
+> Task :terminal:generateDebugResValues UP-TO-DATE
+> Task :terminal:generateDebugResources UP-TO-DATE
+> Task :terminal:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :dragonbones:extractDeepLinksDebug UP-TO-DATE
+> Task :dragonbones:processDebugManifest UP-TO-DATE
+> Task :fbx:extractDeepLinksDebug UP-TO-DATE
+> Task :fbx:processDebugManifest UP-TO-DATE
+> Task :llama:extractDeepLinksDebug UP-TO-DATE
+> Task :llama:processDebugManifest UP-TO-DATE
+> Task :mmd:extractDeepLinksDebug UP-TO-DATE
+> Task :mmd:processDebugManifest UP-TO-DATE
+> Task :mnn:extractDeepLinksDebug UP-TO-DATE
+> Task :mnn:processDebugManifest UP-TO-DATE
+> Task :quickjs:extractDeepLinksDebug UP-TO-DATE
+> Task :quickjs:processDebugManifest UP-TO-DATE
+> Task :showerclient:extractDeepLinksDebug UP-TO-DATE
+> Task :showerclient:processDebugManifest UP-TO-DATE
+> Task :terminal:extractDeepLinksDebug UP-TO-DATE
+> Task :terminal:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :dragonbones:compileDebugLibraryResources UP-TO-DATE
+> Task :dragonbones:parseDebugLocalResources UP-TO-DATE
+> Task :dragonbones:generateDebugRFile UP-TO-DATE
+> Task :fbx:compileDebugLibraryResources UP-TO-DATE
+> Task :fbx:parseDebugLocalResources UP-TO-DATE
+> Task :fbx:generateDebugRFile UP-TO-DATE
+> Task :llama:compileDebugLibraryResources UP-TO-DATE
+> Task :llama:parseDebugLocalResources UP-TO-DATE
+> Task :llama:generateDebugRFile UP-TO-DATE
+> Task :mmd:compileDebugLibraryResources UP-TO-DATE
+> Task :mmd:parseDebugLocalResources UP-TO-DATE
+> Task :mmd:generateDebugRFile UP-TO-DATE
+> Task :mnn:compileDebugLibraryResources UP-TO-DATE
+> Task :mnn:parseDebugLocalResources UP-TO-DATE
+> Task :mnn:generateDebugRFile UP-TO-DATE
+> Task :quickjs:compileDebugLibraryResources UP-TO-DATE
+> Task :quickjs:parseDebugLocalResources UP-TO-DATE
+> Task :quickjs:generateDebugRFile UP-TO-DATE
+> Task :showerclient:compileDebugLibraryResources UP-TO-DATE
+> Task :showerclient:parseDebugLocalResources UP-TO-DATE
+> Task :showerclient:generateDebugRFile UP-TO-DATE
+> Task :terminal:compileDebugLibraryResources UP-TO-DATE
+> Task :terminal:parseDebugLocalResources UP-TO-DATE
+> Task :terminal:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :dragonbones:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :dragonbones:compileDebugKotlin UP-TO-DATE
+> Task :dragonbones:javaPreCompileDebug UP-TO-DATE
+> Task :dragonbones:compileDebugJavaWithJavac NO-SOURCE
+> Task :dragonbones:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :fbx:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :fbx:compileDebugKotlin UP-TO-DATE
+> Task :fbx:javaPreCompileDebug UP-TO-DATE
+> Task :fbx:compileDebugJavaWithJavac NO-SOURCE
+> Task :fbx:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :llama:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :llama:compileDebugKotlin UP-TO-DATE
+> Task :llama:javaPreCompileDebug UP-TO-DATE
+> Task :llama:compileDebugJavaWithJavac NO-SOURCE
+> Task :llama:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :mmd:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mmd:compileDebugKotlin UP-TO-DATE
+> Task :mmd:javaPreCompileDebug UP-TO-DATE
+> Task :mmd:compileDebugJavaWithJavac NO-SOURCE
+> Task :mmd:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :mnn:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :mnn:compileDebugKotlin UP-TO-DATE
+> Task :mnn:javaPreCompileDebug UP-TO-DATE
+> Task :mnn:compileDebugJavaWithJavac NO-SOURCE
+> Task :mnn:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :quickjs:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :quickjs:compileDebugKotlin UP-TO-DATE
+> Task :quickjs:javaPreCompileDebug UP-TO-DATE
+> Task :quickjs:compileDebugJavaWithJavac NO-SOURCE
+> Task :quickjs:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :showerclient:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :showerclient:compileDebugKotlin UP-TO-DATE
+> Task :showerclient:javaPreCompileDebug UP-TO-DATE
+> Task :showerclient:compileDebugJavaWithJavac UP-TO-DATE
+> Task :showerclient:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :terminal:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :terminal:compileDebugKotlin UP-TO-DATE
+> Task :terminal:javaPreCompileDebug UP-TO-DATE
+> Task :terminal:compileDebugJavaWithJavac UP-TO-DATE
+> Task :terminal:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :app:kaptDebugKotlin UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :dragonbones:mergeDebugShaders UP-TO-DATE
+> Task :dragonbones:compileDebugShaders NO-SOURCE
+> Task :dragonbones:generateDebugAssets UP-TO-DATE
+> Task :dragonbones:mergeDebugAssets UP-TO-DATE
+> Task :fbx:mergeDebugShaders UP-TO-DATE
+> Task :fbx:compileDebugShaders NO-SOURCE
+> Task :fbx:generateDebugAssets UP-TO-DATE
+> Task :fbx:mergeDebugAssets UP-TO-DATE
+> Task :llama:mergeDebugShaders UP-TO-DATE
+> Task :llama:compileDebugShaders NO-SOURCE
+> Task :llama:generateDebugAssets UP-TO-DATE
+> Task :llama:mergeDebugAssets UP-TO-DATE
+> Task :mmd:mergeDebugShaders UP-TO-DATE
+> Task :mmd:compileDebugShaders NO-SOURCE
+> Task :mmd:generateDebugAssets UP-TO-DATE
+> Task :mmd:mergeDebugAssets UP-TO-DATE
+> Task :mnn:mergeDebugShaders UP-TO-DATE
+> Task :mnn:compileDebugShaders NO-SOURCE
+> Task :mnn:generateDebugAssets UP-TO-DATE
+> Task :mnn:mergeDebugAssets UP-TO-DATE
+> Task :quickjs:mergeDebugShaders UP-TO-DATE
+> Task :quickjs:compileDebugShaders NO-SOURCE
+> Task :quickjs:generateDebugAssets UP-TO-DATE
+> Task :quickjs:mergeDebugAssets UP-TO-DATE
+> Task :showerclient:mergeDebugShaders UP-TO-DATE
+> Task :showerclient:compileDebugShaders NO-SOURCE
+> Task :showerclient:generateDebugAssets UP-TO-DATE
+> Task :showerclient:mergeDebugAssets UP-TO-DATE
+> Task :terminal:mergeDebugShaders UP-TO-DATE
+> Task :terminal:compileDebugShaders NO-SOURCE
+> Task :terminal:generateDebugAssets UP-TO-DATE
+> Task :terminal:mergeDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:l8DexDesugarLibDebug UP-TO-DATE
+> Task :dragonbones:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :terminal:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :mnn:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :llama:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :mmd:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :fbx:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :showerclient:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :quickjs:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:transformDebugClassesWithAsm UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeDebugGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :dragonbones:processDebugJavaRes UP-TO-DATE
+> Task :fbx:processDebugJavaRes UP-TO-DATE
+> Task :llama:processDebugJavaRes UP-TO-DATE
+> Task :mmd:processDebugJavaRes UP-TO-DATE
+> Task :mnn:processDebugJavaRes UP-TO-DATE
+> Task :quickjs:processDebugJavaRes UP-TO-DATE
+> Task :showerclient:processDebugJavaRes UP-TO-DATE
+> Task :terminal:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :dragonbones:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :terminal:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :mnn:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :llama:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :mmd:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :fbx:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :showerclient:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :quickjs:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:preCloneBuild
+> Task :app:configureCMakeDebug[arm64-v8a]
+> Task :app:buildCMakeDebug[arm64-v8a]
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :dragonbones:configureCMakeDebug[arm64-v8a]
+> Task :dragonbones:buildCMakeDebug[arm64-v8a]
+> Task :dragonbones:mergeDebugJniLibFolders UP-TO-DATE
+> Task :dragonbones:mergeDebugNativeLibs UP-TO-DATE
+> Task :dragonbones:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :fbx:configureCMakeDebug[arm64-v8a]
+> Task :fbx:buildCMakeDebug[arm64-v8a]
+> Task :fbx:mergeDebugJniLibFolders UP-TO-DATE
+> Task :fbx:mergeDebugNativeLibs UP-TO-DATE
+> Task :fbx:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :llama:configureCMakeDebug[arm64-v8a]
+> Task :llama:buildCMakeDebug[arm64-v8a]
+> Task :llama:mergeDebugJniLibFolders UP-TO-DATE
+> Task :llama:mergeDebugNativeLibs UP-TO-DATE
+> Task :llama:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :mmd:configureCMakeDebug[arm64-v8a]
+> Task :mmd:buildCMakeDebug[arm64-v8a]
+> Task :mmd:mergeDebugJniLibFolders UP-TO-DATE
+> Task :mmd:mergeDebugNativeLibs UP-TO-DATE
+> Task :mmd:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :mnn:configureCMakeDebug[arm64-v8a]
+C/C++: CMake Error at CMakeLists.txt:77 (message):
+C/C++:   Failed to configure the host FlatBuffers compiler for MNN schema
+C/C++:   generation.
+C/C++:   -- Building for: NMake Makefiles
+C/C++:   -- Configuring incomplete, errors occurred!
+C/C++:   See also
+C/C++:   "C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.cxx/operit_deps/mnn-d407447ed56c4121a11ccbd266dc184ca1ead0c2-build/flatc-host/CMakeFiles/CMakeOutput.log".
+C/C++:   
+C/C++:   CMake Error at CMakeLists.txt:6 (project):
+C/C++:     Running
+C/C++:   
+C/C++:      'nmake' '-?'
+C/C++:   
+C/C++:     failed with:
+C/C++:   
+C/C++:      绯荤粺鎵句笉鍒版寚瀹氱殑鏂囦欢銆?
+C/C++:   
+C/C++:   CMake Error: CMAKE_C_COMPILER not set, after EnableLanguage
+C/C++:   CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
+
+> Task :mnn:configureCMakeDebug[arm64-v8a] FAILED
+gradle.bat : 
+At line:15 char:2114
++ ... $env:PATH"; & "C:\Users\lingyun\Documents\Trae-CN\default\tools\gradl ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':mnn:configureCMakeDebug[arm64-v8a]'.
+> [CXX1429] error when building with cmake using C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\llm\mnn\CMakeL
+ists.txt: -- The C compiler identification is Clang 18.0.1
+  -- The CXX compiler identification is Clang 18.0.1
+  -- Detecting C compiler ABI info
+  -- Detecting C compiler ABI info - done
+  -- Check for working C compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/ll
+vm/prebuilt/windows-x86_64/bin/clang.exe - skipped
+  -- Detecting C compile features
+  -- Detecting C compile features - done
+  -- Detecting CXX compiler ABI info
+  -- Detecting CXX compiler ABI info - done
+  -- Check for working CXX compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/
+llvm/prebuilt/windows-x86_64/bin/clang++.exe - skipped
+  -- Detecting CXX compile features
+  -- Detecting CXX compile features - done
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.c
+xx/operit_deps/pre/mnn-d407447ed56c4121a11ccbd266dc184ca1ead0c2.tar.gz
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.c
+xx/operit_deps/pre/kleidiai-fa0a8e861d58451e0a3a0d1588bc0d49bad23743.tar.gz
+  -- Configuring incomplete, errors occurred!
+  See also "C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.cxx/Debug/5e5s4g51/arm64-v8a/CMakeFiles/CM
+akeOutput.log".
+  
+  C++ build system [configure] failed while executing:
+      @echo off
+      "C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\cmake.exe" ^
+        "-HC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn" ^
+        "-DCMAKE_SYSTEM_NAME=Android" ^
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" ^
+        "-DCMAKE_SYSTEM_VERSION=26" ^
+        "-DANDROID_ABI=arm64-v8a" ^
+        "-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a" ^
+        "-DANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_ANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_TOOLCHAIN_FILE=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973\\build\
+\cmake\\android.toolchain.cmake" ^
+        "-DCMAKE_MAKE_PROGRAM=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\ninja.ex
+e" ^
+        "-DCMAKE_CXX_FLAGS=-std=c++17 -fno-emulated-tls" ^
+        "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn\\bui
+ld\\intermediates\\cxx\\Debug\\5e5s4g51\\obj\\arm64-v8a" ^
+        "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn\\bui
+ld\\intermediates\\cxx\\Debug\\5e5s4g51\\obj\\arm64-v8a" ^
+        "-DCMAKE_BUILD_TYPE=Debug" ^
+        "-BC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn\\.cxx\\Debug\\5e5s4g51\\arm64-v8a" 
+^
+        -GNinja ^
+        "-DANDROID_STL=c++_static" ^
+        "-DANDROID_PLATFORM=android-26" ^
+        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" ^
+        "-DMNN_BUILD_SHARED_LIBS=ON" ^
+        "-DMNN_SEP_BUILD=OFF" ^
+        "-DMNN_BUILD_TOOLS=OFF" ^
+        "-DMNN_BUILD_DEMO=OFF" ^
+        "-DMNN_BUILD_CONVERTER=OFF" ^
+        "-DMNN_USE_LOGCAT=ON" ^
+        "-DMNN_BUILD_TEST=OFF" ^
+        "-DMNN_BUILD_BENCHMARK=OFF" ^
+        "-DMNN_BUILD_QUANTOOLS=OFF" ^
+        "-DMNN_OPENCL=OFF" ^
+        "-DMNN_OPENGL=OFF" ^
+        "-DMNN_VULKAN=OFF" ^
+        "-DMNN_ARM82=ON" ^
+        "-DMNN_BUILD_LLM=ON" ^
+        "-DMNN_SUPPORT_TRANSFORMER_FUSE=ON" ^
+        "-DMNN_LOW_MEMORY=ON" ^
+        "-DMNN_CPU_WEIGHT_DEQUANT_GEMM=ON"
+    from C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\llm\mnn
+  CMake Error at CMakeLists.txt:77 (message):
+    Failed to configure the host FlatBuffers compiler for MNN schema
+    generation.
+  
+    -- Building for: NMake Makefiles
+  
+    -- Configuring incomplete, errors occurred!
+  
+    See also
+    "C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.cxx/operit_deps/mnn-d407447ed56c4121a11ccbd266dc1
+84ca1ead0c2-build/flatc-host/CMakeFiles/CMakeOutput.log".
+  
+  
+    
+  
+    CMake Error at CMakeLists.txt:6 (project):
+  
+      Running
+  
+    
+  
+       'nmake' '-?'
+  
+    
+  
+      failed with:
+  
+    
+  
+       绯荤粺鎵句笉鍒版寚瀹氱殑鏂囦欢銆?
+  
+    
+  
+    CMake Error: CMAKE_C_COMPILER not set, after EnableLanguage
+  
+    CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage : com.android.ide.common.process.ProcessException: --
+ The C compiler identification is Clang 18.0.1
+  -- The CXX compiler identification is Clang 18.0.1
+  -- Detecting C compiler ABI info
+  -- Detecting C compiler ABI info - done
+  -- Check for working C compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/ll
+vm/prebuilt/windows-x86_64/bin/clang.exe - skipped
+  -- Detecting C compile features
+  -- Detecting C compile features - done
+  -- Detecting CXX compiler ABI info
+  -- Detecting CXX compiler ABI info - done
+  -- Check for working CXX compiler: C:/Users/lingyun/Documents/Trae-CN/default/tools/sdk/ndk/27.0.12077973/toolchains/
+llvm/prebuilt/windows-x86_64/bin/clang++.exe - skipped
+  -- Detecting CXX compile features
+  -- Detecting CXX compile features - done
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.c
+xx/operit_deps/pre/mnn-d407447ed56c4121a11ccbd266dc184ca1ead0c2.tar.gz
+  -- operit_git_source: using pre-downloaded tarball C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.c
+xx/operit_deps/pre/kleidiai-fa0a8e861d58451e0a3a0d1588bc0d49bad23743.tar.gz
+  -- Configuring incomplete, errors occurred!
+  See also "C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.cxx/Debug/5e5s4g51/arm64-v8a/CMakeFiles/CM
+akeOutput.log".
+  
+  C++ build system [configure] failed while executing:
+      @echo off
+      "C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\cmake.exe" ^
+        "-HC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn" ^
+        "-DCMAKE_SYSTEM_NAME=Android" ^
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" ^
+        "-DCMAKE_SYSTEM_VERSION=26" ^
+        "-DANDROID_ABI=arm64-v8a" ^
+        "-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a" ^
+        "-DANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_ANDROID_NDK=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973" ^
+        "-DCMAKE_TOOLCHAIN_FILE=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\ndk\\27.0.12077973\\build\
+\cmake\\android.toolchain.cmake" ^
+        "-DCMAKE_MAKE_PROGRAM=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\tools\\sdk\\cmake\\3.22.1\\bin\\ninja.ex
+e" ^
+        "-DCMAKE_CXX_FLAGS=-std=c++17 -fno-emulated-tls" ^
+        "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn\\bui
+ld\\intermediates\\cxx\\Debug\\5e5s4g51\\obj\\arm64-v8a" ^
+        "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn\\bui
+ld\\intermediates\\cxx\\Debug\\5e5s4g51\\obj\\arm64-v8a" ^
+        "-DCMAKE_BUILD_TYPE=Debug" ^
+        "-BC:\\Users\\lingyun\\Documents\\Trae-CN\\default\\build\\Operit\\llm\\mnn\\.cxx\\Debug\\5e5s4g51\\arm64-v8a" 
+^
+        -GNinja ^
+        "-DANDROID_STL=c++_static" ^
+        "-DANDROID_PLATFORM=android-26" ^
+        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON" ^
+        "-DMNN_BUILD_SHARED_LIBS=ON" ^
+        "-DMNN_SEP_BUILD=OFF" ^
+        "-DMNN_BUILD_TOOLS=OFF" ^
+        "-DMNN_BUILD_DEMO=OFF" ^
+        "-DMNN_BUILD_CONVERTER=OFF" ^
+        "-DMNN_USE_LOGCAT=ON" ^
+        "-DMNN_BUILD_TEST=OFF" ^
+        "-DMNN_BUILD_BENCHMARK=OFF" ^
+        "-DMNN_BUILD_QUANTOOLS=OFF" ^
+        "-DMNN_OPENCL=OFF" ^
+        "-DMNN_OPENGL=OFF" ^
+        "-DMNN_VULKAN=OFF" ^
+        "-DMNN_ARM82=ON" ^
+        "-DMNN_BUILD_LLM=ON" ^
+        "-DMNN_SUPPORT_TRANSFORMER_FUSE=ON" ^
+        "-DMNN_LOW_MEMORY=ON" ^
+        "-DMNN_CPU_WEIGHT_DEQUANT_GEMM=ON"
+    from C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\llm\mnn
+  CMake Error at CMakeLists.txt:77 (message):
+    Failed to configure the host FlatBuffers compiler for MNN schema
+    generation.
+  
+    -- Building for: NMake Makefiles
+  
+    -- Configuring incomplete, errors occurred!
+  
+    See also
+    "C:/Users/lingyun/Documents/Trae-CN/default/build/Operit/llm/mnn/.cxx/operit_deps/mnn-d407447ed56c4121a11ccbd266dc1
+84ca1ead0c2-build/flatc-host/CMakeFiles/CMakeOutput.log".
+  
+  
+    
+  
+    CMake Error at CMakeLists.txt:6 (project):
+  
+      Running
+  
+    
+  
+       'nmake' '-?'
+  
+    
+  
+      failed with:
+  
+    
+  
+       绯荤粺鎵句笉鍒版寚瀹氱殑鏂囦欢銆?
+  
+    
+  
+    CMake Error: CMAKE_C_COMPILER not set, after EnableLanguage
+  
+    CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:288)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:108)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:106)
+  	at com.android.build.gradle.internal.cxx.timing.TimingEnvironmentKt.time(TimingEnvironment.kt:32)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess(ExecuteProcess.kt:106)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess$default(ExecuteProcess.kt:85)
+  	at com.android.build.gradle.tasks.CmakeQueryMetadataGenerator.executeProcess(CmakeFileApiMetadataGenerator.kt:59)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator$configureOneAbi$1$1$3.invoke(ExternalNativeJsonGenerat
+or.kt:247)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator$configureOneAbi$1$1$3.invoke(ExternalNativeJsonGenerat
+or.kt:247)
+  	at com.android.build.gradle.internal.cxx.timing.TimingEnvironmentKt.time(TimingEnvironment.kt:32)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator.configureOneAbi(ExternalNativeJsonGenerator.kt:247)
+  	at com.android.build.gradle.tasks.ExternalNativeJsonGenerator.configure(ExternalNativeJsonGenerator.kt:113)
+  	at com.android.build.gradle.tasks.ExternalNativeBuildJsonTask.doTaskAction(ExternalNativeBuildJsonTask.kt:89)
+  	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask$taskAction$$inlined$recordTaskAction$1.invoke(BaseTask.
+kt:78)
+  	at com.android.build.gradle.internal.tasks.Blocks.recordSpan(Blocks.java:51)
+  	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask.taskAction(UnsafeOutputsTask.kt:81)
+  	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+  	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+  	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:125)
+  	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.doExecute(StandardTaskAction.java:58)
+  	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:51)
+  	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:29)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution$3.run(TaskExecution.java:244)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:30)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:27)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:48)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.executeAction(TaskExecution.java:229)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.executeActions(TaskExecution.java:212)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.executeWithPreviousOutputFiles(TaskExecution.java:195)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution.execute(TaskExecution.java:162)
+  	at org.gradle.internal.execution.steps.ExecuteStep.executeInternal(ExecuteStep.java:105)
+  	at org.gradle.internal.execution.steps.ExecuteStep.access$000(ExecuteStep.java:44)
+  	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:59)
+  	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:56)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:210)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:205)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+  	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
+  	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:44)
+  	at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
+  	at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
+  	at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
+  	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:50)
+  	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:28)
+  	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:67)
+  	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:37)
+  	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:61)
+  	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:26)
+  	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.jav
+a:69)
+  	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.jav
+a:46)
+  	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:40)
+  	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:29)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$1(BuildCacheStep.java:75)
+  	at org.gradle.internal.Either$Right.fold(Either.java:175)
+  	at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:73)
+  	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:48)
+  	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:46)
+  	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
+  	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
+  	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
+  	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinis
+hedStep.java:37)
+  	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinis
+hedStep.java:27)
+  	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingS
+tateStep.java:49)
+  	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingS
+tateStep.java:27)
+  	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:
+71)
+  	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:
+39)
+  	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:65)
+  	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:36)
+  	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:107)
+  	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:56)
+  	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExe
+cutionStep.java:64)
+  	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExe
+cutionStep.java:43)
+  	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkSte
+p.java:125)
+  	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:56)
+  	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:36)
+  	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStarte
+dStep.java:38)
+  	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36
+)
+  	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23
+)
+  	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
+  	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
+  	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:3
+5)
+  	at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:289)
+  	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
+  	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
+  	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
+  	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
+  	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperatio
+nFiringStep.java:67)
+  	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+  	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringSt
+ep.java:67)
+  	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringSt
+ep.java:39)
+  	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
+  	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
+  	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:48)
+  	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:35)
+  	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:61)
+  	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java
+:127)
+  	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+  	at org.gradle.api.internal.tasks.execution.ProblemsTaskPathTrackingTaskExecuter.execute(ProblemsTaskPathTrackingTask
+Executer.java:40)
+  	at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.jav
+a:46)
+  	at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter
+.java:51)
+  	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:
+57)
+  	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+  	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:210)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:205)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+  	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+  	at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGr
+aph.java:331)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGr
+aph.java:318)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(Defa
+ultTaskExecutionGraph.java:314)
+  	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskEx
+ecutionGraph.java:314)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskEx
+ecutionGraph.java:303)
+  	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+  	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+  	at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)
+211 actionable tasks: 13 executed, 198 up-to-date
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:138)
+  	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:123)
+  	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+  	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
+  	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExe
+cutor.java:54)
+  	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExe
+cutor.java:43)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:210)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOpera
+tionRunner.java:205)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+  	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+  	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java
+:40)
+  	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.
+java:313)
+  	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+  	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+  	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:46)
+  	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+  	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+  	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphCont
+roller.java:220)
+  	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+  	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+  	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+  	at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+  	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198
+)
+  	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+  	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
+  	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+  	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+  	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+  	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+  	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+  	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+  	at java.base/java.lang.Thread.run(Thread.java:1583)
+  Caused by: com.android.ide.common.process.ProcessException: Error while executing process C:\Users\lingyun\Documents\
+Trae-CN\default\tools\sdk\cmake\3.22.1\bin\cmake.exe with arguments {-HC:\Users\lingyun\Documents\Trae-CN\default\build
+\Operit\llm\mnn -DCMAKE_SYSTEM_NAME=Android -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_SYSTEM_VERSION=26 -DANDROID_ABI=
+arm64-v8a -DCMAKE_ANDROID_ARCH_ABI=arm64-v8a -DANDROID_NDK=C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\ndk\27.
+0.12077973 -DCMAKE_ANDROID_NDK=C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\ndk\27.0.12077973 -DCMAKE_TOOLCHAIN
+_FILE=C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\ndk\27.0.12077973\build\cmake\android.toolchain.cmake -DCMAK
+E_MAKE_PROGRAM=C:\Users\lingyun\Documents\Trae-CN\default\tools\sdk\cmake\3.22.1\bin\ninja.exe -DCMAKE_CXX_FLAGS=-std=c
+++17 -fno-emulated-tls -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\Users\lingyun\Documents\Trae-CN\default\build\Operit\llm\mnn
+\build\intermediates\cxx\Debug\5e5s4g51\obj\arm64-v8a -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\Users\lingyun\Documents\Trae-
+CN\default\build\Operit\llm\mnn\build\intermediates\cxx\Debug\5e5s4g51\obj\arm64-v8a -DCMAKE_BUILD_TYPE=Debug -BC:\User
+s\lingyun\Documents\Trae-CN\default\build\Operit\llm\mnn\.cxx\Debug\5e5s4g51\arm64-v8a -GNinja -DANDROID_STL=c++_static
+ -DANDROID_PLATFORM=android-26 -DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON -DMNN_BUILD_SHARED_LIBS=ON -DMNN_SEP_BUILD=OFF 
+-DMNN_BUILD_TOOLS=OFF -DMNN_BUILD_DEMO=OFF -DMNN_BUILD_CONVERTER=OFF -DMNN_USE_LOGCAT=ON -DMNN_BUILD_TEST=OFF -DMNN_BUI
+LD_BENCHMARK=OFF -DMNN_BUILD_QUANTOOLS=OFF -DMNN_OPENCL=OFF -DMNN_OPENGL=OFF -DMNN_VULKAN=OFF -DMNN_ARM82=ON -DMNN_BUIL
+D_LLM=ON -DMNN_SUPPORT_TRANSFORMER_FUSE=ON -DMNN_LOW_MEMORY=ON -DMNN_CPU_WEIGHT_DEQUANT_GEMM=ON}
+  	at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:73)
+  	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:48)
+  	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:277)
+  	... 171 more
+  Caused by: org.gradle.process.internal.ExecException: Process 'command 'C:\Users\lingyun\Documents\Trae-CN\default\to
+ols\sdk\cmake\3.22.1\bin\cmake.exe'' finished with non-zero exit value 1
+  	at org.gradle.process.internal.DefaultExecHandle$ExecResultImpl.assertNormalExitValue(DefaultExecHandle.java:442)
+  	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:46)
+  	... 172 more
+
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 34s
