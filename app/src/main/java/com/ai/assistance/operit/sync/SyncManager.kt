@@ -126,9 +126,9 @@ object SyncManager {
 
     // ============ Auth ============
 
-    suspend fun register(username: String, email: String, password: String): Result<AuthState.LoggedIn> {
+    suspend fun register(username: String, email: String, password: String, code: String): Result<AuthState.LoggedIn> {
         val pbkdf2Salt = SyncCrypto.generateSaltHex()
-        val resp = api.register(RegisterRequest(username, email, password, pbkdf2Salt))
+        val resp = api.register(RegisterRequest(username, email, password, pbkdf2Salt, code))
         return when (resp) {
             is ApiResult.Ok -> {
                 saveAuth(resp.data, pbkdf2Salt)

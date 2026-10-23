@@ -305,7 +305,7 @@ fun CloudAuthScreen(onGoBack: () -> Unit) {
                                             if (confirmPassword.isNotEmpty() && confirmPassword != password) {
                                                 errorText = "两次密码不一致"; busy = false; return@launch
                                             }
-                                            SyncManager.register(username, cleanEmail, password)
+                                            SyncManager.register(username, cleanEmail, password, code)
                                         } else {
                                             SyncManager.login(username, password)
                                         }

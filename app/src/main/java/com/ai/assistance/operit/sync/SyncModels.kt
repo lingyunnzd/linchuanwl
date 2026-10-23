@@ -11,6 +11,7 @@ data class RegisterRequest(
     val email: String,
     val password: String,
     val salt: String, // pbkdf2 salt, hex string
+    val code: String, // 邮箱验证码（后端 consumeCode 校验）
 )
 
 @Serializable

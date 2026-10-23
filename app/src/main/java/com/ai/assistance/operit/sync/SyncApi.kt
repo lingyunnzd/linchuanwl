@@ -48,7 +48,7 @@ class SyncApi(
     // ============ Provider Templates ============
 
     suspend fun listProviderTemplates(): ApiResult<ProviderTemplatesResponse> =
-        get("/api/sync/provider-templates", needAuth = false)
+        get("/api/sync/provider-templates", needAuth = true)
 
     // ============ Settings ============
 
