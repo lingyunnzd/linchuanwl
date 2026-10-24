@@ -183,6 +183,7 @@ class OperitApplication : Application(), ImageLoaderFactory, WorkConfiguration.P
                 storage = com.ai.assistance.operit.sync.OperitSyncAdapter(
                     modelConfigManager = com.ai.assistance.operit.data.preferences.ModelConfigManager(applicationContext),
                     chatDao = database.chatDao(),
+                    functionalConfigManager = com.ai.assistance.operit.data.preferences.FunctionalConfigManager(applicationContext),
                 ),
             )
             AppLogger.d(TAG, "【启动计时】霖川云同步模块初始化完成 - ${System.currentTimeMillis() - startTime}ms")

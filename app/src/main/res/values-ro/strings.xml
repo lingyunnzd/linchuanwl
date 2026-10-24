@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Linchuan AI</string>
     <string name="accessibility_service_description">Utilizat pentru a obțineUIIerarhie, pentruAIAsistentul oferă capacități mai rapide de analiză a interfeței și nu colectează sau stochează nicio informație personală.</string>
@@ -594,7 +594,7 @@
     <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Jurnalul de actualizări</string>
     <string name="app_logo_description">Pictograma aplicației</string>
-    <string name="github_star_description">GitHub Star</string>
+    <string name="github_star_description">Site-ul oficial Linchuan Network</string>
 
     <!-- AI Chat Screen -->
     <string name="configure_ai">Configurație AI Interfață</string>

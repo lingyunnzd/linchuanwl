@@ -143,6 +143,19 @@ object SyncManager {
         }
     }
 
+    /** 邮箱验证码免密登录：验证码通过后直接签发登录态 */
+    suspend fun loginWithCode(email: String, code: String): Result<AuthState.LoggedIn> {
+        val resp = api.loginWithCode(LoginCodeRequest(email, code))
+        return when (resp) {
+            is ApiResult.Ok -> {
+                val pbkdf2Salt = resp.data.salt ?: SyncCrypto.generateSaltHex()
+                saveAuth(resp.data, pbkdf2Salt)
+                Result.success(_state.value as AuthState.LoggedIn)
+            }
+            is ApiResult.Error -> Result.failure(resp.ex)
+        }
+    }
+
     private fun saveAuth(resp: AuthResponse, pbkdf2Salt: String) {
         prefs.edit()
             .putString(KEY_ACCESS_TOKEN, resp.accessToken)
@@ -162,6 +175,14 @@ object SyncManager {
     }
 
     // ============ 验证码（优雅降级） ============
+
+    /** 查询邮箱是否已注册；后端不支持（404/网络失败）时返回 null，由调用方按默认注册流程处理 */
+    suspend fun checkEmail(email: String): Boolean? {
+        return when (val resp = api.checkEmail(CheckEmailRequest(email))) {
+            is ApiResult.Ok -> resp.data.exists
+            is ApiResult.Error -> null
+        }
+    }
 
     /** 发送邮箱验证码。后端未实现该端点（404）时返回 NotSupported，UI 应跳过验证 */
     suspend fun sendCode(email: String, purpose: String = "register"): Result<CodeSendResult> {

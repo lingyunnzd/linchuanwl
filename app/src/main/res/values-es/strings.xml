@@ -1,4 +1,4 @@
-﻿<resources>
+<resources>
     <string name="app_name">Linchuan AI</string>
     <string name="accessibility_service_description">Se utiliza para obtener la jerarquía de la interfaz de usuario, proporcionando al asistente de IA capacidades de análisis de interfaz más rápidas. No recopilará ni almacenará ninguna información personal.</string>
 
@@ -1849,7 +1849,7 @@
     <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Registro de actualizaciones</string>
     <string name="app_logo_description">Icono de la aplicación</string>
-    <string name="github_star_description">Estrella de GitHub</string>
+    <string name="github_star_description">Sitio web oficial de Linchuan Network</string>
     <string name="network_status_label">Estado de red</string>
     <string name="config_title">Asistente 霖川 AI</string>
     <string name="config_description">Usa una clave API de DeepSeek o configura otro servicio de modelos</string>

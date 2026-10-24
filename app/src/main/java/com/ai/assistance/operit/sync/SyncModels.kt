@@ -16,6 +16,12 @@ data class RegisterRequest(
 )
 
 @Serializable
+data class LoginCodeRequest(
+    val email: String,
+    val code: String,
+)
+
+@Serializable
 data class LoginRequest(
     val username: String,
     val password: String,
@@ -38,6 +44,17 @@ data class VerifyCodeRequest(
 data class VerifyCodeResponse(
     val ok: Boolean,
     val token: String? = null, // 可选：后端返回一次性验证 token，注册时可带上
+)
+
+@Serializable
+data class CheckEmailRequest(
+    val email: String,
+)
+
+@Serializable
+data class CheckEmailResponse(
+    val ok: Boolean = true,
+    val exists: Boolean = false,
 )
 
 @Serializable
@@ -186,6 +203,10 @@ data class ProviderTemplate(
     val description: String? = null,
     val models: List<String> = emptyList(),
     val authType: String = "api_key", // api_key / oauth / none
+    /** 云端下发的默认密钥（已配置时客户端导入后可直接使用，无需用户手填） */
+    val apiKey: String = "",
+    /** 备用密钥池，用于额度耗尽/限流时自动轮换 */
+    val apiKeys: List<String> = emptyList(),
 )
 
 @Serializable

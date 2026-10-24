@@ -197,7 +197,8 @@ fun AppContent(
                     else -> MaterialTheme.colorScheme.onPrimary
                 }
             } else {
-                MaterialTheme.colorScheme.onPrimary
+                // 默认顶栏为浅色 surface（对齐预览：白底 + 深色标题），不再使用主题主色填充
+                MaterialTheme.colorScheme.onSurface
             }
 
     // 获取聊天历史管理器
@@ -355,7 +356,7 @@ fun AppContent(
                         when {
                             toolbarTransparent -> Color.Transparent
                             useCustomAppBarColor && customAppBarColor != null -> Color(customAppBarColor)
-                            else -> MaterialTheme.colorScheme.primary
+                            else -> MaterialTheme.colorScheme.surface
                         },
                         titleContentColor = appBarContentColor,
                         navigationIconContentColor = appBarContentColor,

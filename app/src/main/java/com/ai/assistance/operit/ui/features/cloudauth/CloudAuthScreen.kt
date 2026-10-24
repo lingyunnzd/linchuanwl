@@ -330,6 +330,17 @@ fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
 
                     when (step) {
                         Step.EMAIL -> {
+                            // 先判定邮箱是否已注册，自动走正确流程，避免老用户收到「注册验证码」
+                            val exists = SyncManager.checkEmail(cleanEmail)
+                            if (exists != null) {
+                                val target = if (exists) AuthMode.LOGIN else AuthMode.REGISTER
+                                if (target != mode) {
+                                    mode = target
+                                    successText =
+                                        if (exists) "该邮箱已注册，已自动切换为登录"
+                                        else "该邮箱尚未注册，已自动切换为注册"
+                                }
+                            }
                             SyncManager.sendCode(
                                 cleanEmail,
                                 if (mode == AuthMode.REGISTER) "register" else "login"
@@ -348,7 +359,20 @@ fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
                                         }
                                     }
                                 },
-                                onFailure = { errorText = shortenBackendError(it.message ?: "发送失败") }
+                                onFailure = { e ->
+                                    val raw = e.message ?: "发送失败"
+                                    when {
+                                        raw.contains("已注册") -> {
+                                            mode = AuthMode.LOGIN
+                                            errorText = "该邮箱已注册，请再次点击「继续」获取登录验证码"
+                                        }
+                                        raw.contains("尚未注册") -> {
+                                            mode = AuthMode.REGISTER
+                                            errorText = "该邮箱尚未注册，请再次点击「继续」获取注册验证码"
+                                        }
+                                        else -> errorText = shortenBackendError(raw)
+                                    }
+                                }
                             )
                             busy = false
                         }
@@ -364,6 +388,34 @@ fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
                                             is CodeVerifyResult.Ok -> {
                                                 verifyState = VerifyState.SUCCESS
                                                 delay(1100)
+                                                if (mode == AuthMode.LOGIN) {
+                                                    // 已注册用户：验证码即登录凭证，免密登录
+                                                    SyncManager.loginWithCode(cleanEmail, code).fold(
+                                                        onSuccess = { user ->
+                                                            successText = "登录成功，正在同步云端模型..."
+                                                            val imported = runCatching {
+                                                                SyncManager.pullProviderTemplatesAndImport().getOrThrow()
+                                                            }.onFailure {
+                                                                AppLogger.e("CloudSync", "拉服务商模板失败", it)
+                                                            }.getOrDefault(0)
+                                                            successText =
+                                                                if (imported > 0) "欢迎，${user.username}，已同步 $imported 个云端模型"
+                                                                else "欢迎，${user.username}，正在进入..."
+                                                            delay(1000)
+                                                            onGoBack()
+                                                        },
+                                                        onFailure = { e ->
+                                                            val raw = e.message ?: "登录失败"
+                                                            verifyState = VerifyState.FAIL
+                                                            errorText = shortenBackendError(raw)
+                                                            delay(700)
+                                                            verifyState = VerifyState.IDLE
+                                                            code = ""
+                                                            busy = false
+                                                        }
+                                                    )
+                                                    return@launch
+                                                }
                                                 step = Step.PASSWORD
                                                 verifyState = VerifyState.IDLE
                                                 code = ""
@@ -394,10 +446,12 @@ fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
                                 }
                                 SyncManager.register(username, cleanEmail, password, code)
                             } else {
-                                SyncManager.login(username, password)
+                                // 登录用完整邮箱，避免用户名与邮箱前缀不一致导致登录失败
+                                SyncManager.login(cleanEmail, password)
                             }
                             result.fold(
                                 onSuccess = { user ->
+                                    successText = "账号验证通过，正在同步云端配置..."
                                     runCatching {
                                         SyncManager.deriveKey(password)
                                         if (mode == AuthMode.REGISTER) {
@@ -407,16 +461,30 @@ fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
                                             SyncManager.pullSettings()
                                             SyncManager.pullTopics()
                                         }
-                                        SyncManager.pullProviderTemplatesAndImport()
-                                            .onFailure { AppLogger.e("CloudSync", "拉服务商模板失败", it) }
                                     }.onFailure { AppLogger.e("CloudSync", "首次同步失败", it) }
-                                    successText = "欢迎，${user.username}，正在进入..."
-                                    delay(700)
+                                    val imported = runCatching {
+                                        SyncManager.pullProviderTemplatesAndImport().getOrThrow()
+                                    }.onFailure {
+                                        AppLogger.e("CloudSync", "拉服务商模板失败", it)
+                                    }.getOrDefault(0)
+                                    successText =
+                                        if (imported > 0) "欢迎，${user.username}，已同步 $imported 个云端模型"
+                                        else "欢迎，${user.username}，正在进入..."
+                                    delay(1000)
                                     onGoBack()
                                 },
                                 onFailure = { e ->
-                                    errorText = shortenBackendError(e.message ?: "操作失败")
-                                    busy = false
+                                    val raw = e.message ?: "操作失败"
+                                    if (mode == AuthMode.REGISTER && raw.contains("已注册")) {
+                                        // 注册阶段才发现在册：切回登录，禁止再改密码
+                                        mode = AuthMode.LOGIN
+                                        confirmPassword = ""
+                                        errorText = "该邮箱已注册，已切换为登录，请输入原密码"
+                                        busy = false
+                                    } else {
+                                        errorText = shortenBackendError(raw)
+                                        busy = false
+                                    }
                                 }
                             )
                         }
@@ -445,7 +513,7 @@ fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
                 Text(
                     text = when (step) {
                         Step.EMAIL -> "继续"
-                        Step.CODE -> "验证并继续"
+                        Step.CODE -> if (mode == AuthMode.REGISTER) "验证并继续" else "验证并登录"
                         Step.PASSWORD -> if (mode == AuthMode.REGISTER) "创建账号并登录" else "登录"
                     },
                     fontSize = 14.5.sp,

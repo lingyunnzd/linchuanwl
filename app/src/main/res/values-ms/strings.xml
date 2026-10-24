@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Linchuan AI</string>
     <string name="accessibility_service_description">Digunakan untuk mendapatkan hierarki UI, menyediakan keupayaan analisis antara muka yang lebih pantas untuk pembantu AI, tidak akan mengumpul atau menyimpan sebarang maklumat peribadi.</string>
@@ -549,7 +549,7 @@
     <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Log kemas kini</string>
     <string name="app_logo_description">Ikon aplikasi</string>
-    <string name="github_star_description">Bintang GitHub</string>
+    <string name="github_star_description">Laman web rasmi Linchuan Network</string>
     <string name="configure_ai">Konfigurasi antara muka AI</string>
     <string name="save_and_start">Simpan dan mulakan perbualan</string>
     <string name="ai_chat">Perbualan AI</string>

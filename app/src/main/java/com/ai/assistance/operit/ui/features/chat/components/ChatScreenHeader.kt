@@ -156,21 +156,6 @@ fun ChatScreenHeader(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // 品牌标识
-        Box(
-            modifier = Modifier
-                .size(28.dp)
-                .background(Color(0xFF1E4FA3), RoundedCornerShape(8.dp)),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "川",
-                color = Color.White,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
         // 朗读开关
         val ttsTint = if (isAutoReadEnabled) Color(0xFF1E4FA3) else MaterialTheme.colorScheme.onSurfaceVariant
         IconButton(

@@ -252,6 +252,6 @@ jobs:
           ssh-keyscan -H 38.76.164.148 >> ~/.ssh/known_hosts 2>/dev/null || true
           SCP="scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
           SSH="ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new"
-          $SSH root@38.76.164.148 "mkdir -p /www/wwwroot/9178.linchuanwl.xyz/dl"
-          $SCP "$APK" root@38.76.164.148:/www/wwwroot/9178.linchuanwl.xyz/dl/linchuan-ai-debug.apk.tmp
-          $SSH root@38.76.164.148 "mv /www/wwwroot/9178.linchuanwl.xyz/dl/linchuan-ai-debug.apk.tmp /www/wwwroot/9178.linchuanwl.xyz/dl/linchuan-ai-debug.apk && ls -la /www/wwwroot/9178.linchuanwl.xyz/dl/"
+          $SSH root@38.76.164.148 "mkdir -p /www/wwwroot/9178.linchuanwl.xyz/dist/dl"
+          $SCP "$APK" root@38.76.164.148:/www/wwwroot/9178.linchuanwl.xyz/dist/dl/linchuan-ai-debug.apk.tmp
+          $SSH root@38.76.164.148 "mv /www/wwwroot/9178.linchuanwl.xyz/dist/dl/linchuan-ai-debug.apk.tmp /www/wwwroot/9178.linchuanwl.xyz/dist/dl/linchuan-ai-debug.apk && ls -la /www/wwwroot/9178.linchuanwl.xyz/dist/dl/"

@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="workflow_enabled_label">Aktifkan Alur Kerja</string>
     <string name="workflow_disabled">Dinonaktifkan</string>
@@ -510,7 +510,7 @@
     <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Catatan Pembaruan</string>
     <string name="app_logo_description">Ikon Aplikasi</string>
-    <string name="github_star_description">Bintang GitHub</string>
+    <string name="github_star_description">Situs web resmi Linchuan Network</string>
     <string name="configure_ai">Konfigurasi Antarmuka AI</string>
     <string name="save_and_start">Simpan dan Mulai Percakapan</string>
     <string name="ai_chat">Percakapan AI</string>

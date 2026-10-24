@@ -1,4 +1,4 @@
-﻿ <resources>
+ <resources>
     <string name="app_name">Linchuan AI</string>
     <string name="accessibility_service_description">Used to obtain the UI hierarchy, providing faster interface analysis capabilities for AI assistants, and does not collect or store any personal information.</string>
     
@@ -592,7 +592,7 @@
     <string name="star_on_github">Visit Official Site</string>
     <string name="update_log">Update Log</string>
     <string name="app_logo_description">App Logo</string>
-    <string name="github_star_description">GitHub Star</string>
+    <string name="github_star_description">Official website of Linchuan Network</string>
     
     <!-- AI Chat Screen -->
     <string name="configure_ai">Configure AI API</string>

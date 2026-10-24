@@ -98,11 +98,16 @@ fun SettingsScreen(
                                 icon = Icons.Default.RecordVoiceOver,
                                 onClick = navigateToSpeechServicesSettings
                         )
+                }
+
+                // ======= 对话与记忆 =======
+                SettingsSection(title = "对话与记忆") {
                         CompactSettingsItem(
                                 title = stringResource(R.string.settings_prompt_title),
                                 subtitle = stringResource(id = R.string.settings_system_prompts_subtitle),
                                 icon = Icons.Default.ChatBubble,
-                                onClick = navigateToModelPrompts
+                                onClick = navigateToModelPrompts,
+                                showDivider = false
                         )
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_section_context_summary),
@@ -163,11 +168,16 @@ fun SettingsScreen(
                                 icon = Icons.Default.Language,
                                 onClick = navigateToLanguageSettings
                         )
+                }
+
+                // ======= 数据与高级 =======
+                SettingsSection(title = "数据与高级") {
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_data_backup),
                                 subtitle = stringResource(id = R.string.settings_data_backup_desc),
                                 icon = Icons.Default.CloudUpload,
-                                onClick = navigateToChatBackupSettings
+                                onClick = navigateToChatBackupSettings,
+                                showDivider = false
                         )
                         CompactSettingsItem(
                                 title = stringResource(id = R.string.settings_chat_history_management),
