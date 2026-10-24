@@ -11,9 +11,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -22,8 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -106,6 +110,8 @@ fun MentionSuggestionPanel(
     panelStyle: MentionSuggestionPanelStyle,
     onFileSelected: (String) -> Unit,
     onPackageSelected: (String) -> Unit,
+    onMemorySourceSelected: () -> Unit = {},
+    onHistorySourceSelected: () -> Unit = {},
 ) {
     val context = LocalContext.current
     val chatHistories by viewModel.chatHistories.collectAsState()
@@ -196,6 +202,7 @@ fun MentionSuggestionPanel(
             panelStyle.chatInputWaterGlass &&
             isWaterGlassSupported()
     val panelShape = RoundedCornerShape(22.dp)
+    var fileSourceOnly by remember { mutableStateOf(false) }
 
     Box(
         modifier =
@@ -242,51 +249,103 @@ fun MentionSuggestionPanel(
                     .padding(horizontal = 8.dp, vertical = 8.dp)
                     .heightIn(max = 280.dp)
         ) {
-            item {
-                MentionSuggestionSectionHeader(
-                    title = context.getString(R.string.mention_selector_packages_section),
-                )
-            }
-
-            when (val suggestions = packageSuggestions) {
-                null -> item { MentionSuggestionLoadingRow() }
-                else ->
-                    if (suggestions.isEmpty()) {
-                        item {
-                            MentionSuggestionEmptyRow(
-                                text =
-                                    if (searchQuery.isBlank()) {
-                                        context.getString(R.string.attachment_package_empty)
-                                    } else {
-                                        context.getString(R.string.attachment_package_search_empty)
-                                    },
-                            )
-                        }
-                    } else {
-                        items(items = suggestions, key = { it.packageName }) { suggestion ->
-                            MentionSuggestionPackageRow(
-                                icon = Icons.Default.AutoAwesome,
-                                iconTint = mentionPackageColor(suggestion.kind, colors),
-                                title = suggestion.title,
-                                subtitle = buildMentionPackageSubtitle(suggestion),
-                                onClick = { onPackageSelected(suggestion.packageName) },
-                            )
-                        }
-                    }
-            }
-
-            if (showFileSuggestions) {
+            if (searchQuery.isBlank() && !fileSourceOnly) {
+                item {
+                    MentionSuggestionSectionHeader(
+                        title = context.getString(R.string.mention_selector_sources_section),
+                    )
+                }
+                item {
+                    MentionSuggestionPackageRow(
+                        icon = Icons.Default.AutoAwesome,
+                        iconTint = colors.primary,
+                        title = context.getString(R.string.mention_selector_source_memory),
+                        subtitle = context.getString(R.string.mention_selector_source_memory_desc),
+                        onClick = onMemorySourceSelected,
+                    )
+                }
+                item {
+                    MentionSuggestionPackageRow(
+                        icon = Icons.Default.Folder,
+                        iconTint = colors.secondary,
+                        title = context.getString(R.string.mention_selector_source_files),
+                        subtitle = context.getString(R.string.mention_selector_source_files_desc),
+                        onClick = { fileSourceOnly = true },
+                    )
+                }
+                item {
+                    MentionSuggestionPackageRow(
+                        icon = Icons.Default.History,
+                        iconTint = colors.primary,
+                        title = context.getString(R.string.mention_selector_source_history),
+                        subtitle = context.getString(R.string.mention_selector_source_history_desc),
+                        onClick = onHistorySourceSelected,
+                    )
+                }
                 item {
                     HorizontalDivider(
                         modifier = Modifier.padding(vertical = 4.dp),
                         color = colors.outlineVariant.copy(alpha = 0.32f),
                     )
                 }
+            }
 
+            if (!fileSourceOnly) {
                 item {
                     MentionSuggestionSectionHeader(
-                        title = context.getString(R.string.mention_selector_files_section),
+                        title = context.getString(R.string.mention_selector_packages_section),
                     )
+                }
+
+                when (val suggestions = packageSuggestions) {
+                    null -> item { MentionSuggestionLoadingRow() }
+                    else ->
+                        if (suggestions.isEmpty()) {
+                            item {
+                                MentionSuggestionEmptyRow(
+                                    text =
+                                        if (searchQuery.isBlank()) {
+                                            context.getString(R.string.attachment_package_empty)
+                                        } else {
+                                            context.getString(R.string.attachment_package_search_empty)
+                                        },
+                                )
+                            }
+                        } else {
+                            items(items = suggestions, key = { it.packageName }) { suggestion ->
+                                MentionSuggestionPackageRow(
+                                    icon = Icons.Default.AutoAwesome,
+                                    iconTint = mentionPackageColor(suggestion.kind, colors),
+                                    title = suggestion.title,
+                                    subtitle = buildMentionPackageSubtitle(suggestion),
+                                    onClick = { onPackageSelected(suggestion.packageName) },
+                                )
+                            }
+                        }
+                }
+            }
+
+            if (showFileSuggestions) {
+                if (fileSourceOnly) {
+                    item {
+                        MentionSuggestionBackHeader(
+                            title = context.getString(R.string.mention_selector_files_section),
+                            onBack = { fileSourceOnly = false },
+                        )
+                    }
+                } else {
+                    item {
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 4.dp),
+                            color = colors.outlineVariant.copy(alpha = 0.32f),
+                        )
+                    }
+
+                    item {
+                        MentionSuggestionSectionHeader(
+                            title = context.getString(R.string.mention_selector_files_section),
+                        )
+                    }
                 }
 
                 when {
@@ -360,6 +419,35 @@ private fun MentionSuggestionSectionHeader(title: String) {
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier = Modifier.padding(horizontal = 4.dp, vertical = 1.dp),
     )
+}
+
+@Composable
+private fun MentionSuggestionBackHeader(
+    title: String,
+    onBack: () -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .clickable(onClick = onBack)
+                .padding(horizontal = 4.dp, vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(14.dp),
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = title,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
 }
 
 @Composable

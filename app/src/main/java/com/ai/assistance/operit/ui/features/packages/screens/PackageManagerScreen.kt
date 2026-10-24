@@ -37,6 +37,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.ai.assistance.operit.ui.components.CustomScaffold
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -45,6 +46,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.ai.assistance.operit.core.tools.AIToolHandler
 import com.ai.assistance.operit.core.tools.PackageTool
 import com.ai.assistance.operit.core.tools.ToolPackage
@@ -618,153 +620,45 @@ fun PackageManagerScreen(
                     .fillMaxSize()
                     .padding(paddingValues)
         ) {
-            // 优化标签栏布局 - 直接使用TabRow，不再使用Card包裹，移除边距完全贴满
-            TabRow(
-                selectedTabIndex = selectedTab.ordinal,
-                modifier = Modifier.fillMaxWidth(),
-                divider = {
-                    HorizontalDivider(
-                        thickness = 1.dp,
-                        color = MaterialTheme.colorScheme.outlineVariant
-                    )
-                },
-                indicator = { tabPositions ->
-                    if (selectedTab.ordinal < tabPositions.size) {
-                        TabRowDefaults.PrimaryIndicator(
-                            modifier =
-                                Modifier.tabIndicatorOffset(
-                                    tabPositions[selectedTab.ordinal]
-                                ),
-                            height = 2.dp,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                }
+            // 分段式切换栏
+            Row(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 10.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f))
+                        .padding(3.dp)
             ) {
-                // 插件标签
-                Tab(
-                    selected = selectedTab == PackageTab.PLUGINS,
-                    onClick = { selectedTab = PackageTab.PLUGINS },
-                    modifier = Modifier.height(48.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                listOf(
+                    PackageTab.PLUGINS to context.getString(R.string.nav_group_plugins),
+                    PackageTab.PACKAGES to context.getString(R.string.packages),
+                    PackageTab.SKILLS to context.getString(R.string.package_tab_skills),
+                    PackageTab.MCP to context.getString(R.string.mcp)
+                ).forEach { (tab, label) ->
+                    val selected = selectedTab == tab
+                    Box(
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(
+                                    if (selected) MaterialTheme.colorScheme.surface
+                                    else Color.Transparent
+                                )
+                                .clickable { selectedTab = tab }
+                                .padding(vertical = 7.dp),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Apps,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = if (selectedTab == PackageTab.PLUGINS)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.width(6.dp))
                         Text(
-                            context.getString(R.string.nav_group_plugins),
-                            style = MaterialTheme.typography.bodySmall,
-                            softWrap = false,
-                            color = if (selectedTab == PackageTab.PLUGINS)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-
-                // 包管理标签
-                Tab(
-                    selected = selectedTab == PackageTab.PACKAGES,
-                    onClick = { selectedTab = PackageTab.PACKAGES },
-                    modifier = Modifier.height(48.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Extension,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = if (selectedTab == PackageTab.PACKAGES)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            context.getString(R.string.packages),
-                            style = MaterialTheme.typography.bodySmall,
-                            softWrap = false,
-                            color = if (selectedTab == PackageTab.PACKAGES)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-
-                // Skills标签
-                Tab(
-                    selected = selectedTab == PackageTab.SKILLS,
-                    onClick = { selectedTab = PackageTab.SKILLS },
-                    modifier = Modifier.height(48.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Build,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = if (selectedTab == PackageTab.SKILLS)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            context.getString(R.string.package_tab_skills),
-                            style = MaterialTheme.typography.bodySmall,
-                            softWrap = false,
-                            color = if (selectedTab == PackageTab.SKILLS)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-
-                // MCP标签
-                Tab(
-                    selected = selectedTab == PackageTab.MCP,
-                    onClick = { selectedTab = PackageTab.MCP },
-                    modifier = Modifier.height(48.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Cloud,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = if (selectedTab == PackageTab.MCP)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            context.getString(R.string.mcp),
-                            style = MaterialTheme.typography.bodySmall,
-                            softWrap = false,
-                            color = if (selectedTab == PackageTab.MCP)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurfaceVariant
+                            text = label,
+                            fontSize = 12.sp,
+                            fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
+                            color =
+                                if (selected) MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            softWrap = false
                         )
                     }
                 }

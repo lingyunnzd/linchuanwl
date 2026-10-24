@@ -253,14 +253,22 @@ fun OperitTheme(content: @Composable () -> Unit) {
                     statusBarTransparent -> Color.Transparent.toArgb()
                     useBackgroundImage && backgroundImageUri != null -> Color.Transparent.toArgb()  // 有背景时透明
                     useCustomStatusBarColor && customStatusBarColorValue != null -> customStatusBarColorValue!!.toInt()
-                    else -> colorScheme.primary.toArgb()
+                    else -> colorScheme.background.toArgb()
                 }
                 window.statusBarColor = statusBarColor
 
                 // 根据状态栏背景色动态设置状态栏图标颜色
                 // isAppearanceLightStatusBars = true 表示图标为深色（适用于浅色背景）
                 // isAppearanceLightStatusBars = false 表示图标为浅色（适用于深色背景）
-                insetsController?.isAppearanceLightStatusBars = !isColorLight(Color(statusBarColor))
+                // 透明状态栏下颜色取不到实际底色，按当前主题明暗决定图标颜色
+                val lightStatusBarBg = when {
+                    statusBarTransparent -> !darkTheme
+                    useBackgroundImage && backgroundImageUri != null -> !darkTheme
+                    useCustomStatusBarColor && customStatusBarColorValue != null ->
+                        isColorLight(Color(customStatusBarColorValue!!.toInt()))
+                    else -> isColorLight(colorScheme.background)
+                }
+                insetsController?.isAppearanceLightStatusBars = lightStatusBarBg
             }
             
             // 设置导航栏颜色（底部小白条所在的区域）

@@ -1457,6 +1457,51 @@ class ChatViewModel(private val context: Context) : ViewModel() {
         hideMentionSuggestionPanel()
     }
 
+    fun selectMentionHistoryMessage() {
+        val activeChat = chatHistories.value.firstOrNull { it.id == currentChatId.value }
+        val latestAiMessage =
+            activeChat?.messages?.lastOrNull { message ->
+                message.sender == "ai" && message.content.isNotBlank()
+            }
+        if (latestAiMessage == null) {
+            uiStateDelegate.showToast("当前会话暂无可引用的历史消息")
+            return
+        }
+
+        val quotedText =
+            latestAiMessage.content.trim().let { content ->
+                if (content.length > 300) content.take(300) + "…" else content
+            }
+        replaceActiveMentionWithRawText(
+            quotedText.lineSequence().joinToString("\n") { line -> "> $line" },
+        )
+        hideMentionSuggestionPanel()
+    }
+
+    private fun replaceActiveMentionWithRawText(insertion: String) {
+        val current = userMessage.value
+        val activeMention = findActiveMentionTrigger(current) ?: return
+        val text = current.text
+        val cursor = current.selection.start.coerceIn(0, text.length)
+        val before = text.substring(0, activeMention.triggerIndex)
+        val after = text.substring(cursor)
+        val needLeadingSpace = before.isNotEmpty() && !before.last().isWhitespace()
+        val needTrailingSpace = after.isEmpty() || !after.first().isWhitespace()
+        val builtInsertion =
+            buildString {
+                if (needLeadingSpace) append(' ')
+                append(insertion)
+                if (needTrailingSpace) append(' ')
+            }
+        val newText = before + builtInsertion + after
+        updateUserMessage(
+            TextFieldValue(
+                text = newText,
+                selection = TextRange((before.length + builtInsertion.length).coerceAtMost(newText.length)),
+            ),
+        )
+    }
+
     fun sendUserMessage(promptFunctionType: PromptFunctionType = PromptFunctionType.CHAT) {
         hideMentionSuggestionPanel()
         messageCoordinationDelegate.sendUserMessage(

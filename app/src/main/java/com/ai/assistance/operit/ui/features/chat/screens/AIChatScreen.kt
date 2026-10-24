@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,10 +21,16 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.CodeOff
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.PictureInPicture
 import androidx.compose.material.icons.filled.Terminal
+import androidx.compose.material.icons.filled.VolumeOff
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -84,6 +91,7 @@ import com.ai.assistance.operit.ui.main.components.LocalAppBarContentColor
 import com.ai.assistance.operit.ui.main.screens.GestureStateHolder
 import com.ai.assistance.operit.ui.main.SharedFileHandler
 import java.io.File
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.sample
@@ -97,6 +105,7 @@ import com.ai.assistance.operit.ui.main.components.LocalSetUseScreenImePadding
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.CancellationException
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextRange
@@ -798,72 +807,258 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
     }
 
 
-    // 当showWebView或showAiComputer状态改变时，更新TopAppBar的actions
-    // 使用DisposableEffect确保当AIChatScreen离开组合时，actions被清空
-    LaunchedEffect(isCurrentScreen, embedded, showWebView, showAiComputer, isWorkspacePreparing, appBarContentColor, hasBoundWorkspace, currentChatView?.title) {
+    // 顶栏单行：菜单（系统栏）/ 角色标题 / 朗读 · 历史 · 浮窗 · 上下文用量环 / AI电脑 · 工作区
+    LaunchedEffect(actualViewModel, context) {
+        actualViewModel.moveTaskToBackEvents.collect {
+            (context as? android.app.Activity)?.moveTaskToBack(true)
+        }
+    }
+    val inputTokenCount by actualViewModel.inputTokenCount.collectAsState()
+    val outputTokenCount by actualViewModel.outputTokenCount.collectAsState()
+    val currentWindowSize by actualViewModel.currentWindowSize.collectAsState()
+    val maxWindowSizeInK by actualViewModel.maxWindowSizeInK.collectAsState()
+    val activeStreamingChatIds by actualViewModel.activeStreamingChatIds.collectAsState()
+    var showTokenStats by remember { mutableStateOf(false) }
+    var showCharacterSelector by remember { mutableStateOf(false) }
+    val headerTypography = MaterialTheme.typography
+    val headerPermissionLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                actualViewModel.launchWindowFloatingModeAfterMicPermissionGranted(
+                    colorScheme = colorScheme,
+                    typography = headerTypography,
+                    moveTaskToBackOnReady = true
+                )
+            } else {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.microphone_permission_denied),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    val launchFloatingWindowFromHeader = useFloatingWindowLauncher(actualViewModel, headerPermissionLauncher)
+    val headerCharacterName = activeCharacterGroup?.name ?: activeCharacterCard?.name.orEmpty()
+
+    LaunchedEffect(
+        isCurrentScreen,
+        embedded,
+        showWebView,
+        showAiComputer,
+        isWorkspacePreparing,
+        appBarContentColor,
+        hasBoundWorkspace,
+        headerCharacterName,
+        isAutoReadEnabled,
+        showChatHistorySelector,
+        isFloatingMode,
+        inputTokenCount,
+        outputTokenCount,
+        currentWindowSize,
+        maxWindowSizeInK,
+        activeStreamingChatIds.size
+    ) {
         if (isCurrentScreen && !embedded) {
-            val subtitle = currentChatView?.title?.takeIf { it.isNotBlank() } ?: "AI 助手 · 本机运行"
+            val subtitle =
+                if (headerCharacterName.isBlank()) "点击切换角色 ▾"
+                else "$headerCharacterName · 点击切换角色 ▾"
             val titleColor = appBarContentColor
             setTopBarTitleContent(
-                    TopBarTitleContent {
-                        Column {
-                            Text(
-                                    text = stringResource(R.string.app_name),
-                                    fontSize = 15.5.sp,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = titleColor
-                            )
-                            Text(
-                                    text = subtitle,
-                                    fontSize = 10.5.sp,
-                                    color = titleColor.copy(alpha = 0.7f),
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                            )
-                        }
+                TopBarTitleContent {
+                    Column(
+                        modifier =
+                            Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .clickable { showCharacterSelector = true }
+                                .padding(horizontal = 2.dp, vertical = 1.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.app_name),
+                            fontSize = 15.5.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = titleColor
+                        )
+                        Text(
+                            text = subtitle,
+                            fontSize = 10.5.sp,
+                            color = titleColor.copy(alpha = 0.7f),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
+                }
             )
             setTopBarActions {
-                // AI电脑模式切换按钮
+                // 朗读开关
                 IconButton(
-                        enabled = !isWorkspacePreparing,
-                        onClick = {
-                            actualViewModel.onAiComputerButtonClick()
-                        }
+                    onClick = { actualViewModel.toggleAutoRead() },
+                    modifier = Modifier.size(34.dp)
                 ) {
                     Icon(
-                            imageVector = Icons.Default.Terminal,
-                            contentDescription = stringResource(R.string.ai_computer),
-                            tint =
-                            if (showAiComputer) MaterialTheme.colorScheme.primaryContainer
-                            else appBarContentColor
+                        imageVector = if (isAutoReadEnabled) Icons.Filled.VolumeUp else Icons.Filled.VolumeOff,
+                        contentDescription = if (isAutoReadEnabled) "关闭朗读" else "开启朗读",
+                        tint = if (isAutoReadEnabled) colorScheme.primary else appBarContentColor,
+                        modifier = Modifier.size(19.dp)
+                    )
+                }
+
+                // 聊天历史
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(
+                            color = if (showChatHistorySelector) colorScheme.primary.copy(alpha = 0.15f) else Color.Transparent,
+                            shape = CircleShape
+                        )
+                ) {
+                    IconButton(
+                        onClick = { actualViewModel.toggleChatHistorySelector() },
+                        modifier = Modifier.matchParentSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.History,
+                            contentDescription =
+                                if (showChatHistorySelector) stringResource(R.string.hide_history)
+                                else stringResource(R.string.show_history),
+                            tint = if (showChatHistorySelector) colorScheme.primary else appBarContentColor,
+                            modifier = Modifier.size(19.dp)
+                        )
+                    }
+                }
+
+                // 浮窗模式
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(
+                            color = if (isFloatingMode) colorScheme.primary.copy(alpha = 0.15f) else Color.Transparent,
+                            shape = CircleShape
+                        )
+                ) {
+                    IconButton(
+                        onClick = launchFloatingWindowFromHeader,
+                        modifier = Modifier.matchParentSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.PictureInPicture,
+                            contentDescription =
+                                if (isFloatingMode) stringResource(R.string.close_floating_window)
+                                else stringResource(R.string.open_floating_window),
+                            tint = if (isFloatingMode) colorScheme.primary else appBarContentColor,
+                            modifier = Modifier.size(19.dp)
+                        )
+                    }
+                }
+
+                // 上下文用量环
+                Box {
+                    val maxWindowSize = (maxWindowSizeInK * 1024).toLong().coerceAtLeast(0L)
+                    val contextUsagePercentage =
+                        if (maxWindowSize > 0) {
+                            ((currentWindowSize.toDouble() / maxWindowSize.toDouble()) * 100.0)
+                                .coerceAtMost(999.0)
+                                .toFloat()
+                        } else {
+                            0f
+                        }
+                    val animatedProgress by animateFloatAsState(
+                        targetValue = (contextUsagePercentage / 100f).coerceIn(0f, 1f),
+                        label = "TopBarTokenProgress"
+                    )
+                    val progressColor =
+                        when {
+                            contextUsagePercentage > 90 -> colorScheme.error
+                            contextUsagePercentage > 75 -> colorScheme.tertiary
+                            else -> colorScheme.primary
+                        }
+
+                    Box(
+                        modifier = Modifier
+                            .clickable { showTokenStats = !showTokenStats }
+                            .size(34.dp)
+                            .padding(3.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            progress = { animatedProgress },
+                            modifier = Modifier.fillMaxSize(),
+                            color = progressColor,
+                            strokeWidth = 2.5.dp,
+                            trackColor = colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                        )
+                        Text(
+                            text = "${contextUsagePercentage.toInt()}%",
+                            fontSize = 8.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = progressColor
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = showTokenStats,
+                        onDismissRequest = { showTokenStats = false },
+                        modifier = Modifier.background(colorScheme.surface)
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.context_window, currentWindowSize), fontSize = 12.sp) },
+                            onClick = {},
+                            enabled = false
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.input_tokens, inputTokenCount), fontSize = 12.sp) },
+                            onClick = {},
+                            enabled = false
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.output_tokens, outputTokenCount), fontSize = 12.sp) },
+                            onClick = {},
+                            enabled = false
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    stringResource(R.string.total_tokens, inputTokenCount + outputTokenCount),
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = colorScheme.primary
+                                )
+                            },
+                            onClick = {},
+                            enabled = false
+                        )
+                    }
+                }
+
+                // AI电脑模式切换按钮
+                IconButton(
+                    enabled = !isWorkspacePreparing,
+                    onClick = { actualViewModel.onAiComputerButtonClick() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Terminal,
+                        contentDescription = stringResource(R.string.ai_computer),
+                        tint = if (showAiComputer) MaterialTheme.colorScheme.primaryContainer else appBarContentColor
                     )
                 }
 
                 // Web开发模式切换按钮
                 IconButton(
-                        enabled = !isWorkspacePreparing,
-                        onClick = {
-                            actualViewModel.onWorkspaceButtonClick()
-                        }
+                    enabled = !isWorkspacePreparing,
+                    onClick = { actualViewModel.onWorkspaceButtonClick() }
                 ) {
                     if (isWorkspacePreparing) {
                         CircularProgressIndicator(
-                                modifier = Modifier.size(18.dp),
-                                strokeWidth = 2.dp,
-                                color = appBarContentColor
+                            modifier = Modifier.size(18.dp),
+                            strokeWidth = 2.dp,
+                            color = appBarContentColor
                         )
                     } else {
                         Icon(
-                                imageVector =
-                                if (hasBoundWorkspace) Icons.Default.Code
-                                else Icons.Default.CodeOff,
-                                contentDescription =
+                            imageVector = if (hasBoundWorkspace) Icons.Default.Code else Icons.Default.CodeOff,
+                            contentDescription =
                                 if (hasBoundWorkspace) stringResource(R.string.workspace)
                                 else stringResource(R.string.setup_workspace),
-                                tint =
-                                if (showWebView) MaterialTheme.colorScheme.primaryContainer
-                                else appBarContentColor
+                            tint = if (showWebView) MaterialTheme.colorScheme.primaryContainer else appBarContentColor
                         )
                     }
                 }
@@ -883,7 +1078,6 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
     var exportFilePath by remember { mutableStateOf<String?>(null) }
     var exportErrorMessage by remember { mutableStateOf<String?>(null) }
     var webContentDir by remember { mutableStateOf<File?>(null) }
-    var showCharacterSelector by remember { mutableStateOf(false) }
 
     var bottomBarHeightPx by remember { mutableStateOf(0) }
     val bottomBarHeightDp = with(density) { bottomBarHeightPx.toDp() }
@@ -1234,6 +1428,11 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
                     chatInputLiquidGlass = chatInputLiquidGlass,
                     chatInputWaterGlass = chatInputWaterGlass,
                 ),
+            onMemorySourceSelected = {
+                actualViewModel.hideMentionSuggestionPanel()
+                showMemoryFolderDialog = true
+            },
+            onHistorySourceSelected = actualViewModel::selectMentionHistoryMessage,
         )
 
         val isWorkspaceVisible = !embedded && showWebView
@@ -2065,6 +2264,8 @@ private fun MentionSuggestionOverlay(
     bottomBarHeightPx: Int,
     inputBarTranslationYPx: Float,
     panelStyle: MentionSuggestionPanelStyle,
+    onMemorySourceSelected: () -> Unit,
+    onHistorySourceSelected: () -> Unit,
 ) {
     val density = LocalDensity.current
     val showMentionSuggestionPanel by actualViewModel.showMentionSuggestionPanel.collectAsState()
@@ -2108,6 +2309,8 @@ private fun MentionSuggestionOverlay(
                     actualViewModel.selectMentionWorkspaceEntry(relativePath)
                 },
                 onPackageSelected = actualViewModel::selectMentionPackage,
+                onMemorySourceSelected = onMemorySourceSelected,
+                onHistorySourceSelected = onHistorySourceSelected,
             )
         }
     }

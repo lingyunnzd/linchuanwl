@@ -254,6 +254,10 @@
     <string name="workflow_trigger_type_intent">Intent 触发</string>
     <string name="workflow_trigger_type_speech">语音触发</string>
     <string name="workflow_trigger_type_app_open">打开 App 时触发</string>
+    <string name="workflow_status_enabled">启用中</string>
+    <string name="workflow_status_paused">已暂停</string>
+    <string name="workflow_summary_nodes">%1$d 节点</string>
+    <string name="workflow_summary_success_rate">成功 %1$d%%</string>
     <string name="workflow_trigger_fallback">触发器</string>
     <string name="web_session_dialog_title_alert">页面提示</string>
     <string name="web_session_dialog_title_confirm">页面确认</string>
@@ -3310,7 +3314,8 @@
     <string name="long_pasted_text_threshold">转换阈值</string>
     <string name="long_pasted_text_threshold_desc">粘贴文本超过此字符数时转为文件</string>
     <string name="long_pasted_text_threshold_unit">字符</string>
-    <string name="chat_pending_queue_title">待发送队列（%1$d）</string>
+    <string name="chat_pending_queue_title">排队消息 · %1$d</string>
+    <string name="chat_pending_queue_item_state">排队中</string>
     <string name="chat_queue_add_message">加入发送队列</string>
     <string name="chat_queue_added">已加入发送队列</string>
     <string name="chat_use_default_config_continue">使用默认配置继续</string>
@@ -5787,6 +5792,13 @@
     <string name="mention_selector_hint">输入包名、文件名或路径</string>
     <string name="mention_selector_packages_section">Packages</string>
     <string name="mention_selector_files_section">Files</string>
+    <string name="mention_selector_sources_section">引用内容</string>
+    <string name="mention_selector_source_memory">记忆片段</string>
+    <string name="mention_selector_source_memory_desc">从记忆库选择一条作为上下文</string>
+    <string name="mention_selector_source_files">文件 / 文件夹</string>
+    <string name="mention_selector_source_files_desc">引用本机文件内容</string>
+    <string name="mention_selector_source_history">历史消息</string>
+    <string name="mention_selector_source_history_desc">引用本会话或其他会话的消息</string>
     <string name="mention_selector_files_idle">输入名称或路径搜索工作区项目</string>
     <string name="mention_selector_files_empty">没有匹配的文件或文件夹</string>
     <string name="select_file_to_reference">选择要引用的文件</string>

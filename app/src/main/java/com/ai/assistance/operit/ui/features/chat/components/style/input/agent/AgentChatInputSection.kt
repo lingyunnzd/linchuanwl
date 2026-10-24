@@ -11,6 +11,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -156,6 +157,7 @@ import com.ai.assistance.operit.ui.theme.isWaterGlassSupported
 import com.ai.assistance.operit.ui.theme.liquidGlass
 import com.ai.assistance.operit.ui.theme.waterGlass
 import com.ai.assistance.operit.util.ChatUtils
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -645,6 +647,20 @@ fun AgentChatInputSection(
             Triple(MaterialTheme.colorScheme.primary, "", 0f)
         }
 
+    var processingElapsedSeconds by remember { mutableStateOf(0) }
+    LaunchedEffect(showProcessingStatus) {
+        if (showProcessingStatus) {
+            val startMs = System.currentTimeMillis()
+            processingElapsedSeconds = 0
+            while (true) {
+                processingElapsedSeconds = ((System.currentTimeMillis() - startMs) / 1000L).toInt()
+                delay(1000L)
+            }
+        } else {
+            processingElapsedSeconds = 0
+        }
+    }
+
     val floatingContainerModifier =
         if (chatInputFloating) {
             modifier.padding(horizontal = 8.dp, vertical = 6.dp)
@@ -714,21 +730,44 @@ fun AgentChatInputSection(
             SimpleAnimatedVisibility(
                 visible = showProcessingStatus,
             ) {
-                if (processingMessage.isNotBlank()) {
-                    Row(
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp, end = 12.dp, top = 2.dp, bottom = 2.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(12.dp),
+                        strokeWidth = 1.6.dp,
+                        color = processingProgressColor,
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text =
+                            buildString {
+                                append(processingMessage.ifBlank { "正在生成…" })
+                                if (processingElapsedSeconds > 0) {
+                                    append(" · 已运行 ${processingElapsedSeconds}s")
+                                }
+                            },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Text(
+                        text = "停止",
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
                         modifier =
                             Modifier
-                                .fillMaxWidth()
-                                .padding(start = 12.dp, end = 12.dp, top = 4.dp, bottom = 0.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = processingMessage,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
+                                .clip(RoundedCornerShape(6.dp))
+                                .clickable(onClick = onCancelMessage)
+                                .padding(horizontal = 6.dp, vertical = 2.dp),
+                    )
                 }
             }
 
@@ -749,6 +788,18 @@ fun AgentChatInputSection(
                     }
                 }
             }
+
+            // 快捷开关行：工具 / 深度思考 / 记忆 / 最大上下文
+            AgentModePillsRow(
+                enableTools = enableTools,
+                onToggleTools = onToggleTools,
+                enableThinkingMode = enableThinkingMode,
+                onToggleThinkingMode = onToggleThinkingMode,
+                enableMemoryAutoUpdate = enableMemoryAutoUpdate,
+                onToggleMemoryAutoUpdate = onToggleMemoryAutoUpdate,
+                enableMaxContextMode = enableMaxContextMode,
+                onToggleEnableMaxContextMode = onToggleEnableMaxContextMode,
+            )
 
             val inputCardShape =
                 if (chatInputFloating) {
@@ -825,116 +876,18 @@ fun AgentChatInputSection(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                            .padding(horizontal = 10.dp, vertical = 8.dp),
                 ) {
-                    OutlinedTextField(
-                        value = userMessage,
-                        onValueChange = onUserMessageChange,
-                        visualTransformation = mentionVisualTransformation,
-                        placeholder = {
-                            Text(
-                                if (isWorkspaceOpen) {
-                                    context.getString(R.string.input_question_with_workspace)
-                                } else {
-                                    context.getString(R.string.input_question_hint)
-                                },
-                                style = inputTextStyle,
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 44.dp).onPreviewKeyEvent(onEnterToSendKeyEvent),
-                        textStyle = inputTextStyle,
-                        maxLines = 6,
-                        minLines = 1,
-                        singleLine = false,
-                        keyboardOptions =
-                            KeyboardOptions(
-                                imeAction = if (enableEnterToSend) ImeAction.Send else ImeAction.Default
-                            ),
-                        keyboardActions =
-                            if (enableEnterToSend) {
-                                KeyboardActions(onSend = { handleEnterSendAction() })
-                            } else {
-                                KeyboardActions()
-                            },
-                        colors =
-                            OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color.Transparent,
-                                unfocusedBorderColor = Color.Transparent,
-                                disabledBorderColor = Color.Transparent,
-                                focusedContainerColor = Color.Transparent,
-                                unfocusedContainerColor = Color.Transparent,
-                                disabledContainerColor = Color.Transparent,
-                            ),
-                        shape = RoundedCornerShape(14.dp),
-                        trailingIcon = {
-                            IconButton(onClick = { showFullscreenInput.value = true }) {
-                                Icon(
-                                    imageVector = Icons.Default.Fullscreen,
-                                    contentDescription = stringResource(R.string.chat_fullscreen_input),
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                        },
-                        enabled = !isProcessing || allowTextInputWhileProcessing,
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Box(
-                            modifier = Modifier.weight(1f),
-                            contentAlignment = Alignment.CenterStart,
-                        ) {
-                            Surface(
-                                shape = RoundedCornerShape(12.dp),
-                                color = Color.Transparent,
-                                modifier =
-                                    Modifier
-                                        .widthIn(min = 0.dp, max = 220.dp)
-                                        .border(
-                                            width = 1.dp,
-                                            color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-                                            shape = RoundedCornerShape(12.dp),
-                                        )
-                                        .clip(RoundedCornerShape(12.dp))
-                                        .clickable(onClick = onModelSelectorClick),
-                            ) {
-                                Row(
-                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    Text(
-                                        text = modelLabel,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        modifier = Modifier.widthIn(max = 160.dp),
-                                    )
-                                    Spacer(modifier = Modifier.width(4.dp))
-                                    Icon(
-                                        imageVector =
-                                            if (showModelSelectorPopup.value) {
-                                                Icons.Default.KeyboardArrowUp
-                                            } else {
-                                                Icons.Default.KeyboardArrowDown
-                                            },
-                                        contentDescription = context.getString(R.string.select_model_config),
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        modifier = Modifier.size(18.dp),
-                                    )
-                                }
-                            }
-                        }
-
+                        // 对话设置（齿轮）：模型 / 记忆 / 工具 / 行为 / 全屏输入
                         Box(
                             modifier =
                                 Modifier
-                                    .padding(start = 6.dp)
                                     .size(34.dp)
+                                    .clip(CircleShape)
                                     .clickable(
                                         enabled = true,
                                         onClick = {
@@ -957,11 +910,13 @@ fun AgentChatInputSection(
                             )
                         }
 
+                        // 添加附件
                         Box(
                             modifier =
                                 Modifier
-                                    .padding(start = 8.dp)
-                                    .size(36.dp)
+                                    .padding(start = 2.dp)
+                                    .size(34.dp)
+                                    .clip(CircleShape)
                                     .clickable(
                                         enabled = true,
                                         onClick = {
@@ -981,9 +936,55 @@ fun AgentChatInputSection(
                                     } else {
                                         MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.9f)
                                     },
-                                modifier = Modifier.size(24.dp),
+                                modifier = Modifier.size(22.dp),
                             )
                         }
+
+                        OutlinedTextField(
+                            value = userMessage,
+                            onValueChange = onUserMessageChange,
+                            visualTransformation = mentionVisualTransformation,
+                            placeholder = {
+                                Text(
+                                    if (isWorkspaceOpen) {
+                                        context.getString(R.string.input_question_with_workspace)
+                                    } else {
+                                        context.getString(R.string.input_question_hint)
+                                    },
+                                    style = inputTextStyle,
+                                )
+                            },
+                            modifier =
+                                Modifier
+                                    .weight(1f)
+                                    .heightIn(min = 40.dp)
+                                    .onPreviewKeyEvent(onEnterToSendKeyEvent),
+                            textStyle = inputTextStyle,
+                            maxLines = 5,
+                            minLines = 1,
+                            singleLine = false,
+                            keyboardOptions =
+                                KeyboardOptions(
+                                    imeAction = if (enableEnterToSend) ImeAction.Send else ImeAction.Default
+                                ),
+                            keyboardActions =
+                                if (enableEnterToSend) {
+                                    KeyboardActions(onSend = { handleEnterSendAction() })
+                                } else {
+                                    KeyboardActions()
+                                },
+                            colors =
+                                OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                                    unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.55f),
+                                    disabledBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                                    focusedContainerColor = Color.Transparent,
+                                    unfocusedContainerColor = Color.Transparent,
+                                    disabledContainerColor = Color.Transparent,
+                                ),
+                            shape = RoundedCornerShape(12.dp),
+                            enabled = !isProcessing || allowTextInputWhileProcessing,
+                        )
 
                         Spacer(modifier = Modifier.width(6.dp))
 
@@ -1125,123 +1126,25 @@ fun AgentChatInputSection(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 12.dp, vertical = 8.dp),
+                                .padding(horizontal = 10.dp, vertical = 8.dp),
                     ) {
-                        OutlinedTextField(
-                            value = userMessage,
-                            onValueChange = onUserMessageChange,
-                            visualTransformation = mentionVisualTransformation,
-                            placeholder = {
-                                Text(
-                                    if (isWorkspaceOpen) {
-                                        context.getString(R.string.input_question_with_workspace)
-                                    } else {
-                                        context.getString(R.string.input_question_hint)
-                                    },
-                                    style = inputTextStyle,
-                                )
-                            },
-                            modifier = Modifier.fillMaxWidth().heightIn(min = 44.dp).onPreviewKeyEvent(onEnterToSendKeyEvent),
-                            textStyle = inputTextStyle,
-                            maxLines = 6,
-                            minLines = 1,
-                            singleLine = false,
-                            keyboardOptions =
-                                KeyboardOptions(
-                                    imeAction = if (enableEnterToSend) ImeAction.Send else ImeAction.Default
-                                ),
-                            keyboardActions =
-                                if (enableEnterToSend) {
-                                    KeyboardActions(onSend = { handleEnterSendAction() })
-                                } else {
-                                    KeyboardActions()
-                                },
-                            colors =
-                                OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = Color.Transparent,
-                                    unfocusedBorderColor = Color.Transparent,
-                                    disabledBorderColor = Color.Transparent,
-                                    focusedContainerColor = Color.Transparent,
-                                    unfocusedContainerColor = Color.Transparent,
-                                    disabledContainerColor = Color.Transparent,
-                                ),
-                            shape = RoundedCornerShape(14.dp),
-                            trailingIcon = {
-                                IconButton(onClick = { showFullscreenInput.value = true }) {
-                                    Icon(
-                                        imageVector = Icons.Default.Fullscreen,
-                                        contentDescription = stringResource(R.string.chat_fullscreen_input),
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                }
-                            },
-                            enabled = !isProcessing || allowTextInputWhileProcessing,
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
+                            // 对话设置（齿轮）：模型 / 记忆 / 工具 / 行为 / 全屏输入
                             Box(
-                                modifier = Modifier.weight(1f),
-                                contentAlignment = Alignment.CenterStart,
-                            ) {
-                                Surface(
-                                    shape = RoundedCornerShape(12.dp),
-                                    color = Color.Transparent,
-                                    modifier =
-                                        Modifier
-                                            .widthIn(min = 0.dp, max = 220.dp)
-                                            .border(
-                                                width = 1.dp,
-                                                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f),
-                                                shape = RoundedCornerShape(12.dp),
-                                            )
-                                            .clip(RoundedCornerShape(12.dp))
-                                            .clickable(onClick = onModelSelectorClick),
-                                ) {
-                                    Row(
-                                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Text(
-                                            text = modelLabel,
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = MaterialTheme.colorScheme.onSurface,
-                                            maxLines = 1,
-                                            overflow = TextOverflow.Ellipsis,
-                                            modifier = Modifier.widthIn(max = 160.dp),
-                                        )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Icon(
-                                            imageVector =
-                                                if (showModelSelectorPopup.value) {
-                                                    Icons.Default.KeyboardArrowUp
-                                                } else {
-                                                    Icons.Default.KeyboardArrowDown
-                                                },
-                                            contentDescription = context.getString(R.string.select_model_config),
-                                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            modifier = Modifier.size(18.dp),
-                                        )
-                                    }
-                                }
-                            }
-
-                                Box(
-                                    modifier =
-                                        Modifier
-                                            .padding(start = 6.dp)
-                                            .size(34.dp)
-                                            .clickable(
-                                                enabled = true,
-                                                onClick = {
-                                                    showModelSelectorPopup.value = false
-                                                    showExtraSettingsPopup.value = !showExtraSettingsPopup.value
-                                                },
-                                            ),
+                                modifier =
+                                    Modifier
+                                        .size(34.dp)
+                                        .clip(CircleShape)
+                                        .clickable(
+                                            enabled = true,
+                                            onClick = {
+                                                showModelSelectorPopup.value = false
+                                                showExtraSettingsPopup.value = !showExtraSettingsPopup.value
+                                            },
+                                        ),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Icon(
@@ -1257,19 +1160,21 @@ fun AgentChatInputSection(
                                 )
                             }
 
-                                Box(
-                                    modifier =
-                                        Modifier
-                                            .padding(start = 8.dp)
-                                            .size(36.dp)
-                                            .clickable(
-                                                enabled = true,
-                                                onClick = {
-                                                    showModelSelectorPopup.value = false
-                                                    showExtraSettingsPopup.value = false
-                                                    setShowAttachmentPanel(!showAttachmentPanel)
-                                                },
-                                            ),
+                            // 添加附件
+                            Box(
+                                modifier =
+                                    Modifier
+                                        .padding(start = 2.dp)
+                                        .size(34.dp)
+                                        .clip(CircleShape)
+                                        .clickable(
+                                            enabled = true,
+                                            onClick = {
+                                                showModelSelectorPopup.value = false
+                                                showExtraSettingsPopup.value = false
+                                                setShowAttachmentPanel(!showAttachmentPanel)
+                                            },
+                                        ),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Icon(
@@ -1281,9 +1186,55 @@ fun AgentChatInputSection(
                                         } else {
                                             MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.9f)
                                         },
-                                    modifier = Modifier.size(24.dp),
+                                    modifier = Modifier.size(22.dp),
                                 )
                             }
+
+                            OutlinedTextField(
+                                value = userMessage,
+                                onValueChange = onUserMessageChange,
+                                visualTransformation = mentionVisualTransformation,
+                                placeholder = {
+                                    Text(
+                                        if (isWorkspaceOpen) {
+                                            context.getString(R.string.input_question_with_workspace)
+                                        } else {
+                                            context.getString(R.string.input_question_hint)
+                                        },
+                                        style = inputTextStyle,
+                                    )
+                                },
+                                modifier =
+                                    Modifier
+                                        .weight(1f)
+                                        .heightIn(min = 40.dp)
+                                        .onPreviewKeyEvent(onEnterToSendKeyEvent),
+                                textStyle = inputTextStyle,
+                                maxLines = 5,
+                                minLines = 1,
+                                singleLine = false,
+                                keyboardOptions =
+                                    KeyboardOptions(
+                                        imeAction = if (enableEnterToSend) ImeAction.Send else ImeAction.Default
+                                    ),
+                                keyboardActions =
+                                    if (enableEnterToSend) {
+                                        KeyboardActions(onSend = { handleEnterSendAction() })
+                                    } else {
+                                        KeyboardActions()
+                                    },
+                                colors =
+                                    OutlinedTextFieldDefaults.colors(
+                                        focusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                                        unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.55f),
+                                        disabledBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                                        focusedContainerColor = Color.Transparent,
+                                        unfocusedContainerColor = Color.Transparent,
+                                        disabledContainerColor = Color.Transparent,
+                                    ),
+                                shape = RoundedCornerShape(12.dp),
+                                enabled = !isProcessing || allowTextInputWhileProcessing,
+                            )
 
                             Spacer(modifier = Modifier.width(6.dp))
 
@@ -1447,6 +1398,15 @@ fun AgentChatInputSection(
                 onNavigateToPackageManager = onNavigateToPackageManager,
                 onManualMemoryUpdate = onManualMemoryUpdate,
                 onDismiss = { showExtraSettingsPopup.value = false },
+                currentModelLabel = modelLabel,
+                onModelSelectorClick = {
+                    showExtraSettingsPopup.value = false
+                    showModelSelectorPopup.value = true
+                },
+                onFullscreenInput = {
+                    showExtraSettingsPopup.value = false
+                    showFullscreenInput.value = true
+                },
             )
 
             AttachmentSelectorPopupPanel(
@@ -2243,6 +2203,9 @@ private fun AgentExtraSettingsPopup(
     onSaveToolPromptVisibilityMap: (Map<String, Boolean>) -> Unit,
     toolOrder: List<String> = emptyList(),
     onSaveToolOrder: (List<String>) -> Unit = {},
+    currentModelLabel: String,
+    onModelSelectorClick: () -> Unit,
+    onFullscreenInput: () -> Unit,
     onNavigateToPackageManager: () -> Unit,
     onManualMemoryUpdate: () -> Unit,
     onDismiss: () -> Unit,
@@ -2332,6 +2295,23 @@ private fun AgentExtraSettingsPopup(
                             .padding(vertical = 4.dp)
                             .verticalScroll(rememberScrollState()),
                 ) {
+                    AgentSimpleActionItem(
+                        title = "当前模型 · $currentModelLabel",
+                        icon = Icons.Outlined.Speed,
+                        onClick = {
+                            onDismiss()
+                            onModelSelectorClick()
+                        },
+                    )
+                    AgentSimpleActionItem(
+                        title = "全屏输入",
+                        icon = Icons.Default.Fullscreen,
+                        onClick = {
+                            onDismiss()
+                            onFullscreenInput()
+                        },
+                    )
+
                     AgentMemorySelectorItem(
                         preferenceProfiles = preferenceProfiles,
                         currentProfileId = currentProfileId,
@@ -3337,3 +3317,126 @@ private fun expandCornerRadius(base: CornerRadius, expansion: Float): CornerRadi
         x = (base.x + expansion).coerceAtLeast(0f),
         y = (base.y + expansion).coerceAtLeast(0f),
     )
+
+@Composable
+private fun AgentSimpleActionItem(
+    title: String,
+    icon: ImageVector,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .heightIn(min = 38.dp)
+                .clickable(onClick = onClick)
+                .padding(horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+            modifier = Modifier.size(16.dp),
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Text(
+            text = title,
+            fontSize = 13.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+/** 输入框上方快捷开关行：工具 / 深度思考 / 记忆 / 最大上下文 */
+@Composable
+private fun AgentModePillsRow(
+    enableTools: Boolean,
+    onToggleTools: () -> Unit,
+    enableThinkingMode: Boolean,
+    onToggleThinkingMode: () -> Unit,
+    enableMemoryAutoUpdate: Boolean,
+    onToggleMemoryAutoUpdate: () -> Unit,
+    enableMaxContextMode: Boolean,
+    onToggleEnableMaxContextMode: () -> Unit,
+) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 12.dp, vertical = 2.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        AgentModePill(
+            text = "工具",
+            icon = Icons.Outlined.Tune,
+            selected = enableTools,
+            onClick = onToggleTools,
+        )
+        AgentModePill(
+            text = "深度思考",
+            icon = Icons.Outlined.Psychology,
+            selected = enableThinkingMode,
+            onClick = onToggleThinkingMode,
+        )
+        AgentModePill(
+            text = "记忆",
+            icon = Icons.Outlined.Hub,
+            selected = enableMemoryAutoUpdate,
+            onClick = onToggleMemoryAutoUpdate,
+        )
+        AgentModePill(
+            text = "最大上下文",
+            icon = Icons.Outlined.DataObject,
+            selected = enableMaxContextMode,
+            onClick = onToggleEnableMaxContextMode,
+        )
+    }
+}
+
+@Composable
+private fun AgentModePill(
+    text: String,
+    icon: ImageVector,
+    selected: Boolean,
+    onClick: () -> Unit,
+) {
+    val shape = RoundedCornerShape(50)
+    val contentColor =
+        if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+    Row(
+        modifier =
+            Modifier
+                .clip(shape)
+                .background(
+                    if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.10f) else Color.Transparent
+                )
+                .border(
+                    width = 1.dp,
+                    color =
+                        if (selected) {
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.45f)
+                        } else {
+                            MaterialTheme.colorScheme.outline.copy(alpha = 0.35f)
+                        },
+                    shape = shape,
+                )
+                .clickable(onClick = onClick)
+                .padding(horizontal = 9.dp, vertical = 5.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = text,
+            tint = contentColor,
+            modifier = Modifier.size(13.dp),
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(text = text, fontSize = 11.sp, color = contentColor)
+    }
+}

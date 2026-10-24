@@ -710,7 +710,8 @@ private fun CodeCells(
     val redBg = Color(0xFFFBE9E7)
 
     Box(modifier = Modifier.fillMaxWidth()) {
-        Row(
+        // 校验结果态（成功对勾 / 失败红叉）替换格子行，避免叠压
+        if (verifyState == VerifyState.IDLE) Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset { IntOffset(shakeX.roundToInt(), 0) },

@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -374,14 +375,53 @@ private fun CloudSyncSection(navigateToCloudAuth: () -> Unit) {
         SettingsSection(title = "账号与云服务") {
                 when (val state = authState) {
                         is AuthState.LoggedIn -> {
-                                CompactSettingsItem(
-                                        title = "霖川账号",
-                                        subtitle = state.username,
-                                        icon = Icons.Default.CloudDone,
-                                        onClick = {},
-                                        showDivider = false,
-                                        trailingText = "已登录"
-                                )
+                                val cs = MaterialTheme.colorScheme
+                                Row(
+                                        modifier =
+                                                Modifier
+                                                        .fillMaxWidth()
+                                                        .padding(horizontal = 14.dp, vertical = 14.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                        Box(
+                                                modifier =
+                                                        Modifier
+                                                                .size(42.dp)
+                                                                .clip(CircleShape)
+                                                                .background(cs.primary.copy(alpha = 0.10f)),
+                                                contentAlignment = Alignment.Center
+                                        ) {
+                                                Text(
+                                                        text = state.username.take(1).uppercase(),
+                                                        fontSize = 16.sp,
+                                                        fontWeight = FontWeight.SemiBold,
+                                                        color = cs.primary
+                                                )
+                                        }
+                                        Spacer(modifier = Modifier.width(12.dp))
+                                        Column(modifier = Modifier.weight(1f)) {
+                                                Text(
+                                                        text = state.username,
+                                                        fontSize = 14.sp,
+                                                        fontWeight = FontWeight.Medium,
+                                                        color = cs.onSurface,
+                                                        maxLines = 1,
+                                                        overflow = TextOverflow.Ellipsis
+                                                )
+                                                Spacer(modifier = Modifier.height(2.dp))
+                                                Text(
+                                                        text = "霖川云服务 · 已登录",
+                                                        fontSize = 11.5.sp,
+                                                        color = cs.onSurfaceVariant
+                                                )
+                                        }
+                                        Icon(
+                                                imageVector = Icons.Default.CloudDone,
+                                                contentDescription = null,
+                                                tint = cs.primary,
+                                                modifier = Modifier.size(18.dp)
+                                        )
+                                }
                                 CompactSettingsItem(
                                         title = if (busy) "同步中…" else "云同步",
                                         subtitle = statusText ?: "AES-256-GCM 端侧加密，服务端不可解密",

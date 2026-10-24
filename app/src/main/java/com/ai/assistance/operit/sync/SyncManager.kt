@@ -236,16 +236,18 @@ object SyncManager {
         cachedKey = SyncCrypto.deriveKey(password, salt)
     }
 
-    private fun getOrDeriveKey(): ByteArray {
-        return cachedKey ?: throw IllegalStateException("key not derived - call deriveKey(password) after login")
-    }
+    private fun getOrDeriveKey(): ByteArray? = cachedKey
+
+    /** 加密同步需要由密码派生的密钥；验证码免密登录的用户没有密码，只能做模板导入 */
+    private val keyMissingError: Throwable =
+        IllegalStateException("当前为验证码登录，未保存密码，加密同步不可用；请用密码重新登录后再同步")
 
     // ============ Settings 同步 ============
 
     /** 拉取 settings + providers（从服务端），解密后写回本地 */
     suspend fun pullSettings(): Result<Unit> {
+        val key = getOrDeriveKey() ?: return Result.failure(keyMissingError)
         val resp = api.pullSettings()
-        val key = getOrDeriveKey()
         return when (resp) {
             is ApiResult.Ok -> {
                 val d = resp.data
@@ -267,7 +269,7 @@ object SyncManager {
 
     /** 把本地 settings + providers 加密后推送到服务端 */
     suspend fun pushSettings(): Result<Unit> {
-        val key = getOrDeriveKey()
+        val key = getOrDeriveKey() ?: return Result.failure(keyMissingError)
         val deviceHash = getOrCreateDeviceHash()
         val deviceName = android.os.Build.MODEL
 
@@ -296,9 +298,9 @@ object SyncManager {
 
     /** 拉取增量话题变化，密文解密后合并到本地 */
     suspend fun pullTopics(): Result<Int> {
+        val key = getOrDeriveKey() ?: return Result.failure(keyMissingError)
         val since = lastTopicsSync
         val resp = api.pullTopics(since)
-        val key = getOrDeriveKey()
         return when (resp) {
             is ApiResult.Ok -> {
                 var applied = 0
@@ -320,7 +322,7 @@ object SyncManager {
 
     /** 把本地话题的变更（全部）加密后推送到服务端 */
     suspend fun pushTopics(clientVersion: String = "1.0"): Result<Unit> {
-        val key = getOrDeriveKey()
+        val key = getOrDeriveKey() ?: return Result.failure(keyMissingError)
         val nowIso = java.time.Instant.now().toString()
         val updates = storage.getAllTopics().map { (id, json) ->
             val (enc, nonce) = SyncCrypto.encryptString(json, key)

@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -39,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ai.assistance.operit.R
 import com.ai.assistance.operit.core.tools.packTool.PackageManager
 import com.ai.assistance.operit.data.model.ExecutionStatus
+import com.ai.assistance.operit.data.model.TriggerNode
 import com.ai.assistance.operit.data.model.Workflow
 import com.ai.assistance.operit.ui.components.CustomScaffold
 import com.ai.assistance.operit.ui.features.workflow.viewmodel.WorkflowViewModel
@@ -238,8 +241,8 @@ fun WorkflowListScreen(
                 else -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 20.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         if (isSelectionMode) {
                             item {
@@ -628,6 +631,7 @@ fun WorkflowCard(
     isSelected: Boolean = false,
     onSelectionChange: (Boolean) -> Unit = {}
 ) {
+    val colors = MaterialTheme.colorScheme
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -635,157 +639,112 @@ fun WorkflowCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected) {
-                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                colors.primary.copy(alpha = 0.06f)
             } else {
-                MaterialTheme.colorScheme.surface
+                colors.surface
             }
         ),
-        border = CardDefaults.outlinedCardBorder()
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(1.dp, colors.outlineVariant.copy(alpha = 0.6f))
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(18.dp)
+                .padding(horizontal = 14.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // 标题行
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = workflow.name,
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Medium
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f)
-                )
-
-                Row(
-                    modifier = Modifier.padding(start = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    if (!workflow.enabled) {
-                        Box(
-                            modifier = Modifier
-                                .clip(MaterialTheme.shapes.extraSmall)
-                                .background(MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f))
-                                .padding(horizontal = 6.dp, vertical = 2.dp)
-                        ) {
-                            Text(
-                                text = stringResource(R.string.workflow_disabled),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.error,
-                                fontSize = 10.sp
-                            )
-                        }
-                    }
-
-                    if (isSelectionMode) {
-                        Checkbox(
-                            checked = isSelected,
-                            onCheckedChange = { onSelectionChange(it) }
-                        )
-                    } else {
-                        Switch(
-                            checked = workflow.enabled,
-                            onCheckedChange = onEnabledChange,
-                            modifier = Modifier.scale(0.82f)
-                        )
-                    }
-                }
-            }
-            
-            // 描述
-            if (workflow.description.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = workflow.description,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    lineHeight = 18.sp
-                )
-            }
-            
-            Spacer(modifier = Modifier.height(12.dp))
-            
-            // 执行状态信息
-            workflow.lastExecutionStatus?.let { status ->
-                ExecutionStatusBar(
-                    status = status,
-                    lastExecutionTime = workflow.lastExecutionTime,
-                    totalExecutions = workflow.totalExecutions,
-                    successRate = if (workflow.totalExecutions > 0) {
-                        (workflow.successfulExecutions.toFloat() / workflow.totalExecutions * 100).toInt()
-                    } else 0
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-            }
-            
-            // 底部信息栏
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    // 节点数量
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        Text(
-                            text = "${workflow.nodes.size}",
-                            style = MaterialTheme.typography.labelMedium.copy(
-                                fontWeight = FontWeight.SemiBold
+            Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = workflow.name,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = colors.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text =
+                            stringResource(
+                                if (workflow.enabled) R.string.workflow_status_enabled
+                                else R.string.workflow_status_paused
                             ),
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Text(
-                            text = stringResource(R.string.workflow_node),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-                        )
-                    }
-                    
-                    // 执行次数
-                    if (workflow.totalExecutions > 0) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                Icons.Outlined.PlayCircle,
-                                contentDescription = null,
-                                modifier = Modifier.size(14.dp),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                            )
-                            Text(
-                                text = "${workflow.totalExecutions}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-                            )
-                        }
-                    }
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = if (workflow.enabled) colors.primary else colors.onSurfaceVariant,
+                        modifier =
+                            Modifier
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(
+                                    if (workflow.enabled) colors.primary.copy(alpha = 0.10f)
+                                    else colors.outlineVariant.copy(alpha = 0.35f)
+                                )
+                                .padding(horizontal = 5.dp, vertical = 1.dp)
+                    )
                 }
-                
-                // 更新时间
+
+                Spacer(modifier = Modifier.height(3.dp))
+
                 Text(
-                    text = formatDate(workflow.updatedAt),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                    text = buildWorkflowSummary(workflow),
+                    fontSize = 11.sp,
+                    color = colors.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                if (workflow.description.isNotEmpty()) {
+                    Text(
+                        text = workflow.description,
+                        fontSize = 11.sp,
+                        color = colors.onSurfaceVariant.copy(alpha = 0.72f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.width(8.dp))
+
+            if (isSelectionMode) {
+                Checkbox(
+                    checked = isSelected,
+                    onCheckedChange = { onSelectionChange(it) }
+                )
+            } else {
+                Switch(
+                    checked = workflow.enabled,
+                    onCheckedChange = onEnabledChange,
+                    modifier = Modifier.scale(0.8f)
                 )
             }
         }
     }
+}
+
+@Composable
+private fun buildWorkflowSummary(workflow: Workflow): String {
+    val triggerNode = workflow.nodes.filterIsInstance<TriggerNode>().firstOrNull()
+    val triggerLabel =
+        when (triggerNode?.triggerType) {
+            "schedule" -> stringResource(R.string.workflow_trigger_type_schedule)
+            "tasker" -> stringResource(R.string.workflow_trigger_type_tasker)
+            "intent" -> stringResource(R.string.workflow_trigger_type_intent)
+            "speech" -> stringResource(R.string.workflow_trigger_type_speech)
+            "app_open" -> stringResource(R.string.workflow_trigger_type_app_open)
+            else -> stringResource(R.string.workflow_trigger_type_manual)
+        }
+    val nodeCount = stringResource(R.string.workflow_summary_nodes, workflow.nodes.size)
+    val successPart =
+        if (workflow.totalExecutions > 0) {
+            val rate = (workflow.successfulExecutions.toFloat() / workflow.totalExecutions * 100).toInt()
+            " · " + stringResource(R.string.workflow_summary_success_rate, rate)
+        } else {
+            ""
+        }
+    return triggerLabel + " · " + nodeCount + successPart
 }
 
 @Composable

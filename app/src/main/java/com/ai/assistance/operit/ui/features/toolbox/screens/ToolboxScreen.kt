@@ -127,48 +127,47 @@ fun ToolCard(tool: Tool) {
                                 isPressed = false
                         }
                 },
-                modifier = Modifier.fillMaxWidth().height(156.dp).scale(scale),
+                modifier = Modifier.fillMaxWidth().height(104.dp).scale(scale),
                 colors =
                         CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                elevation =
-                        CardDefaults.cardElevation(
-                                defaultElevation = 2.dp,
-                                pressedElevation = 8.dp
-                        ),
-                shape = RoundedCornerShape(12.dp)
+                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                shape = RoundedCornerShape(12.dp),
+                border =
+                        androidx.compose.foundation.BorderStroke(
+                                1.dp,
+                                MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f)
+                        )
         ) {
-                // 卡片内容
                 Column(
-                        modifier = Modifier.fillMaxSize().padding(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        modifier = Modifier.fillMaxSize().padding(horizontal = 12.dp, vertical = 12.dp),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                        // 工具图标带有背景圆圈
                         Box(
                                 contentAlignment = Alignment.Center,
                                 modifier =
-                                        Modifier.size(48.dp)
-                                                .clip(CircleShape)
+                                        Modifier.size(30.dp)
+                                                .clip(RoundedCornerShape(8.dp))
                                                 .background(
-                                                        color = MaterialTheme.colorScheme.primaryContainer
+                                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.10f)
                                                 )
-                                                .padding(8.dp)
                         ) {
                                 Icon(
                                         imageVector = tool.icon,
                                         contentDescription = tool.name,
-                                        modifier = Modifier.size(24.dp),
+                                        modifier = Modifier.size(18.dp),
                                         tint = MaterialTheme.colorScheme.primary
                                 )
                         }
 
+                        Spacer(modifier = Modifier.height(2.dp))
+
                         Text(
                                 text = tool.name,
                                 style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center,
-                                minLines = 1,
-                                maxLines = 2,
+                                fontWeight = FontWeight.SemiBold,
+                                textAlign = TextAlign.Start,
+                                maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                         )
 
@@ -177,10 +176,8 @@ fun ToolCard(tool: Tool) {
                                         text = description,
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        textAlign = TextAlign.Center,
-                                        modifier = Modifier.padding(horizontal = 2.dp),
-                                        minLines = 1,
-                                        maxLines = 2,
+                                        textAlign = TextAlign.Start,
+                                        maxLines = 1,
                                         overflow = TextOverflow.Ellipsis
                                 )
                         }
