@@ -59,6 +59,7 @@ import com.ai.assistance.operit.data.preferences.UserPreferencesManager
 import com.ai.assistance.operit.data.preferences.androidPermissionPreferences
 import com.ai.assistance.operit.data.repository.WorkflowRepository
 import com.ai.assistance.operit.ui.common.NavItem
+import com.ai.assistance.operit.ui.components.LinchuanLogo
 import com.ai.assistance.operit.ui.main.screens.ScreenRouteRegistry
 import com.ai.assistance.operit.ui.main.navigation.NavigationEntrySpec
 import com.ai.assistance.operit.ui.main.screens.Screen
@@ -571,20 +572,7 @@ private fun SidebarInfoCard(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
         ) {
-                Box(
-                        modifier = Modifier
-                                .size(42.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(Color(0xFF1E4FA3)),
-                        contentAlignment = Alignment.Center
-                ) {
-                        Text(
-                                text = "川",
-                                color = Color.White,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold
-                        )
-                }
+                LinchuanLogo(size = 42)
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                         Text(

@@ -54,6 +54,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.ai.assistance.operit.ui.components.CustomScaffold
+import com.ai.assistance.operit.ui.components.LinchuanLogo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
@@ -856,21 +857,7 @@ fun AboutScreen(
                         .padding(vertical = 10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Surface(
-                        modifier = Modifier.size(72.dp),
-                        shape = RoundedCornerShape(18.dp),
-                        tonalElevation = 0.dp,
-                        color = Color(0xFF1E4FA3)
-                    ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Text(
-                                text = "川",
-                                color = Color.White,
-                                fontSize = 34.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
+                    LinchuanLogo(size = 72)
 
                     Spacer(modifier = Modifier.height(10.dp))
 

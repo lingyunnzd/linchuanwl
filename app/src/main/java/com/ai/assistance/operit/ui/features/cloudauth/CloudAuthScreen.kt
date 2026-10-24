@@ -66,10 +66,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ai.assistance.operit.sync.SyncManager
 import com.ai.assistance.operit.sync.AuthState
 import com.ai.assistance.operit.sync.CodeSendResult
 import com.ai.assistance.operit.sync.CodeVerifyResult
-import com.ai.assistance.operit.sync.SyncManager
+import com.ai.assistance.operit.ui.components.LinchuanLogo
 import com.ai.assistance.operit.util.AppLogger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -575,39 +576,7 @@ fun CloudAuthScreen(onGoBack: () -> Unit, onSkip: (() -> Unit)? = null) {
 
 @Composable
 private fun BrandMark(size: Int) {
-    Box(
-        modifier = Modifier
-            .size(size.dp)
-            .background(MaterialTheme.colorScheme.primary, RoundedCornerShape((size / 4).dp)),
-        contentAlignment = Alignment.Center
-    ) {
-        Canvas(modifier = Modifier.size((size * 0.52f).dp)) {
-            val w = this.size.width
-            val h = this.size.height
-            val stroke = w * 0.14f
-            drawLine(
-                color = Color.White,
-                start = Offset(w * 0.22f, h * 0.12f),
-                end = Offset(w * 0.22f, h * 0.88f),
-                strokeWidth = stroke,
-                cap = StrokeCap.Round
-            )
-            drawLine(
-                color = Color.White,
-                start = Offset(w * 0.5f, h * 0.26f),
-                end = Offset(w * 0.5f, h * 0.74f),
-                strokeWidth = stroke,
-                cap = StrokeCap.Round
-            )
-            drawLine(
-                color = Color.White,
-                start = Offset(w * 0.78f, h * 0.38f),
-                end = Offset(w * 0.78f, h * 0.62f),
-                strokeWidth = stroke,
-                cap = StrokeCap.Round
-            )
-        }
-    }
+    LinchuanLogo(size = size)
 }
 
 @Composable

@@ -4,23 +4,55 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- 「川」三笔流水，霖川网络品牌标识 -->
+
+    <!-- 行星环 / 星体：倾斜 -16° 的三道环，与 App 内品牌标识同构 -->
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:rotation="-16">
+
+        <!-- 外层淡青环 -->
+        <path
+            android:pathData="M24,54 a30,19 0 1,0 60,0 a30,19 0 1,0 -60,0"
+            android:strokeColor="#FFB9F1FF"
+            android:strokeWidth="2.6"
+            android:fillColor="#00000000" />
+
+        <!-- 中层品牌蓝粗环 -->
+        <path
+            android:pathData="M31.5,54 a22.5,14 0 1,0 45,0 a22.5,14 0 1,0 -45,0"
+            android:strokeColor="#FF2A6CF0"
+            android:strokeWidth="6"
+            android:fillColor="#00000000" />
+
+        <!-- 内层亮青细环 -->
+        <path
+            android:pathData="M39,54 a15,9 0 1,0 30,0 a15,9 0 1,0 -30,0"
+            android:strokeColor="#FF7FE3FF"
+            android:strokeWidth="3"
+            android:fillColor="#00000000" />
+    </group>
+
+    <!-- 白色轨道线 -->
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:rotation="-8">
+        <path
+            android:pathData="M32,54 a22,12 0 1,0 44,0 a22,12 0 1,0 -44,0"
+            android:strokeColor="#F2FFFFFF"
+            android:strokeWidth="1.2"
+            android:fillColor="#00000000" />
+    </group>
+
+    <!-- 三颗星点 -->
     <path
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="7"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000"
-        android:pathData="M41,33 C41,47 37.5,62 32,74" />
+        android:pathData="M46,55 m-1.6,0 a1.6,1.6 0 1,0 3.2,0 a1.6,1.6 0 1,0 -3.2,0"
+        android:fillColor="#FFFFFFFF" />
     <path
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="7"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000"
-        android:pathData="M55,31 L55,77" />
+        android:pathData="M54,51.5 m-2.4,0 a2.4,2.4 0 1,0 4.8,0 a2.4,2.4 0 1,0 -4.8,0"
+        android:fillColor="#FFFFFFFF" />
     <path
-        android:strokeColor="#FFFFFF"
-        android:strokeWidth="7"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000"
-        android:pathData="M70,25 L70,83" />
+        android:pathData="M62,49.5 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0"
+        android:fillColor="#FFFFFFFF" />
 </vector>
